@@ -72,8 +72,9 @@ class AGraphicsView(QGraphicsView):
         mousePos = QPointF(mouseEvent.pos())
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
             self.rightDrag = True
-
-            self.viewPosInScene = self.lastViewPosInScene + (QPointF(self.lastPos) - mousePos) / self.viewScale
+            diffvec = QPointF(self.lastPos) - mousePos
+            diffvec.setY(-diffvec.y())
+            self.viewPosInScene = self.lastViewPosInScene + diffvec / self.viewScale
 
             self.resetSceneRect()
         if self._indicator:
