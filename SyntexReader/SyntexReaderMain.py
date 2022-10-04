@@ -1,7 +1,7 @@
 from lexer import Lexer
 from parser import Parser
 
-#https://github.com/davidcallanan/py-simple-math-interpreter
+#adapted from https://github.com/davidcallanan/py-simple-math-interpreter
 
 while True:
     text = input("calc > ")
