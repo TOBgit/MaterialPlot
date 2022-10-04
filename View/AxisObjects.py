@@ -87,6 +87,7 @@ class MarkLine(QGraphicsObject):
         if self._axisMode == MARKTRACK_MODE_LOGSCALE and basea is not None:
             a = math.log10(a + 1) * base + basea
         return a
+
     def makeMinorLine(self, a, basea=None, base=None):
         rect = self.view.getViewRect()
 
@@ -101,13 +102,11 @@ class MarkLine(QGraphicsObject):
         return QPointF(a, y)
 
     def getLogLevel(self):
-        max, min = self.lin2log(self.axisMax) , self.lin2log(self.axisMin)
+        max, min = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
         maxbase = math.ceil(math.log10(max))
         minbase = math.floor(math.log10(min))
         print(minbase, maxbase)
 
-    def getLogMarkText(self, a):
-        return self.getMarkText(a)
     def _generateLogText(self, i, a):
         # add tick texts
         if i >= len(self._markTextItem):
@@ -121,8 +120,9 @@ class MarkLine(QGraphicsObject):
         else:
             item = self._markTextItem[i]
         item.setPos(self.makeTextPos(self.log2lin(a)))
-        item.setPlainText(self.getLogMarkText(self.log2lin(a)))
+        item.setPlainText(self.getMarkText(self.log2lin(a)))
         item.show()
+
     def calcLogLevel(self, level, maxlog, minlog):
         # maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
         base = 10 ** level
@@ -132,9 +132,10 @@ class MarkLine(QGraphicsObject):
         if lowborder + base > maxlog:
             return "Over"
         for i in range(9):
-            if minlog < lowborder + (i+1) * base < maxlog:
-                return lowborder + (i+1) * base
+            if minlog < lowborder + (i + 1) * base < maxlog:
+                return lowborder + (i + 1) * base
         return "Continue"
+
     def drawMajorLogLine(self, startlevel, minlog, maxlog, i, lines):
         base = 10 ** startlevel
         a = math.floor(minlog / base) * base
@@ -149,6 +150,7 @@ class MarkLine(QGraphicsObject):
                 i += 1
             a += base
         return i
+
     def logUpdateMark(self):
         originmaxlog, originminlog = maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
         minrange = (originmaxlog - originminlog) * 0.01
@@ -162,7 +164,6 @@ class MarkLine(QGraphicsObject):
 
         i = 0
 
-        div = maxbase - minbase
         startlevel = math.floor(math.log10(maxlog - minlog))
         ret = self.calcLogLevel(startlevel, maxlog, minlog)
         times = 0
@@ -228,6 +229,7 @@ class MarkLine(QGraphicsObject):
 
         self._markLinesBold = lines
         self._markLines = minor_lines
+
     def updateMark(self, force=False):
         # 获取可视区域
         rect = self.view.getViewRect()
@@ -243,6 +245,7 @@ class MarkLine(QGraphicsObject):
 
         except OverflowError:
             pass
+
     @staticmethod
     def lin2log(v):
         return 10 ** (v / LINEAR_TO_LOG)
@@ -337,29 +340,10 @@ class VerticalMarkLine(MarkLine):
         width = TICKMARK_BAR_WIDTH / self.view_scale
         newRect = QRectF(rect.left(), rect.top(), width, rect.height())
         return newRect
+
     def getBorderLine(self, rect):
         x = float(rect.left()) + TICKMARK_BAR_WIDTH / self.view_scale
         return QLineF(x, rect.top(), x, rect.bottom())
-
-    def getMarkText(self, a):
-        return "%g" % self.getVisualCoord(a)
-
-    def drawMajorLogLine(self, startlevel, minlog, maxlog, i, lines):
-        base = 10 ** startlevel
-        a = math.floor(minlog / base) * base
-        if a == 0:
-            a = base
-        while a < maxlog:
-            # calc major ticks
-            if minlog < a:
-                lines.append(self.makeMajorLine(self.log2lin(a)))
-                # if main:
-                self._generateLogText(i, a)
-                i += 1
-            a += base
-        return i
-    def getLogMarkText(self, a):
-        return "%g" % self.getVisualCoord(a)
 
     @property
     def axisMin(self):
@@ -388,8 +372,6 @@ class VerticalMarkLine(MarkLine):
         x = rect.left() + 30 / self.view_scale
         return QPointF(x, a)
 
-class Test(QGraphicsObject):
-    pass
 
 class IndicatorLines(QGraphicsObject):
 
@@ -409,7 +391,7 @@ class IndicatorLines(QGraphicsObject):
         item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
         item.hide()
         # 设置刻度线的颜色:
-        self.pen = QPen(QColor(255, 0, 0, 200),0, Qt.DashLine)
+        self.pen = QPen(QColor(255, 0, 0, 200), 0, Qt.DashLine)
         self.pen.setWidth(0)  # linewidth not zooming
 
         self.setZValue(400)
@@ -418,20 +400,23 @@ class IndicatorLines(QGraphicsObject):
     def setViewScale(self, scale):
         self.view_scale = scale
         self.onHoverChanged(self.hoverPos)
+
     def boundingRect(self):
         """交互范围."""
         rect = self.view.getViewRect()
         return rect
+
     def setAxisMode(self, mode):
         self._axisMode = mode
         self.onHoverChanged(self.hoverPos)
         self.update()
+
     def onHoverChanged(self, pos):
         rect = self.view.getViewRect()
         self.hoverPos = pos
         self.vline = QLineF(pos.x(), rect.top(), pos.x(), rect.bottom())
         self.hline = QLineF(rect.left(), pos.y(), rect.right(), pos.y())
-        self.textitem.setPos(pos + QPointF(0, - 25/ self.view_scale))
+        self.textitem.setPos(pos + QPointF(0, - 25 / self.view_scale))
         if self._axisMode == MARKTRACK_MODE_LOGSCALE:
 
             self.textitem.setPlainText("%g, %g" % (10 ** (pos.x()), 10 ** (pos.y())))
