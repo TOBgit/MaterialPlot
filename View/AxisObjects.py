@@ -145,12 +145,13 @@ class MarkLine(QGraphicsObject):
         maxbase = math.ceil(maxlogbase)
         minbase = math.floor(minlogbase)
 
+        i = 0
         def drawMajorLine(startlevel, main=True):
+            nonlocal i
             base = 10 ** startlevel
             a = math.floor(minlog / base) * base
             if a == 0:
                 a = base
-            i = 0
             while a < maxlog:
                 # calc major ticks
                 if minlog < a:
@@ -168,7 +169,7 @@ class MarkLine(QGraphicsObject):
                 drawMajorLine(startlevel, times == 0)
                 maxlog = ret
                 times += 1
-                if times >= 2:
+                if times >= 3:
                     break
             startlevel -= 1
             if maxlog - minlog < minrange:
