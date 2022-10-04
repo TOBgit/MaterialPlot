@@ -69,8 +69,6 @@ class GraphicTransformer():
         Convert an material item to a pure geometry object.
         '''
         upper_left_x = mat_item.features[x] - mat_item.features[w] / 2.
-        # Specific handling of y-coor (is a negative value) because we actually mark
-        # the neg-y area on the plot as pos-y for visualization purpose.
         upper_left_y = mat_item.features[y] - mat_item.features[h] / 2.
         width = mat_item.features[w]
         height = mat_item.features[h]
