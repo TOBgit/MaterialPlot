@@ -71,7 +71,7 @@ class GraphicTransformer():
         upper_left_x = mat_item.features[x] - mat_item.features[w] / 2.
         # Specific handling of y-coor (is a negative value) because we actually mark
         # the neg-y area on the plot as pos-y for visualization purpose.
-        upper_left_y = - mat_item.features[y] - mat_item.features[h] / 2.
+        upper_left_y = mat_item.features[y] - mat_item.features[h] / 2.
         width = mat_item.features[w]
         height = mat_item.features[h]
         if self.config.log_scale:
@@ -79,9 +79,9 @@ class GraphicTransformer():
             # Use the diff between the lower-right point and upper-left point to re-calculate
             # the width and height.
             width = log10(upper_left_x + width) - log10(upper_left_x)
-            height = log10(-upper_left_y) - log10(-(upper_left_y - height))
+            height = log10(upper_left_y) - log10((upper_left_y + height))
             upper_left_x = log10(upper_left_x)
-            upper_left_y = -log10(-upper_left_y)
+            upper_left_y = log10(upper_left_y)
         center_x = upper_left_x + width / 2.
         center_y = upper_left_y + height / 2.
         return simpleEllipse(center_x, center_y, width, height, mat_item.rotation)

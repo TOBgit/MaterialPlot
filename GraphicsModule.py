@@ -2,6 +2,7 @@
 from typing import List
 
 from PySide2.QtCore import QPointF, QRectF
+from PySide2.QtWidgets import QGraphicsItem
 from PySide2.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
 
 from DataModel import AshbyModel, MaterialItem
@@ -93,6 +94,7 @@ class AshbyGraphicsController(object):
         text = self.scene.addText(mat_item.label, QFont("Arial", 12, 2))
         text.setPos(self.transformer.matCenterPoint(mat_item))
         text.setRotation(self.transformer.matRotation(mat_item))
+        text.setFlag(QGraphicsItem.ItemIgnoresTransformations)
         # Append semantic item info for re-draw.
         # TODO(tienan): consider consolidate the two item caches together.
         self.semanticItems.append(mat_item)

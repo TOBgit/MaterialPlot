@@ -174,10 +174,10 @@ class AGraphicsView(QGraphicsView):
         self.setSceneRect(rect)
 
         trans = QTransform()
-        trans.scale(self.viewScale, self.viewScale)
+        trans.scale(self.viewScale, -self.viewScale)
         self.setTransform(trans)
-        for item in self.graphicItems:
-            if isinstance(item, QGraphicsTextItem):
-                item.setScale(1.0 / self.viewScale)
+        # for item in self.graphicItems:
+        #     if isinstance(item, QGraphicsTextItem):
+        #         item.setScale(1.0 / self.viewScale)
         self.scene().update()
         self.refreshMarks()

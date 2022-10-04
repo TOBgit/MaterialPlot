@@ -80,8 +80,8 @@ class MarkLine(QGraphicsObject):
 
     def makeMajorLine(self, a):
         rect = self.view.getViewRect()
-        return QLineF(a, rect.bottom() - (TICKMARK_BAR_HEIGHT - MAJORTICK_HEIGHT) / self.view_scale, a,
-                      rect.bottom() - TICKMARK_BAR_HEIGHT / self.view_scale)
+        return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MAJORTICK_HEIGHT) / self.view_scale, a,
+                      rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale)
 
     def transFormLogMinorCoord(self, a, basea=None, base=None):
         if self._axisMode == MARKTRACK_MODE_LOGSCALE and basea is not None:
@@ -92,12 +92,12 @@ class MarkLine(QGraphicsObject):
 
         a = self.transFormLogMinorCoord(a, basea, base)
 
-        return QLineF(a, rect.bottom() - (TICKMARK_BAR_HEIGHT - MINORTICK_HEIGHT) / self.view_scale, a,
-                      rect.bottom() - TICKMARK_BAR_HEIGHT / self.view_scale)
+        return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MINORTICK_HEIGHT) / self.view_scale, a,
+                      rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale)
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        y = rect.bottom() - 30 / self.view_scale
+        y = rect.top() + 30 / self.view_scale
         return QPointF(a, y)
 
     def getLogLevel(self):
@@ -106,6 +106,8 @@ class MarkLine(QGraphicsObject):
         minbase = math.floor(math.log10(min))
         print(minbase, maxbase)
 
+    def getLogMarkText(self, a):
+        return self.getMarkText(a)
     def _generateLogText(self, i, a):
         # add tick texts
         if i >= len(self._markTextItem):
@@ -119,7 +121,7 @@ class MarkLine(QGraphicsObject):
         else:
             item = self._markTextItem[i]
         item.setPos(self.makeTextPos(self.log2lin(a)))
-        item.setPlainText(self.getMarkText(self.log2lin(a)))
+        item.setPlainText(self.getLogMarkText(self.log2lin(a)))
         item.show()
     def calcLogLevel(self, level, maxlog, minlog):
         # maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
@@ -133,7 +135,20 @@ class MarkLine(QGraphicsObject):
             if minlog < lowborder + (i+1) * base < maxlog:
                 return lowborder + (i+1) * base
         return "Continue"
-
+    def drawMajorLogLine(self, startlevel, minlog, maxlog, i, lines):
+        base = 10 ** startlevel
+        a = math.floor(minlog / base) * base
+        if a == 0:
+            a = base
+        while a < maxlog:
+            # calc major ticks
+            if minlog < a:
+                lines.append(self.makeMajorLine(self.log2lin(a)))
+                # if main:
+                self._generateLogText(i, a)
+                i += 1
+            a += base
+        return i
     def logUpdateMark(self):
         originmaxlog, originminlog = maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
         minrange = (originmaxlog - originminlog) * 0.01
@@ -146,27 +161,14 @@ class MarkLine(QGraphicsObject):
         minbase = math.floor(minlogbase)
 
         i = 0
-        def drawMajorLine(startlevel, main=True):
-            nonlocal i
-            base = 10 ** startlevel
-            a = math.floor(minlog / base) * base
-            if a == 0:
-                a = base
-            while a < maxlog:
-                # calc major ticks
-                if minlog < a:
-                    lines.append(self.makeMajorLine(self.log2lin(a)))
-                    # if main:
-                    self._generateLogText(i, a)
-                    i += 1
-                a += base
+
         div = maxbase - minbase
         startlevel = math.floor(math.log10(maxlog - minlog))
         ret = self.calcLogLevel(startlevel, maxlog, minlog)
         times = 0
         while ret != "Stop":
             if not isinstance(ret, str):
-                drawMajorLine(startlevel, times == 0)
+                i = self.drawMajorLogLine(startlevel, minlog, maxlog, i, lines)
                 maxlog = ret
                 times += 1
                 if times >= 3:
@@ -177,36 +179,6 @@ class MarkLine(QGraphicsObject):
             ret = self.calcLogLevel(startlevel, maxlog, minlog)
 
         self._markLinesBold = lines
-
-        return
-        if div < 3:
-            # case2
-            minorbase = 10 ** math.floor(math.log10(maxlog - minlog))
-            divs = int((maxlog - minlog)/minorbase)
-            if divs < 2:
-                divs *= 10
-                base = minorbase * 0.1
-            else:
-                base = minorbase
-            a = math.floor(minlog / base) * base
-            i = 0
-            while a < self.axisMax:
-                # calc major ticks
-                lines.append(self.makeMajorLine(self.log2lin(a)))
-                self._generateLogText(i, a)
-                i += 1
-                a += base
-        else:
-            i = 0
-            for j in range(minbase, maxbase):
-                ivalue = 10 ** j
-                # calc major ticks
-                lines.append(self.makeMajorLine(self.log2lin(ivalue)))
-                self._generateLogText(i, ivalue)
-                i += 1
-
-
-
 
     def linearUpdateMark(self):
         arange = self.axisMax - self.axisMin
@@ -335,14 +307,14 @@ class MarkLine(QGraphicsObject):
         self.paintBorderLine(painter)
 
     def getBorderLine(self, rect):
-        y = float(rect.bottom()) - TICKMARK_BAR_HEIGHT / self.view_scale
+        y = float(rect.top()) + TICKMARK_BAR_HEIGHT / self.view_scale
         return QLineF(rect.left(), y, rect.right(), y)
 
     def boundingRect(self):
         """交互范围."""
         rect = self.view.getViewRect()
         height = TICKMARK_BAR_HEIGHT / self.view_scale
-        newRect = QRectF(rect.left(), rect.bottom() - height, rect.width(), height)
+        newRect = QRectF(rect.left(), rect.top(), rect.width(), height)
         return newRect
 
     def getViewScale(self):
@@ -365,16 +337,29 @@ class VerticalMarkLine(MarkLine):
         width = TICKMARK_BAR_WIDTH / self.view_scale
         newRect = QRectF(rect.left(), rect.top(), width, rect.height())
         return newRect
-    def transFormLogMinorCoord(self, a, basea=None, base=None):
-        if self._axisMode == MARKTRACK_MODE_LOGSCALE and basea is not None:
-            a = (1 - math.log10(a + 1)) * base + basea
-        return a
     def getBorderLine(self, rect):
         x = float(rect.left()) + TICKMARK_BAR_WIDTH / self.view_scale
         return QLineF(x, rect.top(), x, rect.bottom())
 
     def getMarkText(self, a):
-        return "%g" % self.getVisualCoord(-a)
+        return "%g" % self.getVisualCoord(a)
+
+    def drawMajorLogLine(self, startlevel, minlog, maxlog, i, lines):
+        base = 10 ** startlevel
+        a = math.floor(minlog / base) * base
+        if a == 0:
+            a = base
+        while a < maxlog:
+            # calc major ticks
+            if minlog < a:
+                lines.append(self.makeMajorLine(self.log2lin(a)))
+                # if main:
+                self._generateLogText(i, a)
+                i += 1
+            a += base
+        return i
+    def getLogMarkText(self, a):
+        return "%g" % self.getVisualCoord(a)
 
     @property
     def axisMin(self):
