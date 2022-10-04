@@ -434,9 +434,9 @@ class IndicatorLines(QGraphicsObject):
         self.textitem.setPos(pos + QPointF(0, - 25/ self.view_scale))
         if self._axisMode == MARKTRACK_MODE_LOGSCALE:
 
-            self.textitem.setPlainText("%g, %g" % (10 ** (pos.x()), 10 ** (-pos.y())))
+            self.textitem.setPlainText("%g, %g" % (10 ** (pos.x()), 10 ** (pos.y())))
         else:
-            self.textitem.setPlainText("%g, %g" % (pos.x(), -pos.y()))
+            self.textitem.setPlainText("%g, %g" % (pos.x(), pos.y()))
         self.textitem.show()
         self.update()
 
