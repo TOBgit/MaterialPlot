@@ -121,8 +121,22 @@ class MarkLine(QGraphicsObject):
         item.setPos(self.makeTextPos(self.log2lin(a)))
         item.setPlainText(self.getMarkText(self.log2lin(a)))
         item.show()
+    def calcLogLevel(self, level, maxlog, minlog):
+        # maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
+        base = 10 ** level
+        lowborder = base * math.floor(minlog / base)
+        if lowborder + 9 * base < minlog:
+            return "Stop"
+        if lowborder + base > maxlog:
+            return "Over"
+        for i in range(9):
+            if minlog < lowborder + (i+1) * base < maxlog:
+                return lowborder + (i+1) * base
+        return "Continue"
+
     def logUpdateMark(self):
-        maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
+        originmaxlog, originminlog = maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
+        minrange = (originmaxlog - originminlog) * 0.01
         for item in self._markTextItem:
             item.hide()
         lines = []
@@ -130,7 +144,40 @@ class MarkLine(QGraphicsObject):
         minlogbase = math.log10(minlog)
         maxbase = math.ceil(maxlogbase)
         minbase = math.floor(minlogbase)
+
+        def drawMajorLine(startlevel, main=True):
+            base = 10 ** startlevel
+            a = math.floor(minlog / base) * base
+            if a == 0:
+                a = base
+            i = 0
+            while a < maxlog:
+                # calc major ticks
+                if minlog < a:
+                    lines.append(self.makeMajorLine(self.log2lin(a)))
+                    # if main:
+                    self._generateLogText(i, a)
+                    i += 1
+                a += base
         div = maxbase - minbase
+        startlevel = math.floor(math.log10(maxlog - minlog))
+        ret = self.calcLogLevel(startlevel, maxlog, minlog)
+        times = 0
+        while ret != "Stop":
+            if not isinstance(ret, str):
+                drawMajorLine(startlevel, times == 0)
+                maxlog = ret
+                times += 1
+                if times >= 2:
+                    break
+            startlevel -= 1
+            if maxlog - minlog < minrange:
+                break
+            ret = self.calcLogLevel(startlevel, maxlog, minlog)
+
+        self._markLinesBold = lines
+
+        return
         if div < 3:
             # case2
             minorbase = 10 ** math.floor(math.log10(maxlog - minlog))
@@ -158,7 +205,6 @@ class MarkLine(QGraphicsObject):
                 i += 1
 
 
-        self._markLinesBold = lines
 
 
     def linearUpdateMark(self):
@@ -218,9 +264,7 @@ class MarkLine(QGraphicsObject):
         try:
             arange = self.axisMax - self.axisMin
             if self._axisMode == MARKTRACK_MODE_LOGSCALE and arange < LINEAR_TO_LOG * 2:
-                # dont paint for now
-                # self.logUpdateMark()
-                pass
+                self.logUpdateMark()
             else:
                 self.linearUpdateMark()
 
