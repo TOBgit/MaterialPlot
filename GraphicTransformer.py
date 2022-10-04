@@ -1,9 +1,6 @@
 from math import log10
 from typing import List
 
-from PySide2.QtCore import QPointF, QRectF
-from PySide2.QtGui import QPolygonF
-
 from AlgorithmUtils import ellipseHull, simpleEllipse
 from DataModel import MaterialItem
 
@@ -39,25 +36,24 @@ class GraphicTransformer():
 
     def matToSquare(self, mat_item: MaterialItem):
         elps = self.convertMatToSimpleEllipse(mat_item)
-        return QRectF(elps.upper_left_x, elps.upper_left_y, elps.w, elps.h)
+        return elps.upper_left_x, elps.upper_left_y, elps.w, elps.h
 
     def matUpperLeftPoint(self, mat_item: MaterialItem):
         elps = self.convertMatToSimpleEllipse(mat_item)
-        return QPointF(elps.upper_left_x, elps.upper_left_y)
+        return elps.upper_left_x, elps.upper_left_y
 
     def matCenterPoint(self, mat_item: MaterialItem):
         elps = self.convertMatToSimpleEllipse(mat_item)
-        return QPointF(elps.x, elps.y)
+        return elps.x, elps.y
 
     def matRotation(self, mat_item: MaterialItem):
         elps = self.convertMatToSimpleEllipse(mat_item)
         return elps.rotation
 
     def getEllipseHull(self, items: List[MaterialItem]):
-        hull_v = ellipseHull([self.convertMatToSimpleEllipse(item) for item in items],
+        return ellipseHull([self.convertMatToSimpleEllipse(item) for item in items],
                            self.config.expend_ratio,
                            self.config.hull_sampling_step)
-        return QPolygonF(list(map(QPointF, *hull_v.T)))
 
     #
     # Private

@@ -88,11 +88,13 @@ class AshbyGraphicsController(object):
 
     def drawEllipse(self, mat_item: MaterialItem):
         brush = QBrush(QColor(mat_item.color_r, mat_item.color_g, mat_item.color_b, a=255))
-        elps = self.scene.addEllipse(self.transformer.matToSquare(mat_item), self.pen, brush)
+        ul_x, ul_y, w, h = self.transformer.matToSquare(mat_item)
+        elps = self.scene.addEllipse(QRectF(ul_x, ul_y, w, h), self.pen, brush)
         elps.setRotation(self.transformer.matRotation(mat_item))
 
         text = self.scene.addText(mat_item.label, QFont("Arial", 12, 2))
-        text.setPos(self.transformer.matCenterPoint(mat_item))
+        c_x, c_y = self.transformer.matCenterPoint(mat_item)
+        text.setPos(QPointF(c_x, c_y))
         text.setRotation(self.transformer.matRotation(mat_item))
         text.setFlag(QGraphicsItem.ItemIgnoresTransformations)
         # Append semantic item info for re-draw.
@@ -106,7 +108,8 @@ class AshbyGraphicsController(object):
             r, g, b = self.model.getMeanColor(items)
             self.pen = QPen(QColor(125, 125, 125, 50), 0)
             self.brush = QBrush(QColor(r, g, b, 100))
-            poly = self.scene.addPolygon(self.transformer.getEllipseHull(items), self.pen, self.brush)
+            hull = self.transformer.getEllipseHull(items)
+            poly = self.scene.addPolygon(QPolygonF(list(map(QPointF, *hull.T))), self.pen, self.brush)
             poly.setZValue(-1)
             self.semanticItems.append(items)
             self.view.graphicItems.append(poly)

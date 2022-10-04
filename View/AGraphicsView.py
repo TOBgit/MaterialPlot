@@ -3,7 +3,7 @@ import PySide2.QtGui
 from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtGui import QTransform
-from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, Test
+from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines
 import math
 
 FIT_EXPAND_MARGIN_RATIO = 0.1
