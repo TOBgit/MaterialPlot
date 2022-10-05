@@ -110,6 +110,7 @@ class MainWindow(QMainWindow):
         if filename:
             self.csv_fpath = filename
         self.controller = AshbyGraphicsController(self, self.csv_fpath)
+        self.ui.familyColumn.addItems(self.controller.model.getStringColumn(self.csv_fpath))
 
     def onClickPlotSelLn(self):
         self.controller.drawLine()

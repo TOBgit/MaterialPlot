@@ -73,15 +73,16 @@ class AshbyModel(object):
             self.data[new_str] = (self.data[new_column_info[0]] ** new_column_info[1] / self.data[new_column_info[2]] ** new_column_info[3])
         return new_str
 
-    # to let the user select family catagory, copied from initFromData
+    # to let the user select family category, copied from initFromData
+    # not that the Name is not included
     def getStringColumn(self, filename: str):
         if filename:
             temp_df = pd.read_csv(filename)
             # Find the string columns.
             string_data = temp_df.select_dtypes(include = object)
-    #TODO(guaishow): is the text/string things in Pandas called object?
             string_columns = string_data.columns
-        return string_columns
+            string_columns_exp_name = string_columns.drop("Name")
+        return string_columns_exp_name
 
     def getNumericColumns(self, filename: str):
         if filename:
