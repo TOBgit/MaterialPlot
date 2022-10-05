@@ -595,6 +595,10 @@
    </property>
   </action>
   <action name="actionConvexHull">
+   <property name="icon">
+    <iconset>
+     <normaloff>Res/Hull.svg</normaloff>Res/Hull.svg</iconset>
+   </property>
    <property name="text">
     <string>ConvexHull</string>
    </property>
