@@ -517,12 +517,12 @@
    </attribute>
    <addaction name="actionHotReload"/>
    <addaction name="actionConvexHull"/>
+   <addaction name="actionAxes"/>
    <addaction name="actionResetView"/>
    <addaction name="actionFitView"/>
    <addaction name="separator"/>
    <addaction name="actionOpen_CSV"/>
    <addaction name="actionFamily"/>
-   <addaction name="actionAxes"/>
    <addaction name="actionGenerateChart"/>
    <addaction name="actionFamilyBubble"/>
    <addaction name="actionSelection"/>
@@ -542,6 +542,10 @@
    </property>
   </action>
   <action name="actionAxes">
+   <property name="icon">
+    <iconset>
+     <normaloff>Res/Axis.svg</normaloff>Res/Axis.svg</iconset>
+   </property>
    <property name="text">
     <string>Axes</string>
    </property>
