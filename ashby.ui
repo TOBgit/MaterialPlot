@@ -548,7 +548,7 @@
   <action name="actionOpen_CSV">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 1.png</normaloff>Icons/300ppi/Artboard 1.png</iconset>
+     <normaloff>Res/OpenCSV.svg</normaloff>Res/OpenCSV.svg</iconset>
    </property>
    <property name="text">
     <string>Open CSV...</string>
@@ -562,7 +562,7 @@
   <action name="actionAxes">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 10.png</normaloff>Icons/300ppi/Artboard 10.png</iconset>
+     <normaloff>Res/Axes.svg</normaloff>Res/Axes.svg</iconset>
    </property>
    <property name="text">
     <string>Axes</string>
@@ -625,7 +625,7 @@
   <action name="actionConvexHull">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 6.png</normaloff>Icons/300ppi/Artboard 6.png</iconset>
+     <normaloff>Res/FamBubb.svg</normaloff>Res/FamBubb.svg</iconset>
    </property>
    <property name="text">
     <string>ConvexHull</string>
@@ -634,7 +634,7 @@
   <action name="actionFamily">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 4.png</normaloff>Icons/300ppi/Artboard 4.png</iconset>
+     <normaloff>Res/Family.svg</normaloff>Res/Family.svg</iconset>
    </property>
    <property name="text">
     <string>Family</string>
@@ -643,7 +643,7 @@
   <action name="actionGenerateChart">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 5.png</normaloff>Icons/300ppi/Artboard 5.png</iconset>
+     <normaloff>Res/MatBubb.svg</normaloff>Res/MatBubb.svg</iconset>
    </property>
    <property name="text">
     <string>Generate Chart</string>
@@ -652,7 +652,7 @@
   <action name="actionSelection">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 7.png</normaloff>Icons/300ppi/Artboard 7.png</iconset>
+     <normaloff>Res/Select.svg</normaloff>Res/Select.svg</iconset>
    </property>
    <property name="text">
     <string>Selection</string>
@@ -661,7 +661,7 @@
   <action name="actionPlotSelLn">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 8.png</normaloff>Icons/300ppi/Artboard 8.png</iconset>
+     <normaloff>Res/SelectionLine.svg</normaloff>Res/SelectionLine.svg</iconset>
    </property>
    <property name="text">
     <string>Plot Selection Lines</string>
@@ -670,7 +670,7 @@
   <action name="actionExport">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 9.png</normaloff>Icons/300ppi/Artboard 9.png</iconset>
+     <normaloff>Res/Export.svg</normaloff>Res/Export.svg</iconset>
    </property>
    <property name="text">
     <string>Export</string>
@@ -679,7 +679,7 @@
   <action name="actionFamilyBubble">
    <property name="icon">
     <iconset>
-     <normaloff>Icons/300ppi/Artboard 6.png</normaloff>Icons/300ppi/Artboard 6.png</iconset>
+     <normaloff>Res/FamBubb.svg</normaloff>Res/FamBubb.svg</iconset>
    </property>
    <property name="text">
     <string>Family Bubble</string>

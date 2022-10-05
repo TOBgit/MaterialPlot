@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg353"
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   sodipodi:docname="AshbyIcon.ai"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs357">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath525">
+      <path
+         d="M 0,300 H 300 V 0 H 0 Z"
+         id="path523" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview355"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false" />
+  <g
+     id="g513"
+     inkscape:groupmode="layer"
+     inkscape:label="Page 6"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,400)">
+    <g
+       id="g515"
+       transform="translate(238.2441,253.4444)">
+      <path
+         d="M 0,0 -171.556,-211.556"
+         style="fill:none;stroke:#b5cde3;stroke-width:18;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         id="path517" />
+    </g>
+    <g
+       id="g519">
+      <g
+         id="g521"
+         clip-path="url(#clipPath525)">
+        <g
+           id="g527"
+           transform="translate(116,152.1274)">
+          <path
+             d="m 0,0 h -76.878 c -6.6,0 -12,5.4 -12,12 v 101.837 c 0,6.6 5.4,12 12,12 H 0 c 6.6,0 12,-5.4 12,-12 V 12 C 12,5.4 6.6,0 0,0"
+             style="fill:#85ab8f;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path529" />
+        </g>
+        <g
+           id="g531"
+           transform="translate(260.423,21.824)">
+          <path
+             d="m 0,0 h -111.201 c -6.6,0 -12,5.4 -12,12 v 38.352 c 0,6.6 5.4,12 12,12 H 0 c 6.6,0 12,-5.4 12,-12 V 12 C 12,5.4 6.6,0 0,0"
+             style="fill:#85ab8f;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path533" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
