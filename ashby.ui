@@ -17,14 +17,14 @@
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,10">
     <item>
      <layout class="QGridLayout" name="gridLayout">
+      <property name="horizontalSpacing">
+       <number>6</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
-      </property>
-      <property name="horizontalSpacing">
-       <number>6</number>
       </property>
       <item row="10" column="0" colspan="3">
        <widget class="QPushButton" name="Plot_sel_ln">
@@ -140,8 +140,8 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="x_range_l">
+            <item row="0" column="2">
+             <widget class="QLineEdit" name="x_range_h">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -156,8 +156,47 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="1">
-             <widget class="QLineEdit" name="Exp_Ratio">
+            <item row="3" column="0">
+             <widget class="QRadioButton" name="logRadio">
+              <property name="text">
+               <string>LogScale</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="y_range_l">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QRadioButton" name="linearRadio">
+              <property name="text">
+               <string>Linear</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="x_range_l">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -195,6 +234,22 @@
               </property>
              </widget>
             </item>
+            <item row="2" column="1">
+             <widget class="QLineEdit" name="Exp_Ratio">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
@@ -209,59 +264,14 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="2">
-             <widget class="QLineEdit" name="x_range_h">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLineEdit" name="y_range_l">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QRadioButton" name="logRadio">
+            <item row="4" column="0">
+             <widget class="QCheckBox" name="checkBox_cursor">
               <property name="text">
-               <string>LogScale</string>
+               <string>Cursor lines</string>
               </property>
               <property name="checked">
                <bool>true</bool>
               </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QRadioButton" name="linearRadio">
-              <property name="text">
-               <string>Linear</string>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
              </widget>
             </item>
            </layout>
@@ -412,7 +422,7 @@
      <x>0</x>
      <y>0</y>
      <width>1327</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

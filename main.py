@@ -51,6 +51,7 @@ class MainWindow(QMainWindow):
         self.ui.actionFitView.triggered.connect(self.onFitView)
         self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
+        self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
 
     #
     # Button and menu functions, called upon UI interactions.
@@ -61,6 +62,9 @@ class MainWindow(QMainWindow):
         pop_up.exec_()
         if pop_up.returnNewXY():
             self.controller.updateObjectsByAxis(pop_up.returnNewXY())
+
+    def onCursorChecked(self, state):
+        self.ui.graphicsView.setIndicatorVisible(self.ui.checkBox_cursor.isChecked())
 
     def onAxisStyleChanged(self, _):
         if self.ui.linearRadio.isChecked():

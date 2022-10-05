@@ -164,6 +164,13 @@ class AGraphicsView(QGraphicsView):
             self._vsMarkline.update()
             self._indicator.update()
 
+    def setIndicatorVisible(self, visible):
+        if self._indicator:
+            if visible:
+                self._indicator.show()
+            else:
+                self._indicator.hide()
+
     def resetSceneRect(self):
         rect = self.rect()
         width = rect.width() / self.viewScale
