@@ -97,6 +97,8 @@ class AshbyGraphicsController(object):
         text.setPos(QPointF(c_x, c_y))
         text.setRotation(self.transformer.matRotation(mat_item))
         text.setFlag(QGraphicsItem.ItemIgnoresTransformations)
+
+        text.setFlag(QGraphicsItem.ItemIsMovable)
         # Append semantic item info for re-draw.
         # TODO(tienan): consider consolidate the two item caches together.
         self.semanticItems.append(mat_item)
