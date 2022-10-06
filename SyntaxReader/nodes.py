@@ -10,7 +10,6 @@ class NumberNode:
 class AddNode:
 	node_a: any
 	node_b: any
-
 	def __repr__(self):
 		return f"({self.node_a}+{self.node_b})"
 
@@ -18,7 +17,6 @@ class AddNode:
 class SubtractNode:
 	node_a: any
 	node_b: any
-
 	def __repr__(self):
 		return f"({self.node_a}-{self.node_b})"
 
@@ -26,7 +24,6 @@ class SubtractNode:
 class MultiplyNode:
 	node_a: any
 	node_b: any
-
 	def __repr__(self):
 		return f"({self.node_a}*{self.node_b})"
 
@@ -41,14 +38,12 @@ class DivideNode:
 @dataclass
 class PlusNode:
 	node: any
-
 	def __repr__(self):
 		return f"(+{self.node})"
 	
 @dataclass
 class MinusNode:
 	node: any
-
 	def __repr__(self):
 		return f"(-{self.node})"
         
@@ -56,14 +51,12 @@ class MinusNode:
 class PropNode:
     value: any
     def __repr__(self):
-# TODO (sheshe) here we need to read the mean of the property
         return f"{self.value}"
-# TODO and need to get the SD and calculate it through error propagation
 
 @dataclass
 class PowerNode:
     node_a: any
     node_b: any
     def __repr__(self):
-       return f"{self.node_a}^{self.node_b}"
+       return f"{self.node_a}**{self.node_b}"
 

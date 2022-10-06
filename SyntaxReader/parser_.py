@@ -1,4 +1,4 @@
-from tokens import Token, TokenType
+from tokens import TokenType
 from nodes import *
 
 
@@ -44,16 +44,26 @@ class Parser:
 		return result
 
 	def term(self):
-		result = self.factor()
+		result = self.exponent()
 
 		while self.current_token != None and self.current_token.type in (TokenType.MULTIPLY, TokenType.DIVIDE):
 			if self.current_token.type == TokenType.MULTIPLY:
+				print("read multiply")
 				self.advance()
-				result = MultiplyNode(result, self.factor())
+				result = MultiplyNode(result, self.exponent())
 			elif self.current_token.type == TokenType.DIVIDE:
 				self.advance()
-				result = DivideNode(result, self.factor())
+				result = DivideNode(result, self.exponent())
 				
+		return result
+
+	def exponent(self):
+		result = self.factor()
+
+		if self.current_token != None and self.current_token.type == TokenType.POWER:
+			print("read power")
+			self.advance()
+			result = PowerNode(result, self.factor())
 		return result
 
 	def factor(self):
@@ -77,10 +87,6 @@ class Parser:
 			self.advance()
 			return PropNode(token.value)
 
-		elif token.type == TokenType.POWER:
-			self.advance()
-			return PowerNode(self.factor())
-
 		elif token.type == TokenType.PLUS:
 			self.advance()
 			return PlusNode(self.factor())
@@ -90,8 +96,3 @@ class Parser:
 			return MinusNode(self.factor())
 		
 		self.raise_error()
-
-
-#        elif token.type == TokenType.POWER:
-#            self.advance()
-#            result = PowerNode(result, self.factor()) 

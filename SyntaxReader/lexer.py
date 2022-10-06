@@ -19,31 +19,41 @@ class Lexer:
         while self.current_char != None:
             if self.current_char in WHITESPACE:
                 self.advance()
+
             elif self.current_char == "." or self.current_char in DIGITS:
                 yield self.generate_number()
+
             elif self.current_char in LETTERS:
                 yield self.generate_property()
+
             elif self.current_char == "+":
                 self.advance()
                 yield Token(TokenType.PLUS)
+
             elif self.current_char == "-":
                 self.advance()
                 yield Token(TokenType.MINUS)
+
             elif self.current_char == "*":
                 self.advance()
-                yield Token(TokenType.MULTIPLY)
-            elif self.current_char == "/":
-                self.advance()
-                yield Token(TokenType.DIVIDE)
-            elif self.current_char == "(":
-                self.advance()
-                yield Token(TokenType.LPAREN)
-            elif self.current_char == ")":
-                self.advance()
-                yield Token(TokenType.RPAREN)
+                yield self.star()
+
             elif self.current_char == "^":
                 self.advance()
                 yield Token(TokenType.POWER)
+                
+            elif self.current_char == "/":
+                self.advance()
+                yield Token(TokenType.DIVIDE)
+
+            elif self.current_char == "(":
+                self.advance()
+                yield Token(TokenType.LPAREN)
+
+            elif self.current_char == ")":
+                self.advance()
+                yield Token(TokenType.RPAREN)
+                
             else:
                 raise Exception(f"Illegal Character '{self.current_char}'")
     
@@ -77,3 +87,14 @@ class Lexer:
             self.advance()
     #TODO (sheshe): here need to compare if this prop_str is in the input list. if not return error.
         return Token(TokenType.PROP, str(prop_str))
+
+    def star(self):
+        if self.current_char == "*":
+            self.advance()
+            print("read **")
+            result = Token(TokenType.POWER)
+            return result
+        elif self.current_char != "*":
+            print("read *")
+            result = Token(TokenType.MULTIPLY)
+            return result

@@ -1,6 +1,5 @@
 from nodes import *
 from values import Number
-from DataModel import MaterialItem
 
 class meanInterpreter:
 

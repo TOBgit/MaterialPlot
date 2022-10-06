@@ -1,6 +1,6 @@
 from lexer import Lexer
-from parser import Parser
-from Interpreter import meanInterpreter, errorPropagationInterpreter
+from parser_ import Parser
+from Interpreter import meanInterpreter
 
 #adapted from https://github.com/davidcallanan/py-simple-math-interpreter
 
@@ -11,6 +11,7 @@ while True:
         tokens = lexer.generate_token()
         parser = Parser(tokens)
         tree = parser.parse()
+        print(tree)
         if not tree: continue
         meanInt = meanInterpreter()
         value = meanInt.visit(tree)
