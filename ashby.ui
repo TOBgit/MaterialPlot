@@ -162,7 +162,7 @@
        </widget>
       </item>
       <item row="7" column="2">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="clear_mat_bubble">
         <property name="text">
          <string>Clear</string>
         </property>

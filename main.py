@@ -37,9 +37,7 @@ class MainWindow(QMainWindow):
 
 
     def connectSignals(self):
-        self.ui.Plot_Prop_Chrt.clicked.connect(self.onClickGenPropChrt)
-        self.ui.Plot_sel_ln.clicked.connect(self.onClickPlotSelLn)
-        self.ui.Plot_clear.clicked.connect(self.onActionClear)
+        ## Tool bar buttons
         # TODO(ky): update the ui nameing style in the menu to be consistent with the buttons.
         self.ui.actionOpen_CSV.triggered.connect(self.onActionOpenCSV)
         self.ui.actionHotReload.triggered.connect(self.onActionHotReload)
@@ -49,10 +47,35 @@ class MainWindow(QMainWindow):
         self.ui.actionPlotSelLn.triggered.connect(self.onClickPlotSelLn)
         self.ui.actionResetView.triggered.connect(self.onResetView)
         self.ui.actionFitView.triggered.connect(self.onFitView)
-        self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
-        self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
+
+        ## top layer of buttons ##
         self.ui.Refresh_List.clicked.connect(self.onRefreshTreeList)
+
+        ## middle layer of buttons ##
+        self.ui.Plot_Prop_Chrt.clicked.connect(self.onClickGenPropChrt)
+        self.ui.Plot_hulls.clicked.connect(self.onActionFamilyHull)
+    ## TODO need to implement these
+        #self.ui.clear_mat_bubble.clicked.connect(self.onClickClearMat)
+        #self.ui.clear_hulls.clicked.connect(self.onClickClearHull)
+        #self.ui.show_mat_label.clicked.connect(self.onClickShowMatLabel)
+        #self.ui.show_fam_label.clicked.connect(self.onClickShowFamLabel)
+        #self.ui.delete_mat_label.clicked.connect(self.onClickDeleteMatLabel)
+        #self.ui.delete_fam_label.clicked.connect(self.onClickDeleteFamLabel)
+        
+        ## Plot property tab ##
+        self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
+        self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
+
+        ## Label property tab ##
+    ## TODO need to implement this
+        #self.ui.Plot_refresh_label.clicked.connect(self.onClickRefreshLabel)
+
+        ## lower layer of buttons ##
+        self.ui.Plot_sel_ln.clicked.connect(self.onClickPlotSelLn)
+        self.ui.Plot_clear.clicked.connect(self.onActionClear)
+    ## TODO need to implement this
+        #self.ui.clear_sel_ln.clicked.connect(self.onClickClearSelLn)
 
     #
     # Button and menu functions, called upon UI interactions.
