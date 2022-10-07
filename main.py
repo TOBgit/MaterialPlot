@@ -125,12 +125,11 @@ class MainWindow(QMainWindow):
         self.controller.drawAllHull()
 
     def onActionFamilyHull(self):
-        self.controller.drawFamilyHull()
+        self.controller.clearHull()
+        self.controller.drawFamilyHull(self.ui.familyColumn.currentText())
 
     def onRefreshTreeList(self):
-        #get drop down item
-        family_key = self.ui.familyColumn.currentText()
-        self.controller.initTreeView(family_key)
+        self.controller.initTreeView(self.ui.familyColumn.currentText())
 
 class setAxesPopUp(QDialog):
     def __init__(self, column_candidates: List[str]):
