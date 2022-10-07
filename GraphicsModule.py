@@ -78,13 +78,13 @@ class AshbyGraphicsController(object):
         selections = self.tree.getSelections()
         print(selections)
 
-    def initTreeView(self):
+    def initTreeView(self, family_key = "Type"):
         self.tree.clearModel()
-        mattypes = self.model.getMaterialTypes()
+        mattypes = self.model.getMaterialFamily(family_key)
         items = self.model.getAllItems()
         self.tree.addFamilies(mattypes)  # not necessary at all
         for item in items.values():
-            self.tree.addItem(item, item.family)
+            self.tree.addItem(item, item.family_info[family_key])
 
     def drawEllipse(self, mat_item: MaterialItem):
         brush = QBrush(QColor(mat_item.color_r, mat_item.color_g, mat_item.color_b, a=255))

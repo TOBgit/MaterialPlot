@@ -45,20 +45,21 @@ class MainWindow(QMainWindow):
         self.ui.actionHotReload.triggered.connect(self.onActionHotReload)
         self.ui.actionConvexHull.triggered.connect(self.onActionConvexHull)
         self.ui.actionGenerateChart.triggered.connect(self.onClickGenPropChrt)
-        self.ui.actionFamilyBubble.triggered.connect(self.onActionConvexHull)
+        self.ui.actionFamilyBubble.triggered.connect(self.onActionFamilyHull)
         self.ui.actionPlotSelLn.triggered.connect(self.onClickPlotSelLn)
         self.ui.actionResetView.triggered.connect(self.onResetView)
         self.ui.actionFitView.triggered.connect(self.onFitView)
         self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
         self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
+        self.ui.Refresh_List.clicked.connect(self.onRefreshTreeList)
 
     #
     # Button and menu functions, called upon UI interactions.
     #
 
     def onDefineAxes(self):
-        pop_up = setAxesPopUp(self.controller.model.getNumericColumns(self.csv_fpath))
+        pop_up = setAxesPopUp(self.controller.model.getNumericColumns())
         pop_up.exec_()
         if pop_up.returnNewXY():
             self.controller.updateObjectsByAxis(pop_up.returnNewXY())
@@ -110,7 +111,7 @@ class MainWindow(QMainWindow):
         if filename:
             self.csv_fpath = filename
         self.controller = AshbyGraphicsController(self, self.csv_fpath)
-        self.ui.familyColumn.addItems(self.controller.model.getStringColumn(self.csv_fpath))
+        self.ui.familyColumn.addItems(self.controller.model.getStringColumns())
 
     def onClickPlotSelLn(self):
         self.controller.drawLine()
@@ -122,8 +123,14 @@ class MainWindow(QMainWindow):
 
     def onActionConvexHull(self):
         self.controller.drawAllHull()
-        #TODO(tn/ky): revise the UI to fulfill the actual interaction.
+
+    def onActionFamilyHull(self):
         self.controller.drawFamilyHull()
+
+    def onRefreshTreeList(self):
+        #get drop down item
+        family_key = self.ui.familyColumn.currentText()
+        self.controller.initTreeView(family_key)
 
 class setAxesPopUp(QDialog):
     def __init__(self, column_candidates: List[str]):

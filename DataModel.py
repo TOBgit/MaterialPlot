@@ -13,27 +13,36 @@ class MaterialItem(object):
         self.color_r = int(data["Color_R"])
         self.color_g = int(data["Color_G"])
         self.color_b = int(data["Color_B"])
-        self.family = data["Type"]
         if "rotation" in data.keys():
             self.rotation = data["rotation"]
         else:
             self.rotation = 0.0
+        # All other string columns are family info and stored in a dict for reference.
+        # TODO(tienan): might need to specifically handle the case when family feature cell is empty.
+        self.family_info = {}
+        family_feature_keys = []
+        for feature in data.keys():
+            if isinstance(data[feature], str):
+                family_feature_keys.append(feature)
+                self.family_info[feature] = data[feature]
         # All other features of the material are stored in a dict allowing for flexible extension.
         self.features = {}
         for feature in data.keys():
-            if feature in ["Name", "Color_R", "Color_G", "Color_B", "Type", "rotation"]:
+            if feature in ["Name", "Color_R", "Color_G", "Color_B", "rotation"] + family_feature_keys:
                 continue
             self.features[feature] = data[feature]
 
 class AshbyModel(object):
     def __init__(self, filename: str):
+        self.numeric_columns = []
+        self.string_columns = []
         self.data = self.initFromData(filename)
         print(self.data)
 
-    def getMaterialTypes(self):
-        if "Type" not in self.data:
+    def getMaterialFamily(self, key_name = "Type"):
+        if key_name not in self.data:
             return []
-        return list(self.data["Type"].unique())
+        return list(self.data[key_name].unique())
 
     def getItemByType(self, typestr: str):
         return self.getItemsByFamily("Type", typestr)
@@ -43,22 +52,22 @@ class AshbyModel(object):
         if filename:
             temp_df = pd.read_csv(filename)
             # Find the numerical and string columns.
-            string_columns = []
-            numeric_columns = []
             for column in temp_df.columns:
                 if isinstance(temp_df[column][0], float):
-                    numeric_columns.append(column)
+                    self.numeric_columns.append(column)
                 else:
-                    string_columns.append(column)
+                    self.string_columns.append(column)
             # Use the first column to group different samples from the same material.
             for name, sub_df in temp_df.groupby(temp_df.columns[0]):
                 # Calculate the mean among all numeric columns.
-                avg_series = sub_df.loc[:, numeric_columns].mean(axis=0, skipna=True)
+                avg_series = sub_df.loc[:, self.numeric_columns].mean(axis=0, skipna=True)
                 # Take the first row to capture descriptive features in string columns.
-                avg_series = avg_series.append(sub_df[string_columns].iloc[0].squeeze())
+                avg_series = avg_series.append(sub_df[self.string_columns].iloc[0].squeeze())
                 df = df.append(avg_series.to_frame().T)
+            # Remove name from the string columns.
+            self.string_columns.remove("Name")
 
-        # remove na for compatibility now!
+        # Remove na for compatibility now!
         df.dropna(inplace=True)
         return df
 
@@ -73,23 +82,16 @@ class AshbyModel(object):
             self.data[new_str] = (self.data[new_column_info[0]] ** new_column_info[1] / self.data[new_column_info[2]] ** new_column_info[3])
         return new_str
 
-    # to let the user select family category, copied from initFromData
-    # not that the Name is not included
-    def getStringColumn(self, filename: str):
-        if filename:
-            temp_df = pd.read_csv(filename)
-            # Find the string columns.
-            string_data = temp_df.select_dtypes(include = object)
-            string_columns = string_data.columns
-            string_columns_exp_name = string_columns.drop("Name")
-        return string_columns_exp_name
 
-    def getNumericColumns(self, filename: str):
-        if filename:
-            temp_df = pd.read_csv(filename)
-            numeric_data = temp_df.select_dtypes(include = float)
-            numeric_columns = numeric_data.columns
-        return numeric_columns
+    def getStringColumns(self):
+        '''
+         Returns the candidate columns for users to select the family category.
+         Note that the Name column is not included.
+        '''
+        return self.string_columns
+
+    def getNumericColumns(self):
+        return self.numeric_columns
 
     @staticmethod
     def convertToItem(df):
