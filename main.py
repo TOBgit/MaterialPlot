@@ -56,12 +56,12 @@ class MainWindow(QMainWindow):
         self.ui.Plot_Prop_Chrt.clicked.connect(self.onClickGenPropChrt)
         self.ui.Plot_hulls.clicked.connect(self.onActionFamilyHull)
     ## TODO need to implement these
-        #self.ui.clear_mat_bubble.clicked.connect(self.onClickClearMat)
-        #self.ui.clear_hulls.clicked.connect(self.onClickClearHull)
-        #self.ui.show_mat_label.clicked.connect(self.onClickShowMatLabel)
-        #self.ui.show_fam_label.clicked.connect(self.onClickShowFamLabel)
-        #self.ui.delete_mat_label.clicked.connect(self.onClickDeleteMatLabel)
-        #self.ui.delete_fam_label.clicked.connect(self.onClickDeleteFamLabel)
+        self.ui.clear_mat_bubble.clicked.connect(self.onClickClearMat)
+        self.ui.clear_hulls.clicked.connect(self.onClickClearHull)
+        self.ui.show_mat_label.clicked.connect(self.onClickShowMatLabel)
+        self.ui.show_fam_label.clicked.connect(self.onClickShowFamLabel)
+        self.ui.delete_mat_label.clicked.connect(self.onClickDeleteMatLabel)
+        self.ui.delete_fam_label.clicked.connect(self.onClickDeleteFamLabel)
         
         ## Plot property tab ##
         self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
@@ -80,6 +80,25 @@ class MainWindow(QMainWindow):
     #
     # Button and menu functions, called upon UI interactions.
     #
+
+    def onClickClearMat(self):
+        self.ui.graphicsView.clearItemByType(self.ui.graphicsView.ITEM_TYPE_ELLIPSE)
+
+    def onClickClearHull(self):
+        self.ui.graphicsView.clearItemByType(self.ui.graphicsView.ITEM_TYPE_HULL)
+
+    def onClickShowMatLabel(self):
+        self.ui.graphicsView.setItemVisibleByType(self.ui.graphicsView.ITEM_TYPE_ELLIPSELABEL, True)
+
+    def onClickShowFamLabel(self):
+        self.ui.graphicsView.setItemVisibleByType(self.ui.graphicsView.ITEM_TYPE_HULLLABEL, True)
+
+    def onClickDeleteMatLabel(self):
+        # to huizhang: delete? or hide? implemented as show/hide now
+        self.ui.graphicsView.setItemVisibleByType(self.ui.graphicsView.ITEM_TYPE_ELLIPSELABEL, False)
+
+    def onClickDeleteFamLabel(self):
+        self.ui.graphicsView.setItemVisibleByType(self.ui.graphicsView.ITEM_TYPE_HULLLABEL, False)
 
     def onDefineAxes(self):
         pop_up = setAxesPopUp(self.controller.model.getNumericColumns())
@@ -142,6 +161,7 @@ class MainWindow(QMainWindow):
     def onActionClear(self):
         print("Graph cleared.")
         self.controller.clearScene()
+        self.ui.graphicsView.clearAllItems()
         self.ui.graphicsView.resetView()
 
     def onActionConvexHull(self):

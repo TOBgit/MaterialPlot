@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import PySide2.QtGui
-from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem
+from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtGui import QTransform
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines
@@ -10,6 +10,11 @@ FIT_EXPAND_MARGIN_RATIO = 0.1
 
 
 class AGraphicsView(QGraphicsView):
+    ITEM_TYPE_HULL = "Hull"
+    ITEM_TYPE_ELLIPSE = "Ellipse"
+    ITEM_TYPE_HULLLABEL = "HullLabel"
+    ITEM_TYPE_ELLIPSELABEL = "EllipseLabel"
+
     def __init__(self, parent):
         super(AGraphicsView, self).__init__(parent)
         # initialize
@@ -25,6 +30,37 @@ class AGraphicsView(QGraphicsView):
         self._indicator = self._hMarkline = self._vMarkline = self._hsMarkline = self._vsMarkline = None
 
         self.graphicItems = []
+        self.typedGraphicItems = {}
+
+    def addItemByType(self, itemtype:str, item:QGraphicsItem):
+        """
+        add item by type, in order to manage(clear) by type
+        :param itemtype: type, a string, like AGraphicsView.ITEM_TYPE_HULL
+        :param item: QGraphicsItem
+        :return:
+        """
+        items = self.typedGraphicItems.setdefault(itemtype, [])
+        items.append(item)
+
+    def setItemVisibleByType(self, itemtype:str, visible=True):
+        if itemtype in self.typedGraphicItems:
+            for item in self.typedGraphicItems[itemtype]:
+                if visible:
+                    item.show()
+                else:
+                    item.hide()
+
+    def clearItemByType(self, itemtype:str):
+        if itemtype in self.typedGraphicItems:
+            for item in self.typedGraphicItems[itemtype]:
+                self.scene().removeItem(item)
+            self.typedGraphicItems.pop(itemtype)
+
+    def clearAllItems(self):
+        for vlist in self.typedGraphicItems.values():
+            for item in vlist:
+                self.scene().removeItem(item)
+        self.typedGraphicItems.clear()
 
     def changeAxisMode(self, mode):
         if self._hMarkline:

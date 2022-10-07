@@ -110,7 +110,8 @@ class AshbyGraphicsController(object):
         text.setFlag(QGraphicsItem.ItemIsMovable)
         # Append semantic item info for re-draw.
         self.graphic_items.append(SemanticGraphicItem(mat_item, [elps, text]))
-        self.view.graphicItems.extend((elps, text))
+        self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSE, elps)
+        self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSELABEL, text)
 
     def drawHull(self, items: List[MaterialItem]):
         if len(items) > 0:
@@ -121,7 +122,7 @@ class AshbyGraphicsController(object):
             poly = self.scene.addPolygon(QPolygonF(list(map(QPointF, *hull.T))), self.pen, self.brush)
             poly.setZValue(-1)
             self.graphic_items.append(SemanticGraphicItem(items, [poly]))
-            self.view.graphicItems.append(poly)
+            self.view.addItemByType(self.view.ITEM_TYPE_HULL, poly)
 
     def clearHull(self):
         to_remove = []
