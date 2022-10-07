@@ -26,31 +26,88 @@
       <property name="horizontalSpacing">
        <number>6</number>
       </property>
-      <item row="11" column="0" colspan="4">
-       <widget class="QListView" name="listView"/>
-      </item>
-      <item row="12" column="3" rowspan="2">
-       <widget class="QPushButton" name="Plot_clear">
+      <item row="8" column="3">
+       <widget class="QLabel" name="label_14">
         <property name="text">
-         <string>Clear Lines</string>
+         <string>Family lable</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="3">
-       <widget class="QPushButton" name="pushButton_5">
+      <item row="17" column="3">
+       <widget class="QLabel" name="label_16">
         <property name="text">
-         <string>Delete Selection</string>
+         <string/>
         </property>
        </widget>
       </item>
-      <item row="10" column="2">
-       <widget class="QPushButton" name="pushButton_4">
+      <item row="7" column="3">
+       <widget class="QLabel" name="label_13">
+        <property name="text">
+         <string>Materials lable</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="4">
+       <widget class="QPushButton" name="Plot_sel_ln">
+        <property name="text">
+         <string>Generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="4">
+       <widget class="QPushButton" name="add_selection">
         <property name="text">
          <string>Add Selection</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="0" colspan="4">
+      <item row="13" column="0" colspan="6">
+       <widget class="QListView" name="listView"/>
+      </item>
+      <item row="12" column="5">
+       <widget class="QPushButton" name="delete_selection">
+        <property name="text">
+         <string>Delete Selection</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_11">
+        <property name="text">
+         <string>Materials bubble</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="5">
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="text">
+         <string>Delete all</string>
+        </property>
+       </widget>
+      </item>
+      <item row="12" column="0" colspan="2">
+       <widget class="QLabel" name="label_5">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Selections Lines</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2" colspan="3">
+       <widget class="QComboBox" name="familyColumn"/>
+      </item>
+      <item row="0" column="5">
+       <widget class="QPushButton" name="Refresh_List">
+        <property name="text">
+         <string>Refresh List</string>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="0" colspan="6">
        <widget class="QTabWidget" name="tabWidget">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -62,7 +119,7 @@
          <enum>Qt::TabFocus</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="plot_prop">
          <property name="sizePolicy">
@@ -211,6 +268,13 @@
               </property>
              </widget>
             </item>
+            <item row="4" column="2">
+             <widget class="QPushButton" name="Plot_refresh_graphics">
+              <property name="text">
+               <string>Refresh Plot</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>
@@ -231,12 +295,48 @@
             <item row="0" column="3">
              <widget class="QLabel" name="label_10">
               <property name="text">
-               <string>Family bubble</string>
+               <string>Family</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="2">
+             <widget class="QLineEdit" name="FontColor_Mat">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLineEdit" name="FontColor_Fam">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="2">
+             <widget class="QLineEdit" name="Fontsize_Mat">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
               </property>
              </widget>
             </item>
             <item row="1" column="2">
-             <widget class="QFontComboBox" name="fontComboBox_MatB">
+             <widget class="QFontComboBox" name="FontComboBox_Mat">
               <property name="enabled">
                <bool>true</bool>
               </property>
@@ -248,40 +348,15 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="2">
-             <widget class="QLineEdit" name="Fontsize_MatB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="3">
-             <widget class="QLineEdit" name="Fontsize_FamB">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
+            <item row="2" column="0" colspan="2">
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>Font size (pt)</string>
               </property>
              </widget>
             </item>
             <item row="1" column="3">
-             <widget class="QFontComboBox" name="fontComboBox_FamB">
+             <widget class="QFontComboBox" name="FontComboBox_Fam">
               <property name="maximumSize">
                <size>
                 <width>100</width>
@@ -297,24 +372,40 @@
               </property>
              </widget>
             </item>
+            <item row="2" column="3">
+             <widget class="QLineEdit" name="Fontsize_Fam">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
+              </property>
+             </widget>
+            </item>
             <item row="3" column="0" colspan="2">
              <widget class="QLabel" name="label_8">
               <property name="text">
-               <string>Color</string>
+               <string>Color (Hex code: #RRGGBB)</string>
               </property>
              </widget>
             </item>
             <item row="0" column="2">
              <widget class="QLabel" name="label_9">
               <property name="text">
-               <string>Material bubble</string>
+               <string>Material</string>
               </property>
              </widget>
             </item>
-            <item row="2" column="0" colspan="2">
-             <widget class="QLabel" name="label_7">
+            <item row="4" column="3">
+             <widget class="QPushButton" name="Plot_refresh_lable">
               <property name="text">
-               <string>Font size</string>
+               <string>Refresh Lables</string>
               </property>
              </widget>
             </item>
@@ -324,74 +415,17 @@
         </widget>
        </widget>
       </item>
-      <item row="6" column="0" colspan="4">
+      <item row="6" column="0" colspan="6">
        <widget class="TreeView" name="treeView">
         <attribute name="headerVisible">
          <bool>false</bool>
         </attribute>
        </widget>
       </item>
-      <item row="10" column="0" colspan="2">
-       <widget class="QLabel" name="label_5">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Selections</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QComboBox" name="familyColumn"/>
-      </item>
-      <item row="0" column="3">
-       <widget class="QPushButton" name="Refresh_List">
-        <property name="text">
-         <string>Refresh List</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2" rowspan="4">
-       <widget class="QPushButton" name="pushButton_3">
-        <property name="text">
-         <string>Add Family</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3" rowspan="4">
-       <widget class="QPushButton" name="pushButton_6">
+      <item row="1" column="5" rowspan="4">
+       <widget class="QPushButton" name="delete_family">
         <property name="text">
          <string>Delete Family</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="1">
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>Clear Family Bubble</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
-       <widget class="QPushButton" name="pushButton_2">
-        <property name="text">
-         <string>Generate Family Bubble</string>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="3">
-       <widget class="QPushButton" name="Plot_Prop_Chrt">
-        <property name="text">
-         <string>Generate Property Chart</string>
-        </property>
-       </widget>
-      </item>
-      <item row="12" column="0" rowspan="2" colspan="3">
-       <widget class="QPushButton" name="Plot_sel_ln">
-        <property name="text">
-         <string>Plot Selection Lines</string>
         </property>
        </widget>
       </item>
@@ -407,10 +441,87 @@
         </property>
        </widget>
       </item>
-      <item row="9" column="3">
-       <widget class="QPushButton" name="Plot_Refresh_2">
+      <item row="1" column="4" rowspan="4">
+       <widget class="QPushButton" name="add_family">
         <property name="text">
-         <string>Refresh Chart</string>
+         <string>Add Family</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="2">
+       <widget class="QPushButton" name="clear_hulls">
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5">
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>Delete all</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="2">
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QPushButton" name="Plot_Prop_Chrt">
+        <property name="text">
+         <string>Generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QPushButton" name="Plot_hulls">
+        <property name="text">
+         <string>Generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="3">
+       <widget class="QLabel" name="label_15">
+        <property name="text">
+         <string>Selection line</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="0">
+       <widget class="QLabel" name="label_12">
+        <property name="text">
+         <string>Family bubble</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="4">
+       <widget class="QPushButton" name="show_mat_lable">
+        <property name="text">
+         <string>Show</string>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="4">
+       <widget class="QPushButton" name="show_fam_lable">
+        <property name="text">
+         <string>Show</string>
+        </property>
+       </widget>
+      </item>
+      <item row="16" column="5">
+       <widget class="QPushButton" name="clear_sel_ln">
+        <property name="text">
+         <string>Clear</string>
+        </property>
+       </widget>
+      </item>
+      <item row="17" column="4" rowspan="2" colspan="2">
+       <widget class="QPushButton" name="Plot_clear">
+        <property name="text">
+         <string>Clear all</string>
         </property>
        </widget>
       </item>
@@ -446,7 +557,7 @@
      <x>0</x>
      <y>0</y>
      <width>1616</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
