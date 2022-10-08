@@ -18,3 +18,7 @@ Built upon the theory of materials selection developed by Mike Ashby, this plott
 
 In the future:
 9. Multiplot synchronization
+
+
+Story behind the scene
+The lead developers of this tool are friends from high school. They used to play together in World of Warcarft, leading a guild named 'Times of Beans'. The property chart, with its materials bubbles like beans and family bubble like pods, is unexpectedly reminescent. Not sure if the guild is still alive, but they are more than happy to work together on one project again.
