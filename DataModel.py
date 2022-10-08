@@ -41,7 +41,7 @@ class MaterialItem(object):
             pass
 
 
-class AshbyModel(object):
+class MatPlotModel(object):
     def __init__(self, filename: str):
         self.numeric_columns = []
         self.string_columns = []

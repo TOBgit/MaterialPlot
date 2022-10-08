@@ -7,7 +7,7 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog
 from PySide2.QtGui import QBrush, QPen, QColor, QFont
 
-from GraphicsModule import AshbyGraphicsController
+from GraphicsModule import MatPlotController
 from View.AGraphicsView import AGraphicsView
 from View.TreeView import TreeView
 
@@ -17,7 +17,7 @@ app = None
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        file = QFile("ashby.ui")
+        file = QFile("matplot.ui")
         file.open(QFile.ReadOnly)
         file.close()
         loader = QUiLoader()
@@ -29,7 +29,7 @@ class MainWindow(QMainWindow):
         self.csv_fpath = None
         self.myScene = QGraphicsScene()
         self.ui.graphicsView.setScene(self.myScene)
-        self.controller = AshbyGraphicsController(self, self.csv_fpath)
+        self.controller = MatPlotController(self, self.csv_fpath)
 
         self.pen = QPen(QColor(0, 0, 0))
         self.ui.graphicsView.resetView()
@@ -131,9 +131,9 @@ class MainWindow(QMainWindow):
         '''
         from HotReloadModule import reloadModules
         reloadModules()
-        from GraphicsModule import AshbyGraphicsController
-        from DataModel import AshbyModel
-        self.controller = AshbyGraphicsController(self, self.csv_fpath)
+        from GraphicsModule import MatPlotController
+        from DataModel import MatPlotModel
+        self.controller = MatPlotController(self, self.csv_fpath)
 
     def onClickGenPropChrt(self):
         '''
@@ -151,7 +151,7 @@ class MainWindow(QMainWindow):
         filename, _ = QFileDialog.getOpenFileName(self, "Open CSV", filter="CSV Files (*.csv)")
         if filename:
             self.csv_fpath = filename
-        self.controller = AshbyGraphicsController(self, self.csv_fpath)
+        self.controller = MatPlotController(self, self.csv_fpath)
         self.ui.familyColumn.addItems(self.controller.model.getStringColumns())
 
     def onClickPlotSelLn(self):

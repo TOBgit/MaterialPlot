@@ -5,11 +5,11 @@ from PySide2.QtCore import QPointF, QRectF
 from PySide2.QtWidgets import QGraphicsItem
 from PySide2.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
 
-from DataModel import AshbyModel, MaterialItem
+from DataModel import MatPlotModel, MaterialItem
 from GraphicTransformer import GraphicConfig, GraphicTransformer
 
 
-class AshbyGraphicsController(object):
+class MatPlotController(object):
     def __init__(self, window, filename: str):
         self.window = window
         self.view = window.ui.graphicsView
@@ -17,7 +17,7 @@ class AshbyGraphicsController(object):
         self.tree = window.ui.treeView
         self.pen = QPen(QColor(0, 0, 0))
         self.pen.setWidth(0)
-        self.model = AshbyModel(filename)
+        self.model = MatPlotModel(filename)
         self.config = GraphicConfig()
         self.transformer = GraphicTransformer(self.config)
         # Store the semantic items which have been drawn on the plot, used when the config is updated.
