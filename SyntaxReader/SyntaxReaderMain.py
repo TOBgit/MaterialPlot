@@ -1,6 +1,6 @@
-from lexer import Lexer
-from parser_ import Parser
-from Interpreter import meanInterpreter
+from SyntaxReader.lexer import Lexer
+from SyntaxReader.parser_ import Parser
+from SyntaxReader.Interpreter import meanInterpreter
 
 #adapted from https://github.com/davidcallanan/py-simple-math-interpreter
 

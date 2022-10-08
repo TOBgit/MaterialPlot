@@ -3,6 +3,24 @@ import pandas as pd
 from typing import List
 
 
+
+def evaluation(syntax):
+    from SyntaxReader.lexer import Lexer
+    from SyntaxReader.parser_ import Parser
+    from SyntaxReader.Interpreter import meanInterpreter
+    lexer = Lexer(syntax)
+    tokens = lexer.generate_token()
+    parser = Parser(tokens)
+    tree = parser.parse()
+    if not tree:
+        return False
+    meanInt = meanInterpreter()
+    value = meanInt.visit(tree)
+    return value
+
+
+
+
 class MaterialItem(object):
     """
     Use it to describe your Material
@@ -27,18 +45,55 @@ class MaterialItem(object):
                 self.family_info[feature] = data[feature]
         # All other features of the material are stored in a dict allowing for flexible extension.
         self.features = {}
+        self.baked_features = {}
         for feature in data.keys():
             if feature in ["Name", "Color_R", "Color_G", "Color_B", "rotation"] + family_feature_keys:
                 continue
             self.features[feature] = data[feature]
 
-    def get(self, feature_name):
-        if feature_name in self.features:
-            return self.features[feature_name]
+    def tryReplaceFeatureValue(self, syntaxStr, suffix):
+        outstr = syntaxStr
+        success = False
+        for featurekey, value in self.features.items():
+            if not isinstance(value, str) and value is not None:
+                if suffix in featurekey:
+                    realfeature = featurekey.replace(suffix, "")
+                    if realfeature in outstr:
+                        outstr = outstr.replace(realfeature, str(value))
+                        success = True
+        if not success:
+            return None
         else:
-            # TODO(tienan): add actual logic to calculate extra features by the Latex str, used for customized axis.
-            # Once calculated, also add it into self.features for caching.
-            pass
+            return outstr
+
+    def findRelevantFeature(self, syntaxStr, suffix):
+        for featurekey, value in self.features.items():
+            if not isinstance(value, str) and value is not None:
+                if suffix in featurekey:
+                    realfeature = featurekey.replace(suffix, "")
+                    if realfeature in syntaxStr:
+                        return featurekey
+
+    def get(self, feature_name, suffix):
+        fullname = feature_name + suffix
+        if fullname in self.features:
+            return self.features[fullname]
+        elif fullname in self.baked_features:
+            return self.baked_features[fullname]
+        else:
+            if suffix == "_sd":
+                # todo: don't know how to calculate yet, get origin sd
+                fullname = self.findRelevantFeature(feature_name, suffix)
+                if fullname:
+                    return self.features[fullname]
+            elif suffix == "_mean":
+                strout = self.tryReplaceFeatureValue(feature_name, suffix)
+                if strout is not None:
+                    value = evaluation(strout)
+                    self.baked_features[feature_name] = value.value
+                    return value.value
+                else:
+                    pass
 
 
 class MatPlotModel(object):

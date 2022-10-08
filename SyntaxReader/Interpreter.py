@@ -1,5 +1,5 @@
-from nodes import *
-from values import Number
+from SyntaxReader.nodes import *
+from SyntaxReader.values import Number
 
 class meanInterpreter:
 

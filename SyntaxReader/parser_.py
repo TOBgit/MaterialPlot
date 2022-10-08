@@ -1,5 +1,5 @@
-from tokens import TokenType
-from nodes import *
+from SyntaxReader.tokens import TokenType
+from SyntaxReader.nodes import *
 
 
 ##copied and modified from https://youtu.be/TwKWUj033vY

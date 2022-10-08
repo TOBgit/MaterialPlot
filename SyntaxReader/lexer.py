@@ -1,4 +1,4 @@
-from tokens import Token, TokenType
+from SyntaxReader.tokens import Token, TokenType
 
 WHITESPACE = " \n\t"
 DIGITS = "0123456789"

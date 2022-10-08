@@ -4,6 +4,7 @@ from typing import List
 from AlgorithmUtils import ellipseHull, simpleEllipse
 from DataModel import MaterialItem
 
+
 class GraphicConfig():
     '''
     Describe the plot features.
@@ -83,14 +84,11 @@ class GraphicTransformer():
         '''
         #TODO(kaiyang): provide the doc about correct calculation of w and h under customized axes.
         #TODO(tienan): implement it.
-        x = self.config.x_axis + "_mean"
-        w = self.config.x_axis + "_sd"
-        y = self.config.y_axis + "_mean"
-        h = self.config.y_axis + "_sd"
-        upper_left_x = mat_item.get(x) - mat_item.get(w) / 2.
-        upper_left_y = mat_item.get(y) - mat_item.get(h) / 2.
-        width = mat_item.features[w]
-        height = mat_item.features[h]
+        width = mat_item.get(self.config.x_axis, "_sd")
+        height = mat_item.get(self.config.y_axis, "_sd")
+        upper_left_x = mat_item.get(self.config.x_axis, "_mean") - width * 0.5
+        upper_left_y = mat_item.get(self.config.y_axis, "_mean") - height * 0.5
+
         if self.config.log_scale:
             # The ellipse/square in log scale is defined by the log of the original four corner points.
             # Use the diff between the lower-right point and upper-left point to re-calculate
