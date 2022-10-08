@@ -25,16 +25,24 @@ class MatPlotController(object):
 
         self.initTreeView()
         self.connectSignals()
+        self.initConfigs()
+
+    def initConfigs(self):
+        ui = self.window.ui
+        # append your configs here
+        configMap = {
+            "x_axis": ui.lineEdit_xaxis.text,
+            "y_axis": ui.lineEdit_yaxis.text,
+            "log_scale": lambda : not ui.linearRadio.isChecked(),
+        }
+        for key, getter in configMap.items():
+            self.config.registerConfigGetter(key, getter)
 
     #
     # Public
     #
-    def updateConfig(self, expend_ratio: float=None,
-                           hull_sampling_step: int=None,
-                           log_scale: bool=None,
-                           x_axis: str=None,
-                           y_axis: str=None):
-        self.config.updateConfig(expend_ratio, hull_sampling_step, log_scale, x_axis, y_axis)
+    def updateConfig(self):
+        self.config.updateFromUI()
         self.transformer = GraphicTransformer(self.config)
         self.updateGraphicItems()
 
@@ -43,6 +51,7 @@ class MatPlotController(object):
         self.view.clearAllItems()
 
     def drawAllMaterialEclipses(self):
+        self.config.updateFromUI()
         for name, info in self.model.getAllItems().items():
             self.drawEllipse(info)
 
@@ -62,7 +71,7 @@ class MatPlotController(object):
         #FIXME!(tienan) this is for test.
         y_column = "Modulus"
         x_column = "Strength"
-        self.updateConfig(x_axis = x_column, y_axis = y_column)
+        self.updateConfig()
 
     def clearHull(self):
         remaining_items = []

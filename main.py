@@ -109,11 +109,10 @@ class MainWindow(QMainWindow):
         self.ui.graphicsView.setIndicatorVisible(self.ui.checkBox_cursor.isChecked())
 
     def onAxisStyleChanged(self, _):
+        self.controller.updateConfig()
         if self.ui.linearRadio.isChecked():
-            self.controller.updateConfig(log_scale=False)
             self.ui.graphicsView.changeAxisMode(0)
         else:
-            self.controller.updateConfig(log_scale=True)
             self.ui.graphicsView.changeAxisMode(1)
         self.onFitView()
 

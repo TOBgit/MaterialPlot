@@ -10,28 +10,38 @@ class GraphicConfig():
     '''
 
     def __init__(self):
+        self._configGetters = {}
+        self._configs = {}
+
         self.expend_ratio = 2.
         self.hull_sampling_step = 200
         self.log_scale = True
         self.x_axis = "Modulus"
         self.y_axis = "Strength"
 
-    def updateConfig(self, expend_ratio: float=None,
-                           hull_sampling_step: int=None,
-                           log_scale: bool=None,
-                           x_axis: str=None,
-                           y_axis: str=None):
-        # Updates can be optional. Only update the config values which are explicitly passed in.
-        if expend_ratio:
-            self.expend_ratio = expend_ratio
-        if hull_sampling_step:
-            self.hull_sampling_step = hull_sampling_step
-        if log_scale is not None:
-            self.log_scale = log_scale
-        if x_axis:
-            self.x_axis = x_axis
-        if y_axis:
-            self.y_axis = y_axis
+    def __getattribute__(self, key):
+        """
+        By this, you can read config either by self.getConfig("expend_ratio") or self.expend_ratio.
+        The value in self._config has priority
+        :param key:
+        :return:
+        """
+        config = super(GraphicConfig, self).__getattribute__("_configs")
+        if key in config:
+            return config[key]
+        else:
+            return super(GraphicConfig, self).__getattribute__(key)
+
+    def updateFromUI(self):
+        for key, getter in self._configGetters.items():
+            if callable(getter):
+                self._configs[key] = getter()
+
+    def registerConfigGetter(self, key, getter):
+        self._configGetters[key] = getter
+
+    def getConfig(self, key):
+        return self._configs.get(key, None)
 
 
 class GraphicTransformer():
