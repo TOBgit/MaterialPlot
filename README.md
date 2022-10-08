@@ -1,7 +1,8 @@
 # BEANS: Property Chart Plotter
-![Artboard 46](https://user-images.githubusercontent.com/48959790/194728761-7690a566-456b-4f69-afda-f3d7c0148b09.png)
 
-Welcome to the Property Chart Plotter.
+![LOGO](https://user-images.githubusercontent.com/48959790/194729624-0b88c702-fdd5-4826-a078-6df04f94309d.png)
+
+Welcome to the BEAN: Property Chart Plotter.
 
 Property Chart Plotter is graph constructor to generate property charts (or Ashby charts) from an input dataset. It allows convinient and effective comparison and selection of items, for example materials, based on two properties. Such plot is widely application not only for materials science, but in general for situations where things need to be selected based on numerical values. The explanation of this plotter will assume the user case of plotting materials property charts.
 
