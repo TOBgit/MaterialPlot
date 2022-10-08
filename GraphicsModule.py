@@ -8,14 +8,6 @@ from PySide2.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
 from DataModel import AshbyModel, MaterialItem
 from GraphicTransformer import GraphicConfig, GraphicTransformer
 
-class SemanticGraphicItem():
-    '''
-    A general class to describe the semantic and graphic components on the plot, with their association.
-    '''
-    def __init__(self, semantic, graphic):
-        self.semantic = semantic
-        self.graphic = graphic
-
 
 class AshbyGraphicsController(object):
     def __init__(self, window, filename: str):
@@ -29,7 +21,7 @@ class AshbyGraphicsController(object):
         self.config = GraphicConfig()
         self.transformer = GraphicTransformer(self.config)
         # Store the semantic items which have been drawn on the plot, used when the config is updated.
-        self.graphic_items = []
+        self.semantic_items = []
 
         self.initTreeView()
         self.connectSignals()
@@ -43,11 +35,8 @@ class AshbyGraphicsController(object):
         self.updateGraphicItems()
 
     def clearScene(self):
-        for item in self.graphic_items:
-            for graphic in item.graphic:
-                self.scene.removeItem(graphic)
-        self.graphic_items.clear()
-        self.view.graphicItems.clear()
+        self.semantic_items.clear()
+        self.view.clearAllItems()
 
     def drawAllMaterialEclipses(self):
         for name, info in self.model.getAllItems().items():
@@ -73,6 +62,15 @@ class AshbyGraphicsController(object):
         #Adjust the transformer to allow the flexibility of different x,y selection.
         print(x_column, x_column in self.model.getColumns())
         print(y_column, y_column in self.model.getColumns())
+
+    def clearHull(self):
+        remaining_items = []
+        for item in self.semantic_items:
+            # Only keep the item that is not hull (i.e. not an item list).
+            if not isinstance(item, list):
+                remaining_items.append(item)
+        self.semantic_items = remaining_items
+        self.updateGraphicItems()
 
     #
     # Private
@@ -109,7 +107,7 @@ class AshbyGraphicsController(object):
 
         text.setFlag(QGraphicsItem.ItemIsMovable)
         # Append semantic item info for re-draw.
-        self.graphic_items.append(SemanticGraphicItem(mat_item, [elps, text]))
+        self.semantic_items.append(mat_item)
         self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSE, elps)
         self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSELABEL, text)
 
@@ -121,19 +119,8 @@ class AshbyGraphicsController(object):
             hull = self.transformer.getEllipseHull(items)
             poly = self.scene.addPolygon(QPolygonF(list(map(QPointF, *hull.T))), self.pen, self.brush)
             poly.setZValue(-1)
-            self.graphic_items.append(SemanticGraphicItem(items, [poly]))
+            self.semantic_items.append(items)
             self.view.addItemByType(self.view.ITEM_TYPE_HULL, poly)
-
-    def clearHull(self):
-        to_remove = []
-        for item in self.graphic_items:
-            if isinstance(item.semantic, list):
-                for graphic in item.graphic:
-                    self.scene.removeItem(graphic)
-                    self.view.graphicItems.remove(graphic)
-                to_remove.append(item)
-        for item in to_remove:
-            self.graphic_items.remove(item)
 
     def drawLine(self):
         # fake example, make your draw with your data
@@ -151,12 +138,12 @@ class AshbyGraphicsController(object):
         '''
         Iterates over the existing items and re-draw them with the latest config.
         '''
-        prev_items = self.graphic_items.copy()
+        prev_items = self.semantic_items.copy()
         self.clearScene()
         for item in prev_items:
             # If it is one item, draw the corresponding ellipse.
-            if isinstance(item.semantic, MaterialItem):
-                self.drawEllipse(item.semantic)
+            if isinstance(item, MaterialItem):
+                self.drawEllipse(item)
             # If it is a list of items, draw their convex hull.
-            if isinstance(item.semantic, list):
-                self.drawHull(item.semantic)
+            if isinstance(item, list):
+                self.drawHull(item)

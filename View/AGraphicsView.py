@@ -151,15 +151,16 @@ class AGraphicsView(QGraphicsView):
         return super(AGraphicsView, self).wheelEvent(mouseEvent)
 
     def fitView(self):
-        if not self.graphicItems:
+        if not self.typedGraphicItems:
             self.resetView()
             return
         rect = QRectF()
-        for item in self.graphicItems:
-            if isinstance(item, QGraphicsTextItem):
-                continue
-            bb = item.boundingRect()
-            rect = rect.united(bb)
+        for itemtype in self.typedGraphicItems:
+            for item in self.typedGraphicItems[itemtype]:
+                if isinstance(item, QGraphicsTextItem):
+                    continue
+                bb = item.boundingRect()
+                rect = rect.united(bb)
         if rect.width() < rect.height():
             rect.setWidth(rect.height())
         else:
