@@ -29,8 +29,12 @@ class AshbyGraphicsController(object):
     #
     # Public
     #
-    def updateConfig(self, expend_ratio: float=None, hull_sampling_step: int=None, log_scale: bool=None):
-        self.config.updateConfig(expend_ratio, hull_sampling_step, log_scale)
+    def updateConfig(self, expend_ratio: float=None,
+                           hull_sampling_step: int=None,
+                           log_scale: bool=None,
+                           x_axis: str=None,
+                           y_axis: str=None):
+        self.config.updateConfig(expend_ratio, hull_sampling_step, log_scale, x_axis, y_axis)
         self.transformer = GraphicTransformer(self.config)
         self.updateGraphicItems()
 
@@ -52,16 +56,13 @@ class AshbyGraphicsController(object):
         items = self.model.getAllItems().values()
         self.drawHull(list(items))
 
-    def updateObjectsByAxis(self, new_column_info: List[List]):
-        x_column_info = new_column_info[0]
-        y_column_info = new_column_info[1]
-        x_column = self.model.addProperty(x_column_info)
-        y_column = self.model.addProperty(y_column_info)
-
-        #TODO(tienan): implement the addtional logic.
-        #Adjust the transformer to allow the flexibility of different x,y selection.
-        print(x_column, x_column in self.model.getColumns())
-        print(y_column, y_column in self.model.getColumns())
+    def updateObjectsByAxis(self, new_column_info: List[str]):
+        x_column = new_column_info[0]
+        y_column = new_column_info[1]
+        #FIXME!(tienan) this is for test.
+        y_column = "Modulus"
+        x_column = "Strength"
+        self.updateConfig(x_axis = x_column, y_axis = y_column)
 
     def clearHull(self):
         remaining_items = []

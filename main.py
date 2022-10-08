@@ -55,7 +55,6 @@ class MainWindow(QMainWindow):
         ## middle layer of buttons ##
         self.ui.Plot_Prop_Chrt.clicked.connect(self.onClickGenPropChrt)
         self.ui.Plot_hulls.clicked.connect(self.onActionFamilyHull)
-    ## TODO need to implement these
         self.ui.clear_mat_bubble.clicked.connect(self.onClickClearMat)
         self.ui.clear_hulls.clicked.connect(self.onClickClearHull)
         self.ui.show_mat_label.clicked.connect(self.onClickShowMatLabel)
@@ -203,6 +202,7 @@ class setAxesPopUp(QDialog):
         x_d = self.ui.x_d.currentText()
         y_d = self.ui.y_d.currentText()
         # Default handle empty exp_box to be 1.
+        # TODO(kaiyang): newX and newY should be Latex str.
         self.newX = [x_n, int(self.ui.x_nExp.text()) if self.ui.x_nExp.text() else 1,
                      x_d, int(self.ui.x_nExp.text()) if self.ui.x_nExp.text() else 1]
         self.newY = [y_n, int(self.ui.x_nExp.text()) if self.ui.x_nExp.text() else 1,

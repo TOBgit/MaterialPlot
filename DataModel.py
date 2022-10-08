@@ -32,6 +32,15 @@ class MaterialItem(object):
                 continue
             self.features[feature] = data[feature]
 
+    def get(self, feature_name):
+        if feature_name in self.features:
+            return self.features[feature_name]
+        else:
+            # TODO(tienan): add actual logic to calculate extra features by the Latex str, used for customized axis.
+            # Once calculated, also add it into self.features for caching.
+            pass
+
+
 class AshbyModel(object):
     def __init__(self, filename: str):
         self.numeric_columns = []
