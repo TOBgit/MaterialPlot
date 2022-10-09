@@ -93,7 +93,6 @@ class MatPlotController(object):
         print(selections)
         # anotherway to get
         selections = self.tree.getSelections()
-        print(selections)
 
     def initTreeView(self, family_key = "Type"):
         self.tree.clearModel()
