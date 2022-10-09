@@ -2,7 +2,9 @@ from SyntaxReader.nodes import *
 from SyntaxReader.values import Number
 
 class meanInterpreter:
-
+    '''
+    This interpreter class handle the calculation of the mean from a node tree.
+    '''
     def visit(self, node):
         method_name = f"visit_{type(node).__name__}"
         method = getattr(self, method_name)
@@ -35,8 +37,14 @@ class meanInterpreter:
     def visit_MinusNode(self, node):
         return Number(-self.visit(node.node).value)
 
-##here input is mean (node.value) and sd (node.std)
+    def visit_PropNode(self, node):
+        return Number(node.value)
+
+#TODO(tienan): implement this.
 class errorPropagationInterpreter:
+    '''
+    This interpreter class handle the calculation of the std from a node tree.
+    '''
     def visit(self, node):
         method_name = f"visit_{type(node).__name__}"
         method = getattr(self, method_name)

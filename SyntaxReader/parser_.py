@@ -85,7 +85,7 @@ class Parser:
 
 		elif token.type == TokenType.PROP:
 			self.advance()
-			return PropNode(token.value)
+			return PropNode(token.value, token.sd)
 
 		elif token.type == TokenType.PLUS:
 			self.advance()

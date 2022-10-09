@@ -16,5 +16,7 @@ class TokenType(Enum):
 class Token:
     type: TokenType
     value: any = None
+    sd: any = None
     def __repr__(self):
-        return self.type.name + (f":{self.value}" if self.value != None else "")
+        return (self.type.name + (f":{self.value}" if self.value != None else "")
+                + (f"({self.sd})" if self.sd != None else ""))

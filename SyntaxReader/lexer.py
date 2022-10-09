@@ -1,12 +1,14 @@
 from SyntaxReader.tokens import Token, TokenType
+from typing import List
 
 WHITESPACE = " \n\t"
 DIGITS = "0123456789"
-LETTERS = "abcdefghijlkmnopqrstuvwxyz"
+LETTERS = "abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-class Lexer:
-    def __init__(self, text):
+class LexerForData:
+    def __init__(self, text: str, data_feature: List):
         self.text = iter(text)
+        self.data_feature_cache = data_feature
         self.advance()
 
     def advance(self):
@@ -85,8 +87,13 @@ class Lexer:
         while self.current_char in LETTERS:
             prop_str += self.current_char
             self.advance()
-    #TODO (sheshe): here need to compare if this prop_str is in the input list. if not return error.
-        return Token(TokenType.PROP, str(prop_str))
+        # Check if prop_str_mean and prop_str_sd in data_feature_cache. If so, assign the value and sd to the token.
+        if (((prop_str + "_mean") in self.data_feature_cache) and
+                ((prop_str + "_sd") in self.data_feature_cache)):
+            return Token(TokenType.PROP, self.data_feature_cache[prop_str+"_mean"], self.data_feature_cache[prop_str+"_sd"])
+        else:
+            print("ERROR!")
+            return Token(TokenType.PROP)
 
     def star(self):
         if self.current_char == "*":

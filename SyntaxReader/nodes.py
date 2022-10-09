@@ -2,9 +2,10 @@ from dataclasses import dataclass
 
 @dataclass
 class NumberNode:
-    value: any
-    def __repr__(self):
-        return f"{self.value}"
+	value: any
+	sd: any = 0
+	def __repr__(self):
+		return f"{self.value}"
 
 @dataclass
 class AddNode:
@@ -31,7 +32,6 @@ class MultiplyNode:
 class DivideNode:
 	node_a: any
 	node_b: any
-
 	def __repr__(self):
 		return f"({self.node_a}/{self.node_b})"
 
@@ -49,14 +49,15 @@ class MinusNode:
         
 @dataclass
 class PropNode:
-    value: any
-    def __repr__(self):
-        return f"{self.value}"
+	value: any
+	sd: any
+	def __repr__(self):
+		return f":{self.value}({self.sd})"
 
 @dataclass
 class PowerNode:
-    node_a: any
-    node_b: any
-    def __repr__(self):
-       return f"{self.node_a}**{self.node_b}"
+	node_a: any
+	node_b: any
+	def __repr__(self):
+		return f"{self.node_a}**{self.node_b}"
 

@@ -4,11 +4,11 @@ from typing import List
 
 
 
-def evaluation(syntax):
-    from SyntaxReader.lexer import Lexer
+def evaluation(syntax: str, original_data_features: List):
+    from SyntaxReader.lexer import LexerForData
     from SyntaxReader.parser_ import Parser
     from SyntaxReader.Interpreter import meanInterpreter
-    lexer = Lexer(syntax)
+    lexer = LexerForData(syntax, original_data_features)
     tokens = lexer.generate_token()
     parser = Parser(tokens)
     tree = parser.parse()
@@ -17,8 +17,6 @@ def evaluation(syntax):
     meanInt = meanInterpreter()
     value = meanInt.visit(tree)
     return value
-
-
 
 
 class MaterialItem(object):
@@ -89,8 +87,8 @@ class MaterialItem(object):
             elif suffix == "_mean":
                 strout = self.tryReplaceFeatureValue(feature_name, suffix)
                 if strout is not None:
-                    value = evaluation(strout)
-                    self.baked_features[feature_name] = value.value
+                    value = evaluation(strout, self.features)
+                    self.baked_features[fullname] = value.value
                     return value.value
                 else:
                     pass
