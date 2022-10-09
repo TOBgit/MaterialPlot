@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 import pandas as pd
+import numpy as np
 from typing import List
 
 
@@ -113,18 +114,15 @@ class MatPlotModel(object):
         if filename:
             temp_df = pd.read_csv(filename)
             # Find the numerical and string columns.
-            for column in temp_df.columns:
-                if isinstance(temp_df[column][0], float):
-                    self.numeric_columns.append(column)
-                else:
-                    self.string_columns.append(column)
-            # Use the first column to group different samples from the same material.
-            for name, sub_df in temp_df.groupby(temp_df.columns[0]):
+            self.numeric_columns = list(temp_df.columns[temp_df.dtypes == np.float])
+            self.string_columns = list(temp_df.columns[temp_df.dtypes == np.dtype('O')])
+            def groupData(df):
                 # Calculate the mean among all numeric columns.
-                avg_series = sub_df.loc[:, self.numeric_columns].mean(axis=0, skipna=True)
+                avg_series = df.loc[:, self.numeric_columns].mean(axis=0, skipna=True)
                 # Take the first row to capture descriptive features in string columns.
-                avg_series = avg_series.append(sub_df[self.string_columns].iloc[0].squeeze())
-                df = df.append(avg_series.to_frame().T)
+                avg_series = avg_series.append(df[self.string_columns].iloc[0].squeeze())
+                return avg_series
+            df = temp_df.groupby(temp_df.columns[0]).apply(groupData)
             # Remove name from the string columns.
             self.string_columns.remove("Name")
 
