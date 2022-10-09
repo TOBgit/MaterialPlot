@@ -19,6 +19,7 @@ class TreeView(QTreeView):
 
     def getSelections(self):
         return self.model.getAllCheckedItems()
+
     def clearModel(self):
         self.model.clear()
 

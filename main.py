@@ -35,6 +35,7 @@ class MainWindow(QMainWindow):
         self.pen = QPen(QColor(0, 0, 0))
         self.ui.graphicsView.resetView()
         self.ui.graphicsView.initHelperItems()
+        self.onTextEdited()
 
 
     def connectSignals(self):
@@ -50,6 +51,7 @@ class MainWindow(QMainWindow):
         self.ui.actionFitView.triggered.connect(self.onFitView)
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
         self.ui.actionManageItem.triggered.connect(self.onManageItem)
+        self.ui.actionCapture.triggered.connect(self.onActionCapture)
 
         ## top layer of buttons ##
         self.ui.Refresh_List.clicked.connect(self.onRefreshTreeList)
@@ -68,6 +70,9 @@ class MainWindow(QMainWindow):
         self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
         self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
 
+        self.ui.lineEdit_xaxis.textEdited.connect(self.onTextEdited)
+        self.ui.lineEdit_yaxis.textEdited.connect(self.onTextEdited)
+
         ## Label property tab ##
     ## TODO need to implement this
         #self.ui.Plot_refresh_label.clicked.connect(self.onClickRefreshLabel)
@@ -81,6 +86,15 @@ class MainWindow(QMainWindow):
     #
     # Button and menu functions, called upon UI interactions.
     #
+
+    def onTextEdited(self, *args):
+        self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
+
+    def onActionCapture(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "save Capture", filter="Bitmap (*.bmp)")
+        if filename:
+            pix = self.ui.graphicsView.grab()
+            pix.save(filename)
 
     def onClickClearMat(self):
         self.ui.graphicsView.clearItemByType(self.ui.graphicsView.ITEM_TYPE_ELLIPSE)
@@ -199,7 +213,6 @@ class setAxesPopUp(QDialog):
     def exec_(self):
         return self.ui.exec_()
 
-    #TODO(kaiyang): handle the case with no denominator and empty input. Make corresponding changes in DataModel.addProperty().
     def passingInfo(self):
         #here read users input and bring back the info of x and y axes
         #n stands for numerator, d stands for denominator
