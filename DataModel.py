@@ -98,7 +98,8 @@ class MatPlotModel(object):
     def __init__(self, filename: str):
         self.numeric_columns = []
         self.string_columns = []
-        self.data = self.initFromData(filename)
+        self.raw_data = self.loadData(filename)
+        self.data = self.initFromData()
         print(self.data)
 
     def getMaterialFamily(self, key_name="Type"):
@@ -108,27 +109,39 @@ class MatPlotModel(object):
 
     def getItemByType(self, typestr: str):
         return self.getItemsByFamily("Type", typestr)
-
-    def initFromData(self, filename: str):
+    
+    def loadData(self, filename: str):
         df = pd.DataFrame()
         if filename:
-            temp_df = pd.read_csv(filename)
+            df = pd.read_csv(filename)
+        return df
+    
+    def onRawDataUpdate(self):
+        self.data = self.initFromData()
+
+    def initFromData(self):
+        df = pd.DataFrame()
+        if len(self.raw_data) > 0:
             # Find the numerical and string columns.
-            self.numeric_columns = list(temp_df.columns[temp_df.dtypes == np.float])
-            self.string_columns = list(temp_df.columns[temp_df.dtypes == np.dtype('O')])
+            self.numeric_columns = list(self.raw_data.columns[self.raw_data.dtypes == np.float])
+            self.string_columns = list(self.raw_data.columns[self.raw_data.dtypes == np.dtype('O')])
             def groupData(df):
                 # Calculate the mean among all numeric columns.
                 avg_series = df.loc[:, self.numeric_columns].mean(axis=0, skipna=True)
                 # Take the first row to capture descriptive features in string columns.
-                avg_series = avg_series.append(df[self.string_columns].iloc[0].squeeze())
+                # avg_series = avg_series.append(df[self.string_columns].iloc[0].squeeze())
+                avg_series = pd.concat([df[self.string_columns].iloc[0].squeeze(), avg_series])
                 return avg_series
-            df = temp_df.groupby(temp_df.columns[0]).apply(groupData)
+            df = self.raw_data.groupby(self.raw_data.columns[0]).apply(groupData)
             # Remove name from the string columns.
             self.string_columns.remove("Name")
 
         # Remove na for compatibility now!
         df.dropna(inplace=True)
         return df
+
+    def addMaterial(self):
+        pass
 
     # TODO(team): handle more complex semantic expression.
     def addProperty(self, new_column_info: List):
