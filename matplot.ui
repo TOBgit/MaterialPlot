@@ -874,6 +874,11 @@
     <string>FitView</string>
    </property>
   </action>
+  <action name="actionManageItem">
+   <property name="text">
+    <string>ManageItem</string>
+   </property>
+  </action>
   <action name="actionCapture">
    <property name="text">
     <string>Capture...</string>
