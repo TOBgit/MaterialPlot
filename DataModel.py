@@ -1,23 +1,10 @@
 # -*- coding:utf-8 -*-
-import pandas as pd
-import numpy as np
 from typing import List
 
+import pandas as pd
+import numpy as np
 
-def evaluation(syntax: str, original_data_features: List):
-    from SyntaxReader.lexer import LexerForData
-    from SyntaxReader.parser_ import Parser
-    from SyntaxReader.Interpreter import meanInterpreter
-    lexer = LexerForData(syntax, original_data_features)
-    tokens = lexer.generate_token()
-    parser = Parser(tokens)
-    tree = parser.parse()
-    if not tree:
-        return False
-    meanInt = meanInterpreter()
-    value = meanInt.visit(tree)
-    return value
-
+from SyntaxReader.Interpreter import evaluateWithData
 
 class MaterialItem(object):
     """
@@ -49,29 +36,6 @@ class MaterialItem(object):
                 continue
             self.features[feature] = data[feature]
 
-    def tryReplaceFeatureValue(self, syntaxStr, suffix):
-        outstr = syntaxStr
-        success = False
-        for featurekey, value in self.features.items():
-            if not isinstance(value, str) and value is not None:
-                if suffix in featurekey:
-                    realfeature = featurekey.replace(suffix, "")
-                    if realfeature in outstr:
-                        outstr = outstr.replace(realfeature, str(value))
-                        success = True
-        if not success:
-            return None
-        else:
-            return outstr
-
-    def findRelevantFeature(self, syntaxStr, suffix):
-        for featurekey, value in self.features.items():
-            if not isinstance(value, str) and value is not None:
-                if suffix in featurekey:
-                    realfeature = featurekey.replace(suffix, "")
-                    if realfeature in syntaxStr:
-                        return featurekey
-
     def get(self, feature_name, suffix):
         fullname = feature_name + suffix
         if fullname in self.features:
@@ -79,20 +43,10 @@ class MaterialItem(object):
         elif fullname in self.baked_features:
             return self.baked_features[fullname]
         else:
-            if suffix == "_sd":
-                # todo: don't know how to calculate yet, get origin sd
-                fullname = self.findRelevantFeature(feature_name, suffix)
-                if fullname:
-                    return self.features[fullname]
-            elif suffix == "_mean":
-                strout = self.tryReplaceFeatureValue(feature_name, suffix)
-                if strout is not None:
-                    value = evaluation(strout, self.features)
-                    self.baked_features[fullname] = value.value
-                    return value.value
-                else:
-                    pass
-
+            new_mean, new_sd = evaluateWithData(feature_name, self.features)
+            self.baked_features[feature_name + "_mean"] = new_mean
+            self.baked_features[feature_name + "_sd"] = new_sd
+            return self.baked_features[fullname]
 
 class MatPlotModel(object):
     def __init__(self, filename: str):

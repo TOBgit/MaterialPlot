@@ -1,12 +1,13 @@
 from SyntaxReader.tokens import Token, TokenType
-from typing import List
+from typing import Dict
 
 WHITESPACE = " \n\t"
 DIGITS = "0123456789"
 LETTERS = "abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 class LexerForData:
-    def __init__(self, text: str, data_feature: List):
+    #TODO(tienan/kaiyang): read "word1/word2" is buggy. To fix.
+    def __init__(self, text: str, data_feature: Dict):
         self.text = iter(text)
         self.data_feature_cache = data_feature
         self.advance()
