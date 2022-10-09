@@ -179,7 +179,6 @@ class MainWindow(QMainWindow):
         self.controller.drawLine()
 
     def onActionClear(self):
-        print("Graph cleared.")
         self.controller.clearScene()
         self.ui.graphicsView.resetView()
 

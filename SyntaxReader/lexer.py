@@ -1,4 +1,4 @@
-from SyntaxReader.tokens import Token, TokenType
+from SyntaxReader.internalDataClass import *
 from typing import Dict
 
 WHITESPACE = " \n\t"

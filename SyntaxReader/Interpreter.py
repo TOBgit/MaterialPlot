@@ -1,21 +1,20 @@
 from typing import Dict
 
-from SyntaxReader.nodes import *
-from SyntaxReader.values import Number
+from SyntaxReader.internalDataClass import *
 from SyntaxReader.lexer import LexerForData
-from SyntaxReader.parser_ import Parser
+from SyntaxReader.parser import Parser
 
 class Interpreter:
     '''
     This interpreter class handle the calculation of the mean and std from a node tree.
     For std, we calculate any with error propagation:
     Var(a) = std(a) ^ 2
-    Var(f(x)) = (f'(x)^2) * Var(x)
+    Var(f(x)) ~= (f'(x)^2) * Var(x)
     and thus
     Var(a + b) = Var(a) + Var(b)
     Var(a * b) ~= Var(a) * b^2 +  Var(b) * a^2
     Var(a / b) ~= Var(a) / b^2 +  Var(b) * a^2 / b^4
-    Var(a ^ n) = (n * a^(n-1))^2 * Var(a)
+    Var(a ^ n) ~= (n * a^(n-1))^2 * Var(a)
     '''
     def visit(self, node):
         method_name = f"visit_{type(node).__name__}"
@@ -63,8 +62,6 @@ class Interpreter:
 
     def visit_PropNode(self, node):
         return Number(node.value, node.sd)
-
-
 
 def evaluateWithData(syntax: str, original_data_features: Dict):
     '''
