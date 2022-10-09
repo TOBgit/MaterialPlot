@@ -61,6 +61,7 @@ class MainWindow(QMainWindow):
 
         ## top layer of buttons ##
         self.ui.Refresh_List.clicked.connect(self.onRefreshTreeList)
+        self.ui.manage_item.clicked.connect(self.onManageItem)
 
         ## middle layer of buttons ##
         self.ui.Plot_Prop_Chrt.clicked.connect(self.onClickGenPropChrt)
