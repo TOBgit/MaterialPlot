@@ -433,6 +433,7 @@ class IndicatorLines(QGraphicsObject):
         painter.drawLine(self.hline)
 
 
+
 class HShadowMarkLine(MarkLine):
     MAJORTICK_COLOR = QColor(112, 112, 112, 128)
 

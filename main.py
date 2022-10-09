@@ -48,6 +48,7 @@ class MainWindow(QMainWindow):
         self.ui.actionResetView.triggered.connect(self.onResetView)
         self.ui.actionFitView.triggered.connect(self.onFitView)
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
+        self.ui.actionCapture.triggered.connect(self.onActionCapture)
 
         ## top layer of buttons ##
         self.ui.Refresh_List.clicked.connect(self.onRefreshTreeList)
@@ -79,6 +80,12 @@ class MainWindow(QMainWindow):
     #
     # Button and menu functions, called upon UI interactions.
     #
+
+    def onActionCapture(self):
+        filename, _ = QFileDialog.getSaveFileName(self, "save Capture", filter="Bitmap (*.bmp)")
+        if filename:
+            pix = self.ui.graphicsView.grab()
+            pix.save(filename)
 
     def onClickClearMat(self):
         self.ui.graphicsView.clearItemByType(self.ui.graphicsView.ITEM_TYPE_ELLIPSE)
