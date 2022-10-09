@@ -15,7 +15,7 @@ MARKTRACK_HEIGHT = 40  # 刻度条的高度
 SCENE_WIDTH = 1013
 SCENE_HEIGHT = 948
 # 时间刻度条的背景色:
-MARKTRACK_BG_COLOR = QColor(200, 200, 200, 200)
+MARKTRACK_BG_COLOR = QColor(255, 255, 255, 200)
 # 时间刻度线的颜色:
 TICKS_COLOR = QColor(134, 134, 134, 255)
 # 刻度文字的颜色:
@@ -26,7 +26,7 @@ INDICATOR_TEXT_COLOR = QColor(50, 200, 50, 255)
 
 # 刻度线距离scene绘图面板最上方的距离
 TICKMARK_BAR_HEIGHT = 38.0
-TICKMARK_BAR_WIDTH = TICKMARK_BAR_HEIGHT
+TICKMARK_BAR_WIDTH = TICKMARK_BAR_HEIGHT * 2
 TICKMARK_HEIGHT = 8
 
 MAJORTICK_HEIGHT = 19.0
@@ -47,7 +47,7 @@ class MarkLine(QGraphicsObject):
     """docstring for MarkLine: 刻度线."""
     TEXTANGLE = 0
     MAJORTICK_COLOR = QColor(112, 112, 112, 255)
-    MINORTICK_COLOR = QColor(112, 112, 112, 102)
+    MINORTICK_COLOR = QColor(112, 112, 112, 255)
 
     def __init__(self, view):
         super(MarkLine, self).__init__()
@@ -98,8 +98,9 @@ class MarkLine(QGraphicsObject):
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        y = rect.top() + 30 / self.view_scale
-        return QPointF(a, y)
+        y = rect.top() + 25 / self.view_scale
+        x = a - 20 / self.view_scale
+        return QPointF(x, y)
 
     def getLogLevel(self):
         max, min = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
@@ -332,7 +333,7 @@ class MarkLine(QGraphicsObject):
 
 
 class VerticalMarkLine(MarkLine):
-    TEXTANGLE = 90
+    TEXTANGLE = 0
 
     def boundingRect(self):
         """交互范围."""
@@ -357,20 +358,21 @@ class VerticalMarkLine(MarkLine):
 
     def makeMajorLine(self, a):
         rect = self.view.getViewRect()
-        return QLineF(rect.left() + (TICKMARK_BAR_HEIGHT - MAJORTICK_HEIGHT) / self.view_scale, a,
-                      rect.left() + TICKMARK_BAR_HEIGHT / self.view_scale, a)
+        return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MAJORTICK_HEIGHT) / self.view_scale, a,
+                      rect.left() + TICKMARK_BAR_WIDTH / self.view_scale, a)
 
     def makeMinorLine(self, a, basea=None, base=None):
         rect = self.view.getViewRect()
 
         a = self.transFormLogMinorCoord(a, basea, base)
-        return QLineF(rect.left() + (TICKMARK_BAR_HEIGHT - MINORTICK_HEIGHT) / self.view_scale, a,
-                      rect.left() + TICKMARK_BAR_HEIGHT / self.view_scale, a)
+        return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MINORTICK_HEIGHT) / self.view_scale, a,
+                      rect.left() + TICKMARK_BAR_WIDTH / self.view_scale, a)
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        x = rect.left() + 30 / self.view_scale
-        return QPointF(x, a)
+        x = rect.left()
+        y = a + 10 / self.view_scale
+        return QPointF(x, y)
 
 
 class IndicatorLines(QGraphicsObject):
