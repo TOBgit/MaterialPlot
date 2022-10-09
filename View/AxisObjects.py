@@ -26,7 +26,7 @@ LABEL_TEXT_FONT = QFont("微软雅黑", 12)
 INDICATOR_TEXT_COLOR = QColor(50, 200, 50, 255)
 
 # 刻度线距离scene绘图面板最上方的距离
-TICKMARK_BAR_HEIGHT = 60.0
+TICKMARK_BAR_HEIGHT = 65.0
 TICKMARK_BAR_WIDTH = TICKMARK_BAR_HEIGHT * 1.5
 TICKMARK_HEIGHT = 8
 
@@ -336,7 +336,7 @@ class MarkLine(QGraphicsObject):
     def paintAxisLabel(self, painter):
         rect = self.view.getViewRect()
         x = rect.center().x()
-        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.5) / self.view_scale
+        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.4) / self.view_scale
         self.labelitem.setPos(x, y)
         self.labelitem.setPlainText(self.label)
         self.labelitem.show()
@@ -380,7 +380,7 @@ class VerticalMarkLine(MarkLine):
     def paintAxisLabel(self, painter):
         rect = self.view.getViewRect()
         y = rect.center().y()
-        x = rect.left() + (TICKMARK_BAR_WIDTH *0.1) / self.view_scale
+        x = rect.left() + (TICKMARK_BAR_WIDTH *0.05) / self.view_scale
         self.labelitem.setPos(x, y)
         self.labelitem.setPlainText(self.label)
         self.labelitem.show()
@@ -413,7 +413,7 @@ class VerticalMarkLine(MarkLine):
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        x = rect.left() + (TICKMARK_BAR_WIDTH *0.4)/ self.view_scale
+        x = rect.left() + (TICKMARK_BAR_WIDTH *0.3)/ self.view_scale
         y = a + 10 / self.view_scale
         if a < self.axisMin:
             return
