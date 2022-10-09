@@ -32,7 +32,7 @@ class AGraphicsView(QGraphicsView):
         self.graphicItems = []
         self.typedGraphicItems = {}
 
-    def addItemByType(self, itemtype:str, item:QGraphicsItem):
+    def addItemByType(self, itemtype: str, item: QGraphicsItem):
         """
         add item by type, in order to manage(clear) by type
         :param itemtype: type, a string, like AGraphicsView.ITEM_TYPE_HULL
@@ -42,7 +42,7 @@ class AGraphicsView(QGraphicsView):
         items = self.typedGraphicItems.setdefault(itemtype, [])
         items.append(item)
 
-    def setItemVisibleByType(self, itemtype:str, visible=True):
+    def setItemVisibleByType(self, itemtype: str, visible=True):
         if itemtype in self.typedGraphicItems:
             for item in self.typedGraphicItems[itemtype]:
                 if visible:
@@ -50,7 +50,7 @@ class AGraphicsView(QGraphicsView):
                 else:
                     item.hide()
 
-    def clearItemByType(self, itemtype:str):
+    def clearItemByType(self, itemtype: str):
         if itemtype in self.typedGraphicItems:
             for item in self.typedGraphicItems[itemtype]:
                 self.scene().removeItem(item)

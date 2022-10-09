@@ -52,6 +52,7 @@ class TreeItem(QStandardItem):
 
 class TreeItemModel(QStandardItemModel):
     MyDataChanged = Signal()
+
     def __init__(self):
         super(TreeItemModel, self).__init__()
         self.rootitem = self.invisibleRootItem()
@@ -73,52 +74,12 @@ class TreeItemModel(QStandardItemModel):
             return Qt.NoItemFlags
 
         return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsUserCheckable
+
     #
     def setData(self, index, value, role):
         ret = super(TreeItemModel, self).setData(index, value, role)
         self.MyDataChanged.emit()
         return ret
-    #     if not index.isValid():
-    #         return False
-    #     if role == Qt.CheckStateRole:
-    #         item = self.itemFromIndex(index)
-    #
-    #         if value == int(Qt.Checked):
-    #             item.setCheckState(Qt.Checked)
-    #             for i in range(item.rowCount()):
-    #                 child = item.child(i)
-    #                 child.setData(Qt.Checked, role)
-    #             if item.parent():
-    #                 item.parent().setData(Qt.PartiallyChecked, role)
-    #         elif value == int(Qt.PartiallyChecked):
-    #             childrencount = len(self.children())
-    #             if childrencount > 0:
-    #                 checkedcount = 0
-    #                 for i in range(item.rowCount()):
-    #                     child = item.child(i)
-    #                     if child.checkState() == Qt.Checked:
-    #                         checkedcount += 1
-    #                 if checkedcount == childrencount:
-    #                     item.setCheckState(Qt.Checked)
-    #                 elif checkedcount == 0:
-    #                     item.setCheckState(Qt.UnChecked)
-    #                 else:
-    #                     item.setCheckState(Qt.PartiallyChecked)
-    #             else:
-    #                 item.setCheckState(Qt.PartiallyChecked)
-    #         else:
-    #             for i in range(item.rowCount()):
-    #                 child = item.child(i)
-    #                 child.setData(Qt.Unchecked, role)
-    #             if item.parent():
-    #                 item.parent().setData(Qt.PartiallyChecked, role)
-    #             item.setCheckState(Qt.Unchecked)
-    #
-    #         # item.setCheckState(Qt.CheckState.Checked if value == int(Qt.Checked) else Qt.CheckState.Unchecked)
-    #         self.dataChanged.emit(index, index)
-    #         return True
-    #     return super(TreeItemModel, self).setData(index, value, role)
-
 
     def data(self, index, role=Qt.DisplayRole):
         if not index.isValid():

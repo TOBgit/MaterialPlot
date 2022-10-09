@@ -33,8 +33,8 @@ class MatPlotController(object):
         configMap = {
             "x_axis": ui.lineEdit_xaxis.text,
             "y_axis": ui.lineEdit_yaxis.text,
-            "log_scale": lambda : not ui.linearRadio.isChecked(),
-            "mat_selections": lambda :self.tree.getSelections()["Items"]
+            "log_scale": lambda: not ui.linearRadio.isChecked(),
+            "mat_selections": lambda: self.tree.getSelections()["Items"]
         }
         for key, getter in configMap.items():
             self.config.registerConfigGetter(key, getter)
@@ -56,7 +56,7 @@ class MatPlotController(object):
         for name, info in self.model.getSelectedItems(self.config.mat_selections).items():
             self.drawEllipse(info)
 
-    def drawFamilyHull(self, family_key = "Type"):
+    def drawFamilyHull(self, family_key="Type"):
         family_candidates = self.model.provideFamilyCandidateByColumn(family_key)
         for family in family_candidates:
             items = self.model.getItemsByFamilyAndSelected(family_key, family, self.config.mat_selections).values()
@@ -69,7 +69,7 @@ class MatPlotController(object):
     def updateObjectsByAxis(self, new_column_info: List[str]):
         x_column = new_column_info[0]
         y_column = new_column_info[1]
-        #FIXME!(tienan) this is for test.
+        # FIXME!(tienan) this is for test.
         y_column = "Modulus"
         x_column = "Strength"
         self.updateConfig()
@@ -96,7 +96,7 @@ class MatPlotController(object):
         # # anotherway to get
         # selections = self.tree.getSelections()
 
-    def initTreeView(self, family_key = "Type"):
+    def initTreeView(self, family_key="Type"):
         self.tree.clearModel()
         mattypes = self.model.getMaterialFamily(family_key)
         items = self.model.getAllItems()
@@ -143,7 +143,6 @@ class MatPlotController(object):
             # draw a cross
             graphicitem = self.scene.addLine(mean - 10, std - 10, mean + 10, std + 10, self.pen)
             graphicitem2 = self.scene.addLine(mean - 10, std + 10, mean + 10, std - 10, self.pen)
-
 
     def updateGraphicItems(self):
         '''

@@ -82,8 +82,8 @@ class GraphicTransformer():
         '''
         Convert an material item to a pure geometry object.
         '''
-        #TODO(kaiyang): provide the doc about correct calculation of w and h under customized axes.
-        #TODO(tienan): implement it.
+        # TODO(kaiyang): provide the doc about correct calculation of w and h under customized axes.
+        # TODO(tienan): implement it.
         width = mat_item.get(self.config.x_axis, "_sd")
         height = mat_item.get(self.config.y_axis, "_sd")
         upper_left_x = mat_item.get(self.config.x_axis, "_mean") - width * 0.5
@@ -100,4 +100,3 @@ class GraphicTransformer():
         center_x = upper_left_x + width / 2.
         center_y = upper_left_y + height / 2.
         return simpleEllipse(center_x, center_y, width, height, mat_item.rotation)
-

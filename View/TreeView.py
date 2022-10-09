@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from PySide2.QtWidgets import QTreeView
 from .TreeModel import TreeItemModel
-from PySide2.QtCore import QModelIndex, Signal
+from PySide2.QtCore import Signal
 
 
 class TreeView(QTreeView):
@@ -15,23 +15,10 @@ class TreeView(QTreeView):
         self.model.MyDataChanged.connect(self.onDataChanged)
 
     def onDataChanged(self):
-        # todo: debounce
         self.OnSelectionChanged.emit(self.model.getAllCheckedItems())
-        # self.update()
-
 
     def getSelections(self):
         return self.model.getAllCheckedItems()
-        # labels = []
-        # for index in self.selectedIndexes():
-        #     labels.append(self.model.data(index))
-        # return labels
-
-    # def selectionChanged(self, selected, deselected):
-    #     labels = self.getSelections()
-    #     self.OnSelectionChanged.emit(labels)
-    #     self.doItemsLayout()
-
     def clearModel(self):
         self.model.clear()
 
