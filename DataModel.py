@@ -165,11 +165,17 @@ class MatPlotModel(object):
     def getAllItems(self):
         return self.convertToItem(self.data)
 
+    def getSelectedItems(self, selection):
+        return self.convertToItem(self.data[self.data.Name.isin(selection)])
+
     def getItem(self, label):
         return self.convertToItem(self.data[self.data.Name == label])
 
     def getItemsByFamily(self, column: str, label: str):
         return self.convertToItem(self.data[self.data[column] == label])
+
+    def getItemsByFamilyAndSelected(self, column: str, label: str, selection):
+        return self.convertToItem(self.data[(self.data[column] == label) & self.data.Name.isin(selection)])
 
     def provideFamilyCandidateByColumn(self, column_name: str):
         candidate = self.data[column_name].drop_duplicates()

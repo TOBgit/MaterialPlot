@@ -34,6 +34,7 @@ class MatPlotController(object):
             "x_axis": ui.lineEdit_xaxis.text,
             "y_axis": ui.lineEdit_yaxis.text,
             "log_scale": lambda : not ui.linearRadio.isChecked(),
+            "mat_selections": lambda :self.tree.getSelections()["Items"]
         }
         for key, getter in configMap.items():
             self.config.registerConfigGetter(key, getter)
@@ -52,17 +53,17 @@ class MatPlotController(object):
 
     def drawAllMaterialEclipses(self):
         self.config.updateFromUI()
-        for name, info in self.model.getAllItems().items():
+        for name, info in self.model.getSelectedItems(self.config.mat_selections).items():
             self.drawEllipse(info)
 
     def drawFamilyHull(self, family_key = "Type"):
         family_candidates = self.model.provideFamilyCandidateByColumn(family_key)
         for family in family_candidates:
-            items = self.model.getItemsByFamily(family_key, family).values()
+            items = self.model.getItemsByFamilyAndSelected(family_key, family, self.config.mat_selections).values()
             self.drawHull(list(items))
 
     def drawAllHull(self):
-        items = self.model.getAllItems().values()
+        items = self.model.getSelectedItems(self.config.mat_selections).values()
         self.drawHull(list(items))
 
     def updateObjectsByAxis(self, new_column_info: List[str]):
@@ -90,9 +91,10 @@ class MatPlotController(object):
 
     def OnTreeSelectionChanged(self, selections):
         # todo: make it do someing!
+        self.config.updateFromUI()
         print(selections)
-        # anotherway to get
-        selections = self.tree.getSelections()
+        # # anotherway to get
+        # selections = self.tree.getSelections()
 
     def initTreeView(self, family_key = "Type"):
         self.tree.clearModel()

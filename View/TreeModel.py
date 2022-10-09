@@ -8,6 +8,7 @@ class TreeItem(QStandardItem):
         super(TreeItem, self).__init__(name)
         self.setCheckable(True)
         self.setTristate(True)
+        self.setCheckState(Qt.Checked)
         self.name = name
 
     def data(self, role: int):
