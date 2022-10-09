@@ -6,7 +6,6 @@ DIGITS = "0123456789"
 LETTERS = "abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 class LexerForData:
-    #TODO(tienan/kaiyang): read "word1/word2" is buggy. To fix.
     def __init__(self, text: str, data_feature: Dict):
         self.text = iter(text)
         self.data_feature_cache = data_feature
@@ -85,7 +84,7 @@ class LexerForData:
     def generate_property(self):
         prop_str = self.current_char
         self.advance()
-        while self.current_char in LETTERS:
+        while self.current_char and self.current_char in LETTERS:
             prop_str += self.current_char
             self.advance()
         # Check if prop_str_mean and prop_str_sd in data_feature_cache. If so, assign the value and sd to the token.
@@ -99,10 +98,8 @@ class LexerForData:
     def star(self):
         if self.current_char == "*":
             self.advance()
-            print("read **")
             result = Token(TokenType.POWER)
             return result
         elif self.current_char != "*":
-            print("read *")
             result = Token(TokenType.MULTIPLY)
             return result

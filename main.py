@@ -206,7 +206,6 @@ class setAxesPopUp(QDialog):
     def exec_(self):
         return self.ui.exec_()
 
-    #TODO(kaiyang): handle the case with no denominator and empty input. Make corresponding changes in DataModel.addProperty().
     def passingInfo(self):
         #here read users input and bring back the info of x and y axes
         #n stands for numerator, d stands for denominator

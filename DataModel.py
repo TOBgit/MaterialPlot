@@ -84,19 +84,6 @@ class MatPlotModel(object):
         df.dropna(inplace=True)
         return df
 
-    # TODO(team): handle more complex semantic expression.
-    def addProperty(self, new_column_info: List):
-        '''
-        Manipulate to calculate additional terms from the data. Return the name of the new term.
-        New column info is descried as [numerator, order_of_numerator, denominator, order_of_denominator].
-        '''
-        new_str = new_column_info[0] + '^' + str(new_column_info[1]) + '/' + new_column_info[2] + '^' + str(
-            new_column_info[3])
-        if new_str not in self.data.columns:
-            self.data[new_str] = (self.data[new_column_info[0]] ** new_column_info[1] / self.data[new_column_info[2]] **
-                                  new_column_info[3])
-        return new_str
-
     def getStringColumns(self):
         '''
          Returns the candidate columns for users to select the family category.
