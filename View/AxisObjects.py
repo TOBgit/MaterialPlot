@@ -15,7 +15,7 @@ MARKTRACK_HEIGHT = 40  # 刻度条的高度
 SCENE_WIDTH = 1013
 SCENE_HEIGHT = 948
 # 时间刻度条的背景色:
-MARKTRACK_BG_COLOR = QColor(255, 255, 255, 200)
+MARKTRACK_BG_COLOR = QColor(255, 255, 255, 255)
 # 时间刻度线的颜色:
 TICKS_COLOR = QColor(134, 134, 134, 255)
 # 刻度文字的颜色:
@@ -71,7 +71,7 @@ class MarkLine(QGraphicsObject):
     @property
     def axisMin(self):
         rect = self.view.getViewRect()
-        return rect.left()
+        return rect.left() + TICKMARK_BAR_WIDTH / self.view_scale
 
     @property
     def axisMax(self):
@@ -80,6 +80,8 @@ class MarkLine(QGraphicsObject):
 
     def makeMajorLine(self, a):
         rect = self.view.getViewRect()
+        if a < self.axisMin:
+            return
         return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MAJORTICK_HEIGHT) / self.view_scale, a,
                       rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale)
 
@@ -93,6 +95,8 @@ class MarkLine(QGraphicsObject):
 
         a = self.transFormLogMinorCoord(a, basea, base)
 
+        if a < self.axisMin:
+            return
         return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MINORTICK_HEIGHT) / self.view_scale, a,
                       rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale)
 
@@ -100,6 +104,8 @@ class MarkLine(QGraphicsObject):
         rect = self.view.getViewRect()
         y = rect.top() + 25 / self.view_scale
         x = a - 20 / self.view_scale
+        if a < self.axisMin:
+            return
         return QPointF(x, y)
 
     def getLogLevel(self):
@@ -110,19 +116,21 @@ class MarkLine(QGraphicsObject):
 
     def _generateLogText(self, i, a):
         # add tick texts
-        if i >= len(self._markTextItem):
-            item = QGraphicsTextItem(self)
-            item.setFont(TICKS_TEXT_FONT)
-            item.setDefaultTextColor(TICKS_TEXT_COLOR)
-            item.setZValue(0)
-            item.setRotation(self.TEXTANGLE)
-            item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
-            self._markTextItem.append(item)
-        else:
-            item = self._markTextItem[i]
-        item.setPos(self.makeTextPos(self.log2lin(a)))
-        item.setPlainText(self.getMarkText(self.log2lin(a)))
-        item.show()
+        pos = self.makeTextPos(self.log2lin(a))
+        if pos:
+            if i >= len(self._markTextItem):
+                item = QGraphicsTextItem(self)
+                item.setFont(TICKS_TEXT_FONT)
+                item.setDefaultTextColor(TICKS_TEXT_COLOR)
+                item.setZValue(0)
+                item.setRotation(self.TEXTANGLE)
+                item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
+                self._markTextItem.append(item)
+            else:
+                item = self._markTextItem[i]
+            item.setPos(pos)
+            item.setPlainText(self.getMarkText(self.log2lin(a)))
+            item.show()
 
     def calcLogLevel(self, level, maxlog, minlog):
         # maxlog, minlog = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
@@ -145,7 +153,9 @@ class MarkLine(QGraphicsObject):
         while a < maxlog:
             # calc major ticks
             if minlog < a:
-                lines.append(self.makeMajorLine(self.log2lin(a)))
+                majorline = self.makeMajorLine(self.log2lin(a))
+                if majorline:
+                    lines.append(majorline)
                 # if main:
                 self._generateLogText(i, a)
                 i += 1
@@ -202,29 +212,37 @@ class MarkLine(QGraphicsObject):
         while a < self.axisMax:
             i += 1
             # calc major ticks
-            lines.append(self.makeMajorLine(a))
+            majorline = self.makeMajorLine(a)
+            if majorline:
+                lines.append(majorline)
             # calc minor ticks
             if self._axisMode == MARKTRACK_MODE_LINEAR or base > 1:
                 for j in range(1, MINOR_TICK_COUNT):
                     mina = a + j * base / MINOR_TICK_COUNT
-                    minor_lines.append(self.makeMinorLine(mina))
+                    minorline = self.makeMinorLine(mina)
+                    if minorline:
+                        minor_lines.append(minorline)
             else:
                 for j in range(1, MINOR_TICK_COUNT - 1):
-                    minor_lines.append(self.makeMinorLine(j, a, base))
+                    minorline =self.makeMinorLine(j, a, base)
+                    if minorline:
+                        minor_lines.append(minorline)
             # add tick texts
-            if i >= len(self._markTextItem):
-                item = QGraphicsTextItem(self)
-                item.setFont(TICKS_TEXT_FONT)
-                item.setDefaultTextColor(TICKS_TEXT_COLOR)
-                item.setZValue(0)
-                item.setRotation(self.TEXTANGLE)
-                item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
-                self._markTextItem.append(item)
-            else:
-                item = self._markTextItem[i]
-            item.setPos(self.makeTextPos(a))
-            item.setPlainText(self.getMarkText(a))
-            item.show()
+            pos = self.makeTextPos(a)
+            if pos:
+                if i >= len(self._markTextItem):
+                    item = QGraphicsTextItem(self)
+                    item.setFont(TICKS_TEXT_FONT)
+                    item.setDefaultTextColor(TICKS_TEXT_COLOR)
+                    item.setZValue(0)
+                    item.setRotation(self.TEXTANGLE)
+                    item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
+                    self._markTextItem.append(item)
+                else:
+                    item = self._markTextItem[i]
+                item.setPos(pos)
+                item.setPlainText(self.getMarkText(a))
+                item.show()
 
             a += base
 
@@ -349,7 +367,7 @@ class VerticalMarkLine(MarkLine):
     @property
     def axisMin(self):
         rect = self.view.getViewRect()
-        return rect.top()
+        return rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale
 
     @property
     def axisMax(self):
@@ -358,6 +376,8 @@ class VerticalMarkLine(MarkLine):
 
     def makeMajorLine(self, a):
         rect = self.view.getViewRect()
+        if a < self.axisMin:
+            return
         return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MAJORTICK_HEIGHT) / self.view_scale, a,
                       rect.left() + TICKMARK_BAR_WIDTH / self.view_scale, a)
 
@@ -365,6 +385,8 @@ class VerticalMarkLine(MarkLine):
         rect = self.view.getViewRect()
 
         a = self.transFormLogMinorCoord(a, basea, base)
+        if a < self.axisMin:
+            return
         return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MINORTICK_HEIGHT) / self.view_scale, a,
                       rect.left() + TICKMARK_BAR_WIDTH / self.view_scale, a)
 
@@ -372,6 +394,8 @@ class VerticalMarkLine(MarkLine):
         rect = self.view.getViewRect()
         x = rect.left()
         y = a + 10 / self.view_scale
+        if a < self.axisMin:
+            return
         return QPointF(x, y)
 
 
@@ -441,11 +465,29 @@ class HShadowMarkLine(MarkLine):
         super(HShadowMarkLine, self).__init__(view)
         self.setZValue(-200)
 
+    def boundingRect(self):
+        rect = self.view.getViewRect()
+        return rect
+
     def paint(self, painter, option, widget):
         """绘制刻度线."""
         self.updateMark()
 
         self.paintMajorTick(painter)
+
+        self.paintBorderLine(painter)
+
+    def paintBorderLine(self, painter):
+        boldPen = QPen(QColor(0, 0, 0, 255))
+        boldPen.setWidth(0)
+        painter.setPen(boldPen)
+        rect = self.boundingRect()
+        # 水平线
+        painter.drawLine(self.getBorderLine(rect))
+
+    def getBorderLine(self, rect):
+        y = rect.bottom()
+        return QLineF(rect.left(), y, rect.right(), y)
 
     def paintMajorTick(self, painter):
         # 粗刻度线
@@ -473,3 +515,7 @@ class VShadowMarkLine(HShadowMarkLine):
     def makeMajorLine(self, a):
         rect = self.view.getViewRect()
         return QLineF(rect.left(), a, rect.right(), a)
+
+    def getBorderLine(self, rect):
+        x = float(rect.right() - 3.0 / self.view_scale)
+        return QLineF(x, rect.top(), x, rect.bottom())
