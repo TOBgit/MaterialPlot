@@ -1,6 +1,6 @@
 # BEANS: Property Chart Plotter
 
-![LOGO](https://user-images.githubusercontent.com/48959790/194729624-0b88c702-fdd5-4826-a078-6df04f94309d.png)
+![LOGO](Res/logo.png)
 
 Welcome to the BEANS: Property Chart Plotter.
 
