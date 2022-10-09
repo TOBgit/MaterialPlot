@@ -608,7 +608,7 @@
      <x>0</x>
      <y>0</y>
      <width>1616</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -710,7 +710,6 @@
    <addaction name="actionAxes"/>
    <addaction name="actionResetView"/>
    <addaction name="actionFitView"/>
-   <addaction name="actionManageItem"/>
    <addaction name="separator"/>
    <addaction name="actionOpen_CSV"/>
    <addaction name="actionFamily"/>
@@ -875,9 +874,6 @@
     <string>FitView</string>
    </property>
   </action>
-  <action name="actionManageItem">
-   <property name="text">
-    <string>ManageItem</string>
   <action name="actionCapture">
    <property name="text">
     <string>Capture...</string>

@@ -10,7 +10,6 @@ from PySide2.QtGui import QBrush, QPen, QColor, QFont
 from GraphicsModule import MatPlotController
 from View.AGraphicsView import AGraphicsView
 from View.TreeView import TreeView
-from View.TableWidget import ManageItem
 
 app = None
 
@@ -56,7 +55,6 @@ class MainWindow(QMainWindow):
         self.ui.actionResetView.triggered.connect(self.onResetView)
         self.ui.actionFitView.triggered.connect(self.onFitView)
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
-        self.ui.actionManageItem.triggered.connect(self.onManageItem)
         self.ui.actionCapture.triggered.connect(self.onActionCapture)
 
         ## top layer of buttons ##
@@ -192,11 +190,6 @@ class MainWindow(QMainWindow):
 
     def onRefreshTreeList(self):
         self.controller.initTreeView(self.ui.familyColumn.currentText())
-        
-    def onManageItem(self):
-        self.manager = ManageItem(self.controller.model)
-        self.manager.show()
-
 
 class setAxesPopUp(QDialog):
     def __init__(self, column_candidates: List[str]):
