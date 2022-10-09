@@ -608,7 +608,7 @@
      <x>0</x>
      <y>0</y>
      <width>1616</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -710,6 +710,7 @@
    <addaction name="actionAxes"/>
    <addaction name="actionResetView"/>
    <addaction name="actionFitView"/>
+   <addaction name="actionManageItem"/>
    <addaction name="separator"/>
    <addaction name="actionOpen_CSV"/>
    <addaction name="actionFamily"/>
@@ -889,12 +890,12 @@
   <customwidget>
    <class>AGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">.AGraphicsView</header>
+   <header location="global">AGraphicsView</header>
   </customwidget>
   <customwidget>
    <class>TreeView</class>
    <extends>QTreeView</extends>
-   <header location="global">.TreeView</header>
+   <header location="global">TreeView</header>
   </customwidget>
  </customwidgets>
  <resources/>
