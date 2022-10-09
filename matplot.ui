@@ -727,9 +727,11 @@
    </property>
   </action>
   <action name="actionSearch">
-   <property name="text">
+   <property name="icon">
     <iconset>
      <normaloff>Res/Search.svg</normaloff>Res/Search.svg</iconset>
+   </property>
+   <property name="text">
     <string>Search</string>
    </property>
   </action>
@@ -847,17 +849,21 @@
    </property>
   </action>
   <action name="actionManageItem">
-   <property name="text">
+   <property name="icon">
     <iconset>
-      <normaloff>Res/ManageItem.svg</normaloff>Res/ManageItem.svg</iconset>
-    <string>Manage Item</string>
+     <normaloff>Res/ManageItem.svg</normaloff>Res/ManageItem.svg</iconset>
+   </property>
+   <property name="text">
+     <string>Manage Item</string>
    </property>
   </action>
   <action name="actionCapture">
-   <property name="text">
+   <property name="icon">
     <iconset>
      <normaloff>Res/Capture.svg</normaloff>Res/Capture.svg</iconset>
-    <string>Capture...</string>
+   </property>
+   <property name="text">
+     <string>Capture</string>
    </property>
   </action>
  </widget>
