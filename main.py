@@ -17,15 +17,21 @@ app = None
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
-        file = QFile("matplot.ui")
-        file.open(QFile.ReadOnly)
-        file.close()
-        loader = QUiLoader()
-        loader.registerCustomWidget(AGraphicsView)
-        loader.registerCustomWidget(TreeView)
-        self.ui = loader.load(file)
+        if QFile.exists("matplot.ui"):
+            file = QFile("matplot.ui")
+            file.open(QFile.ReadOnly)
+            file.close()
+            loader = QUiLoader()
+            loader.registerCustomWidget(AGraphicsView)
+            loader.registerCustomWidget(TreeView)
+            self.ui = loader.load(file)
+            self.ui.show()
+        else:
+            from View.matplot import Ui_MainWindow
+            self.ui = Ui_MainWindow()
+            self.ui.setupUi(self)
+            self.show()
         self.connectSignals()
-        self.ui.show()
         self.csv_fpath = None
         self.myScene = QGraphicsScene()
         self.ui.graphicsView.setScene(self.myScene)

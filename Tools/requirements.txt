@@ -1,0 +1,7 @@
+pandas
+PySide2
+PyInstaller
+scipy
+dataclasses
+typing
+tinyaes
