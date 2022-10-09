@@ -12,9 +12,9 @@ class TreeView(QTreeView):
         self.model = TreeItemModel()
         self.setModel(self.model)
         self.setSelectionMode(QTreeView.ExtendedSelection)
-        self.model.dataChanged.connect(self.onDataChanged)
+        self.model.MyDataChanged.connect(self.onDataChanged)
 
-    def onDataChanged(self, topleft: QModelIndex, rightbottom:QModelIndex):
+    def onDataChanged(self):
         # todo: debounce
         self.OnSelectionChanged.emit(self.model.getAllCheckedItems())
         # self.update()

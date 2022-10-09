@@ -50,6 +50,7 @@ class TreeItem(QStandardItem):
 
 
 class TreeItemModel(QStandardItemModel):
+    MyDataChanged = Signal()
     def __init__(self):
         super(TreeItemModel, self).__init__()
         self.rootitem = self.invisibleRootItem()
@@ -72,7 +73,10 @@ class TreeItemModel(QStandardItemModel):
 
         return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsUserCheckable
     #
-    # def setData(self, index, value, role):
+    def setData(self, index, value, role):
+        ret = super(TreeItemModel, self).setData(index, value, role)
+        self.MyDataChanged.emit()
+        return ret
     #     if not index.isValid():
     #         return False
     #     if role == Qt.CheckStateRole:
