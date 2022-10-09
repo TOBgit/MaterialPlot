@@ -22,11 +22,12 @@ TICKS_COLOR = QColor(134, 134, 134, 255)
 TICKS_TEXT_COLOR = QColor(0, 0, 0, 255)
 # 刻度文字的字体:
 TICKS_TEXT_FONT = QFont("微软雅黑", 10)
+LABEL_TEXT_FONT = QFont("微软雅黑", 12)
 INDICATOR_TEXT_COLOR = QColor(50, 200, 50, 255)
 
 # 刻度线距离scene绘图面板最上方的距离
-TICKMARK_BAR_HEIGHT = 38.0
-TICKMARK_BAR_WIDTH = TICKMARK_BAR_HEIGHT * 2
+TICKMARK_BAR_HEIGHT = 60.0
+TICKMARK_BAR_WIDTH = TICKMARK_BAR_HEIGHT * 1.5
 TICKMARK_HEIGHT = 8
 
 MAJORTICK_HEIGHT = 19.0
@@ -59,6 +60,13 @@ class MarkLine(QGraphicsObject):
         self._markLines = []
         self._markLinesBold = []
         self._viewRect = None
+        self.label = "Axis"
+        self.labelitem = QGraphicsTextItem(self)
+        self.labelitem.setFont(LABEL_TEXT_FONT)
+        self.labelitem.setDefaultTextColor(TICKS_TEXT_COLOR)
+        self.labelitem.setZValue(0)
+        self.labelitem.setRotation(self.TEXTANGLE)
+        self.labelitem.setFlag(QGraphicsItem.ItemIgnoresTransformations)
 
         # 设置刻度线的颜色:
         self.pen = QPen(QColor(0, 0, 0, 0))
@@ -67,6 +75,9 @@ class MarkLine(QGraphicsObject):
 
         self.setZValue(200)
         self.setFlags(QGraphicsItem.ItemSendsScenePositionChanges)
+
+    def setAxisLabel(self, label):
+        self.label = label
 
     @property
     def axisMin(self):
@@ -102,17 +113,11 @@ class MarkLine(QGraphicsObject):
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        y = rect.top() + 25 / self.view_scale
+        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.7) / self.view_scale
         x = a - 20 / self.view_scale
         if a < self.axisMin:
             return
         return QPointF(x, y)
-
-    def getLogLevel(self):
-        max, min = self.lin2log(self.axisMax), self.lin2log(self.axisMin)
-        maxbase = math.ceil(math.log10(max))
-        minbase = math.floor(math.log10(min))
-        print(minbase, maxbase)
 
     def _generateLogText(self, i, a):
         # add tick texts
@@ -123,7 +128,6 @@ class MarkLine(QGraphicsObject):
                 item.setFont(TICKS_TEXT_FONT)
                 item.setDefaultTextColor(TICKS_TEXT_COLOR)
                 item.setZValue(0)
-                item.setRotation(self.TEXTANGLE)
                 item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
                 self._markTextItem.append(item)
             else:
@@ -235,7 +239,6 @@ class MarkLine(QGraphicsObject):
                     item.setFont(TICKS_TEXT_FONT)
                     item.setDefaultTextColor(TICKS_TEXT_COLOR)
                     item.setZValue(0)
-                    item.setRotation(self.TEXTANGLE)
                     item.setFlag(QGraphicsItem.ItemIgnoresTransformations)
                     self._markTextItem.append(item)
                 else:
@@ -328,9 +331,19 @@ class MarkLine(QGraphicsObject):
 
         self.paintBorderLine(painter)
 
+        self.paintAxisLabel(painter)
+
+    def paintAxisLabel(self, painter):
+        rect = self.view.getViewRect()
+        x = rect.center().x()
+        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.5) / self.view_scale
+        self.labelitem.setPos(x, y)
+        self.labelitem.setPlainText(self.label)
+        self.labelitem.show()
+
     def getBorderLine(self, rect):
         y = float(rect.top()) + TICKMARK_BAR_HEIGHT / self.view_scale
-        return QLineF(rect.left(), y, rect.right(), y)
+        return QLineF(self.axisMin, y, rect.right(), y)
 
     def boundingRect(self):
         """交互范围."""
@@ -351,7 +364,7 @@ class MarkLine(QGraphicsObject):
 
 
 class VerticalMarkLine(MarkLine):
-    TEXTANGLE = 0
+    TEXTANGLE = -90
 
     def boundingRect(self):
         """交互范围."""
@@ -362,7 +375,15 @@ class VerticalMarkLine(MarkLine):
 
     def getBorderLine(self, rect):
         x = float(rect.left()) + TICKMARK_BAR_WIDTH / self.view_scale
-        return QLineF(x, rect.top(), x, rect.bottom())
+        return QLineF(x, self.axisMin, x, rect.bottom())
+
+    def paintAxisLabel(self, painter):
+        rect = self.view.getViewRect()
+        y = rect.center().y()
+        x = rect.left() + (TICKMARK_BAR_WIDTH *0.1) / self.view_scale
+        self.labelitem.setPos(x, y)
+        self.labelitem.setPlainText(self.label)
+        self.labelitem.show()
 
     @property
     def axisMin(self):
@@ -392,7 +413,7 @@ class VerticalMarkLine(MarkLine):
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        x = rect.left()
+        x = rect.left() + (TICKMARK_BAR_WIDTH *0.4)/ self.view_scale
         y = a + 10 / self.view_scale
         if a < self.axisMin:
             return

@@ -34,6 +34,7 @@ class MainWindow(QMainWindow):
         self.pen = QPen(QColor(0, 0, 0))
         self.ui.graphicsView.resetView()
         self.ui.graphicsView.initHelperItems()
+        self.onTextEdited()
 
 
     def connectSignals(self):
@@ -67,6 +68,9 @@ class MainWindow(QMainWindow):
         self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
         self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
 
+        self.ui.lineEdit_xaxis.textEdited.connect(self.onTextEdited)
+        self.ui.lineEdit_yaxis.textEdited.connect(self.onTextEdited)
+
         ## Label property tab ##
     ## TODO need to implement this
         #self.ui.Plot_refresh_label.clicked.connect(self.onClickRefreshLabel)
@@ -80,6 +84,9 @@ class MainWindow(QMainWindow):
     #
     # Button and menu functions, called upon UI interactions.
     #
+
+    def onTextEdited(self, *args):
+        self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
 
     def onActionCapture(self):
         filename, _ = QFileDialog.getSaveFileName(self, "save Capture", filter="Bitmap (*.bmp)")

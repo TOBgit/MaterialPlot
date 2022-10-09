@@ -32,6 +32,12 @@ class AGraphicsView(QGraphicsView):
         self.graphicItems = []
         self.typedGraphicItems = {}
 
+    def setAxisLabel(self, xlabel, ylabel):
+        if self._hMarkline:
+            self._hMarkline.setAxisLabel(xlabel)
+            self._vMarkline.setAxisLabel(ylabel)
+            self.update()
+
     def addItemByType(self, itemtype: str, item: QGraphicsItem):
         """
         add item by type, in order to manage(clear) by type
