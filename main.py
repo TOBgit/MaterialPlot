@@ -4,7 +4,7 @@ from typing import List
 
 from PySide2.QtCore import QFile, QRectF, QPointF
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog
+from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog, QMessageBox
 from PySide2.QtGui import QBrush, QPen, QColor, QFont
 
 from GraphicsModule import MatPlotController
@@ -59,6 +59,7 @@ class MainWindow(QMainWindow):
         self.ui.actionAxes.triggered.connect(self.onDefineAxes)
         self.ui.actionManageItem.triggered.connect(self.onManageItem)
         self.ui.actionCapture.triggered.connect(self.onActionCapture)
+        self.ui.actionAbout.triggered.connect(self.onAbout)
 
         ## top layer of buttons ##
         self.ui.Refresh_List.clicked.connect(self.onRefreshTreeList)
@@ -94,6 +95,9 @@ class MainWindow(QMainWindow):
     #
     # Button and menu functions, called upon UI interactions.
     #
+
+    def onAbout(self):
+        QMessageBox.aboutQt(self.ui, "About")
 
     def onTextEdited(self, *args):
         self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())

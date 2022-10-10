@@ -585,7 +585,7 @@
      <x>0</x>
      <y>0</y>
      <width>1462</width>
-     <height>24</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -636,6 +636,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -854,7 +855,7 @@
      <normaloff>Res/ManageItem.svg</normaloff>Res/ManageItem.svg</iconset>
    </property>
    <property name="text">
-     <string>Manage Item</string>
+    <string>Manage Item</string>
    </property>
   </action>
   <action name="actionCapture">
@@ -863,7 +864,12 @@
      <normaloff>Res/Capture.svg</normaloff>Res/Capture.svg</iconset>
    </property>
    <property name="text">
-     <string>Capture</string>
+    <string>Capture</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About Qt...</string>
    </property>
   </action>
  </widget>

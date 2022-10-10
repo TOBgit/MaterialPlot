@@ -40,6 +40,7 @@ exe = EXE(
 	strip=False,
 	upx=True,
 	console=False, uac_admin=False,
+	version='file_version_info.txt',
 	icon=os.path.join(curdir, "Res", "logo.ico")
 	)
 

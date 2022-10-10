@@ -1,0 +1,30 @@
+# UTF-8
+VSVersionInfo(
+  ffi=FixedFileInfo(
+    filevers=(0,0,0,0),
+    prodvers=(0, 2, 0, 0),
+    mask=0x3f,
+    flags=0x0,
+    OS=0x40004,
+    fileType=0x1,
+    subtype=0x0,
+    date=(0, 0)
+    ),
+  kids=[
+    StringFileInfo(
+      [
+      StringTable(
+        u'040904b0',
+        [StringStruct(u'CompanyName', u'TOB software'),
+        StringStruct(u'FileDescription', u'Beans Material Plotter'),
+        StringStruct(u'FileVersion', u'0.0.0.0'),
+        StringStruct(u'InternalName', u'Beans Plotter'),
+        StringStruct(u'LegalCopyright', u'TOB copyright(C)2022'),
+        StringStruct(u'OriginalFilename', u'Beans.exe'),
+        StringStruct(u'ProductName', u'Beans Plotter'),
+        StringStruct(u'ProductVersion', u'0.2.0.0'),
+        StringStruct(u'LanguageId', u'en')])
+      ]), 
+    VarFileInfo([VarStruct(u'Translation', [1033, 1200])])
+  ]
+)
