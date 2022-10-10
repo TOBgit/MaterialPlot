@@ -3,7 +3,7 @@ from typing import List
 
 from AlgorithmUtils import ellipseHull, simpleEllipse
 from DataModel import MaterialItem
-
+from View.ErrorWidget import simpleErrorPopUp
 
 class GraphicConfig():
     '''
@@ -90,10 +90,21 @@ class GraphicTransformer():
             # The ellipse/square in log scale is defined by the log of the original four corner points.
             # Use the diff between the lower-right point and upper-left point to re-calculate
             # the width and height.
-            width = log10(upper_left_x + width) - log10(upper_left_x)
-            height = log10(upper_left_y) - log10(upper_left_y - height)
+            try:
+                width = log10(upper_left_x + width) - log10(upper_left_x)
+            except:
+                simpleErrorPopUp(f"The feature ({self.config.x_axis}) of material ({mat_item.label}) has its std larger than its mean. "
+                                 f"Cannot be drawn on log scale.").exec_()
+                return None
+            try:
+                height = log10(upper_left_y) - log10(upper_left_y - height)
+            except:
+                simpleErrorPopUp(f"The feature ({self.config.y_axis}) of material ({mat_item.label}) has its std larger than its mean. "
+                                 f"Cannot be drawn on log scale.").exec_()
+                return None
             upper_left_x = log10(upper_left_x)
             upper_left_y = log10(upper_left_y)
+
         center_x = upper_left_x + width / 2.
         center_y = upper_left_y - height / 2.
         return simpleEllipse(center_x, center_y, width, height, mat_item.rotation)
