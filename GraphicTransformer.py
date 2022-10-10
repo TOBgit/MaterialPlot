@@ -85,16 +85,15 @@ class GraphicTransformer():
         width = mat_item.get(self.config.x_axis, "_sd")
         height = mat_item.get(self.config.y_axis, "_sd")
         upper_left_x = mat_item.get(self.config.x_axis, "_mean") - width * 0.5
-        upper_left_y = mat_item.get(self.config.y_axis, "_mean") - height * 0.5
-
+        upper_left_y = mat_item.get(self.config.y_axis, "_mean") + height * 0.5
         if self.config.log_scale:
             # The ellipse/square in log scale is defined by the log of the original four corner points.
             # Use the diff between the lower-right point and upper-left point to re-calculate
             # the width and height.
             width = log10(upper_left_x + width) - log10(upper_left_x)
-            height = log10(upper_left_y) - log10((upper_left_y + height))
+            height = log10(upper_left_y) - log10(upper_left_y - height)
             upper_left_x = log10(upper_left_x)
             upper_left_y = log10(upper_left_y)
         center_x = upper_left_x + width / 2.
-        center_y = upper_left_y + height / 2.
+        center_y = upper_left_y - height / 2.
         return simpleEllipse(center_x, center_y, width, height, mat_item.rotation)
