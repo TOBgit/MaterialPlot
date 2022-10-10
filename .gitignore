@@ -4,3 +4,4 @@ __pycache__
 View/matplot.py
 Tools/build/
 Tools/dist/
+.vs/
