@@ -6,7 +6,7 @@ from PySide2.QtCore import QFile, QRectF, QPointF
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog, QMessageBox
 from PySide2.QtGui import QBrush, QPen, QColor, QFont, QIcon
-import img_rc
+import res_rc # noqa
 
 from GraphicsModule import MatPlotController
 from View.AGraphicsView import AGraphicsView
@@ -176,7 +176,7 @@ class MainWindow(QMainWindow):
         Loads data, updates both the model and controller.
         '''
         print("Ready to input data.")
-        filename, _ = QFileDialog.getOpenFileName(self, "Open CSV", filter="CSV Files (*.csv)")
+        filename, _ = QFileDialog.getOpenFileName(self, "Open CSV", filter="CSV Files (*.csv)", dir="./Data")
         if filename:
             self.csv_fpath = filename
         self.controller = MatPlotController(self, self.csv_fpath)
