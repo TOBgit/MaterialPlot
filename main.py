@@ -5,7 +5,8 @@ from typing import List
 from PySide2.QtCore import QFile, QRectF, QPointF
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog, QMessageBox
-from PySide2.QtGui import QBrush, QPen, QColor, QFont
+from PySide2.QtGui import QBrush, QPen, QColor, QFont, QIcon
+import img_rc
 
 from GraphicsModule import MatPlotController
 from View.AGraphicsView import AGraphicsView

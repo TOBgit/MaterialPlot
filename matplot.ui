@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Beans</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Res/res.qrc">
+    <normaloff>:/logo/logo.ico</normaloff>:/logo/logo.ico</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,10">
@@ -696,9 +700,6 @@
    <addaction name="separator"/>
    <addaction name="actionConvexHull"/>
    <addaction name="actionAxes"/>
-   <addaction name="actionHotReload"/>
-   <addaction name="actionResetView"/>
-   <addaction name="actionFitView"/>
    <addaction name="actionSearch"/>
   </widget>
   <action name="actionOpen_CSV">
@@ -716,6 +717,9 @@
    </property>
   </action>
   <action name="actionAxes">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Res/Axes.svg</normaloff>Res/Axes.svg</iconset>
@@ -728,6 +732,9 @@
    </property>
   </action>
   <action name="actionSearch">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Res/Search.svg</normaloff>Res/Search.svg</iconset>
@@ -792,6 +799,9 @@
    </property>
   </action>
   <action name="actionFamily">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Res/Family.svg</normaloff>Res/Family.svg</iconset>
@@ -810,6 +820,9 @@
    </property>
   </action>
   <action name="actionSelection">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Res/Select.svg</normaloff>Res/Select.svg</iconset>
@@ -819,6 +832,9 @@
    </property>
   </action>
   <action name="actionPlotSelLn">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset>
      <normaloff>Res/SelectionLine.svg</normaloff>Res/SelectionLine.svg</iconset>
@@ -877,15 +893,17 @@
   <customwidget>
    <class>AGraphicsView</class>
    <extends>QGraphicsView</extends>
-   <header location="global">AGraphicsView</header>
+   <header location="global">.AGraphicsView</header>
   </customwidget>
   <customwidget>
    <class>TreeView</class>
    <extends>QTreeView</extends>
-   <header location="global">TreeView</header>
+   <header location="global">.TreeView</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="Res/res.qrc"/>
+ </resources>
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup"/>
