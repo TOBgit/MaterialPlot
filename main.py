@@ -98,7 +98,7 @@ class MainWindow(QMainWindow):
     #
 
     def onAbout(self):
-        QMessageBox.aboutQt(self.ui, "About")
+        QMessageBox.aboutQt(None, "About")
 
     def onTextEdited(self, *args):
         self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
