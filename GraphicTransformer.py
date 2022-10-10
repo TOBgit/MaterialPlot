@@ -3,6 +3,7 @@ from typing import List
 
 from AlgorithmUtils import ellipseHull, simpleEllipse
 from DataModel import MaterialItem
+from PySide2.QtWidgets import QMessageBox
 from View.ErrorWidget import simpleErrorPopUp
 
 class GraphicConfig():
@@ -94,13 +95,14 @@ class GraphicTransformer():
                 width = log10(upper_left_x + width) - log10(upper_left_x)
             except:
                 simpleErrorPopUp(f"The feature ({self.config.x_axis}) of material ({mat_item.label}) has its std larger than its mean. "
-                                 f"Cannot be drawn on log scale.").exec_()
+                                 f"Cannot be drawn on log scale.")
                 return None
             try:
                 height = log10(upper_left_y) - log10(upper_left_y - height)
             except:
-                simpleErrorPopUp(f"The feature ({self.config.y_axis}) of material ({mat_item.label}) has its std larger than its mean. "
-                                 f"Cannot be drawn on log scale.").exec_()
+                simpleErrorPopUp(
+                    f"The feature ({self.config.y_axis}) of material ({mat_item.label}) has its std larger than its mean. "
+                    f"Cannot be drawn on log scale.")
                 return None
             upper_left_x = log10(upper_left_x)
             upper_left_y = log10(upper_left_y)
