@@ -18,7 +18,7 @@ VSVersionInfo(
         [StringStruct(u'CompanyName', u'TOB software'),
         StringStruct(u'FileDescription', u'Beans Material Plotter'),
         StringStruct(u'FileVersion', u'0.0.0.0'),
-        StringStruct(u'InternalName', u'Beans Plotter'),
+        StringStruct(u'InternalName', u'MaterialPlot'),
         StringStruct(u'LegalCopyright', u'TOB copyright(C)2022'),
         StringStruct(u'OriginalFilename', u'Beans.exe'),
         StringStruct(u'ProductName', u'Beans Plotter'),
