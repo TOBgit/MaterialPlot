@@ -21,8 +21,8 @@ TICKS_COLOR = QColor(134, 134, 134, 255)
 # 刻度文字的颜色:
 TICKS_TEXT_COLOR = QColor(0, 0, 0, 255)
 # 刻度文字的字体:
-TICKS_TEXT_FONT = QFont("微软雅黑", 10)
-LABEL_TEXT_FONT = QFont("微软雅黑", 12)
+TICKS_TEXT_FONT = QFont("Arial", 10)
+LABEL_TEXT_FONT = QFont("Arial", 12)
 INDICATOR_TEXT_COLOR = QColor(50, 200, 50, 255)
 
 # 刻度线距离scene绘图面板最上方的距离
