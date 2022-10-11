@@ -37,7 +37,7 @@ Wesgt et al. (2015) Bioinspired structural materials, Nature Materials
 ## Instructions
 If you're familiar with python, you could clone the git project and run the tool on your platform.
 
-If you don't like to worry about the programming language, the team is also publishing ready-to-use packages for Windows and Mac at important releases. The release packages can be found [here](https://zenodo.org/record/7182691#.Y0S8DXb0lD8)). The latest release with the binary package is v0.2.1. Please also refer to the same site if you would ike to cite us in your paper.
+If you don't like to worry about the programming language, the team is also publishing ready-to-use packages for Windows and Mac at important releases. The release packages can be found [here](https://zenodo.org/record/7182691#.Y0S8DXb0lD8). The latest release with the binary package is v0.2.1. Please also refer to the same site if you would ike to cite us in your paper.
 
 ## Fun fact behind the scene
 
