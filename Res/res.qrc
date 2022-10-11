@@ -1,5 +1,18 @@
 <RCC>
   <qresource prefix="logo">
+    <file>Axes.svg</file>
+    <file>Axis.svg</file>
+    <file>Capture.svg</file>
+    <file>Export.svg</file>
+    <file>FamBubb.svg</file>
+    <file>Family.svg</file>
+    <file>Hull.svg</file>
+    <file>ManageItem.svg</file>
+    <file>MatBubb.svg</file>
+    <file>OpenCSV.svg</file>
+    <file>Search.svg</file>
+    <file>Select.svg</file>
+    <file>SelectionLine.svg</file>
     <file>logo.ico</file>
   </qresource>
 </RCC>

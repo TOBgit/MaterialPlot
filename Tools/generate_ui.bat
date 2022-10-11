@@ -1,0 +1,1 @@
+pyside2-uic ../matplot.ui -o ../View/matplot.py
