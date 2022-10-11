@@ -867,8 +867,8 @@
   </action>
   <action name="actionManageItem">
    <property name="icon">
-    <iconset>
-     <normaloff>Res/ManageItem.svg</normaloff>Res/ManageItem.svg</iconset>
+    <iconset resource="Res/res.qrc">
+     <normaloff>:/logo/ManageItem.svg</normaloff>:/logo/ManageItem.svg</iconset>
    </property>
    <property name="text">
     <string>Manage Item</string>
@@ -876,8 +876,8 @@
   </action>
   <action name="actionCapture">
    <property name="icon">
-    <iconset>
-     <normaloff>Res/Capture.svg</normaloff>Res/Capture.svg</iconset>
+    <iconset resource="Res/res.qrc">
+     <normaloff>:/logo/Capture.svg</normaloff>:/logo/Capture.svg</iconset>
    </property>
    <property name="text">
     <string>Capture</string>
