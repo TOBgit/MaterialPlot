@@ -35,14 +35,15 @@ Wesgt et al. (2015) Bioinspired structural materials, Nature Materials
 
 
 ## Instructions
-Basic python skill is required to run this tool.
-The team is also publishing ready-to-use packages for Windows and Mac at important releases. The latest release with the binary package is v0.2.1.
+If you're familiar with python, you could clone the git project and run the tool on your platform.
+
+If you don't like to worry about the programming language, the team is also publishing ready-to-use packages for Windows and Mac at important releases. The release packages can be found [here](https://zenodo.org/record/7182691#.Y0S8DXb0lD8)). The latest release with the binary package is v0.2.1. Please also refer to the same site if you would ike to cite us in your paper.
 
 ## Fun fact behind the scene
 
 The lead developers of this tool are friends from high school. They used to play together in World of Warcarft, leading a guild named 'Times of Beans'. The property chart, with its materials bubbles like beans and family bubble-like pods, is unexpectedly reminiscent. While it is unknown if the guild is still alive, the developers are more than happy to work together on one project again. By the way, the developers were playing Mage, Rogue, Warlock, and Warrior. There is no healer on the team. So when they are out for a wild task like this, they can only survive by eating and drinking the mage bread/water provided by the kind Mage :(
 
-If you would enjoy this tool, you can [milk the team](https://www.paypal.com/donate/?business=UTH9TVWVJE93G&no_recurring=1&item_name=Support+the+TOB+team+to+move+on.&currency_code=USD). The team will appreciate your support and keep up the good work.
+If you would enjoy this tool, you can [tip](https://www.paypal.com/donate/?business=UTH9TVWVJE93G&no_recurring=1&item_name=Support+the+TOB+team+to+move+on.&currency_code=USD) us some Savory Deviate Delight (it's a famous dish in World of Warcarft in case you don't know what it is). The team will appreciate your support and keep up the good work.
 
 
 
