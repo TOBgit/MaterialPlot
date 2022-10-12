@@ -34,7 +34,8 @@ class MatPlotController(object):
             "x_axis": ui.lineEdit_xaxis.text,
             "y_axis": ui.lineEdit_yaxis.text,
             "log_scale": lambda: not ui.linearRadio.isChecked(),
-            "mat_selections": lambda: self.tree.getSelections()["Items"]
+            "mat_selections": lambda: self.tree.getSelections()["Items"],
+            "selection_lines": ui.listView.getData
         }
         for key, getter in configMap.items():
             self.config.registerConfigGetter(key, getter)
@@ -88,6 +89,11 @@ class MatPlotController(object):
     #
     def connectSignals(self):
         self.tree.OnSelectionChanged.connect(self.OnTreeSelectionChanged)
+        self.window.ui.listView.EditFinished.connect(self.onListDataChanged)
+
+    def onListDataChanged(self):
+        self.updateConfig()
+        print(self.config.selection_lines)
 
     def OnTreeSelectionChanged(self, selections):
         # todo: make it do someing!
