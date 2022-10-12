@@ -28,17 +28,3 @@ class ManageItem(QWidget):
         self.resize(1200, 800)
 
         self.addButton.clicked.connect(self.tableModel.insertRows)
-
-class ManageSelection(QWidget):
-    def __init__(self):
-        super(ManageItem, self).__init__()
-
-        layout0 = QVBoxLayout()
-        layout1 = QHBoxLayout()
-        self.addButton = QPushButton("Add Selection")
-        self.deleteButton = QPushButton("Delete Selection")
-        layout1.addWidget(self.addButton)
-        layout1.addWidget(self.deleteButton)
-
-        #TODO(HH) shall we create a new pd dataframe to store the points for lines?
-        pass

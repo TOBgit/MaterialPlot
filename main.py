@@ -88,13 +88,10 @@ class MainWindow(QMainWindow):
         #self.ui.Plot_refresh_label.clicked.connect(self.onClickRefreshLabel)
 
         ## lower layer of buttons ##
-## TODO need to update this in matplot.py
-        self.ui.manage_selection.clicked.connect(self.onManageSelection)
         self.ui.Plot_sel_ln.clicked.connect(self.onClickPlotSelLn)
- ## TODO need to implement this: hide selection lines
-        self.ui.clear_sel_ln.clicked.connect(self.onClickClearSelLn)
         self.ui.Plot_clear.clicked.connect(self.onActionClear)
-   
+    ## TODO need to implement this
+        #self.ui.clear_sel_ln.clicked.connect(self.onClickClearSelLn)
 
     #
     # Button and menu functions, called upon UI interactions.
@@ -205,10 +202,6 @@ class MainWindow(QMainWindow):
     def onManageItem(self):
         self.manager = ManageItem(self.controller.model)
         self.manager.show()
-
-    def onManageSelection(self):
-    #TODO(HH):pop up table and let user put things in
-        pass
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
