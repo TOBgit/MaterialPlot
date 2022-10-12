@@ -13,6 +13,7 @@ from View.AGraphicsView import AGraphicsView
 from View.AxesSelectionPopUp import setAxesPopUp
 from View.TreeView import TreeView
 from View.TableWidget import ManageItem
+from View.AListView import AListView
 
 app = None
 
@@ -27,6 +28,7 @@ class MainWindow(QMainWindow):
             loader = QUiLoader()
             loader.registerCustomWidget(AGraphicsView)
             loader.registerCustomWidget(TreeView)
+            loader.registerCustomWidget(AListView)
             self.ui = loader.load(file)
             self.ui.show()
         else:
@@ -90,6 +92,8 @@ class MainWindow(QMainWindow):
         ## lower layer of buttons ##
         self.ui.Plot_sel_ln.clicked.connect(self.onClickPlotSelLn)
         self.ui.Plot_clear.clicked.connect(self.onActionClear)
+        self.ui.add_selection.clicked.connect(self.onAddSelection)
+        self.ui.delete_selection.clicked.connect(self.onDelSelection)
     ## TODO need to implement this
         #self.ui.clear_sel_ln.clicked.connect(self.onClickClearSelLn)
 
@@ -99,6 +103,12 @@ class MainWindow(QMainWindow):
 
     def onAbout(self):
         QMessageBox.aboutQt(None, "About")
+
+    def onAddSelection(self):
+        self.ui.listView.addItem()
+
+    def onDelSelection(self):
+        self.ui.listView.popItem()
 
     def onTextEdited(self, *args):
         self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
