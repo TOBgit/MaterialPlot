@@ -4,3 +4,4 @@ __pycache__
 Tools/build/
 Tools/dist/
 .vs/
+.DS_Store
