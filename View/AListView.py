@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import PySide2.QtGui
-from PySide2.QtWidgets import QListView, QStyledItemDelegate, QCheckBox, QLineEdit, QLabel, QHBoxLayout, QFrame, QToolButton
+from PySide2.QtWidgets import QListView, QStyledItemDelegate, QCheckBox, QLineEdit, QLabel, QHBoxLayout, QFrame, QMenu, QAction
 from PySide2.QtCore import QPointF, QRectF, Qt, Signal, QModelIndex
 from PySide2.QtGui import QTransform, QStandardItemModel, QStandardItem
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines
@@ -140,7 +140,29 @@ class AListView(QListView):
 
         self.setModel(self.model)
         self.setItemDelegate(self.delegate)
+        self.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.onCustomMenu)
 
+
+    def onCustomMenu(self, pos):
+        indexes = self.selectedIndexes()
+
+        menu = QMenu(self)
+        # load model action
+        deleteAction = QAction("Delete Line")
+        addAction = QAction("Add Line")
+        menu.addAction(addAction)
+        menu.addAction(deleteAction)
+        if indexes:
+            addAction.setVisible(False)
+        else:
+            deleteAction.setVisible(False)
+
+
+        deleteAction.triggered.connect(self._deleteItem)
+        addAction.triggered.connect(self.addItem)
+        globalPoint = self.mapToGlobal(pos)
+        menu.exec_(globalPoint)
 
     def onEditFinished(self, index, data):
         self.model.setData(index, data["a1"], ListItem.ROLE_A1)
@@ -156,6 +178,10 @@ class AListView(QListView):
         self.model.appendRow(item)
         self.openPersistentEditor(item.index())
         self.EditFinished.emit()
+
+    def _deleteItem(self):
+        for index in self.selectedIndexes():
+            self.model.removeRow(index.row())
 
     def popItem(self):
         if self.model.rowCount() == 0:
