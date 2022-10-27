@@ -78,12 +78,22 @@ class MainWindow(QMainWindow):
         self.ui.delete_mat_label.clicked.connect(self.onClickDeleteMatLabel)
         self.ui.delete_fam_label.clicked.connect(self.onClickDeleteFamLabel)
         
-        ## Plot property tab ##
-        self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
-        self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
+        ##Axis Select Tab##
 
         self.ui.lineEdit_xaxis.textEdited.connect(self.onTextEdited)
         self.ui.lineEdit_yaxis.textEdited.connect(self.onTextEdited)
+    ## TODO need to implement this
+        #self.ui.axis_refresh_graphics.clicked.connect()
+
+        ## Plot property tab ##
+        self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
+        self.ui.checkBox_cursor.stateChanged.connect(self.onCursorChecked)
+    ## TODO need to implement this
+        #self.ui.x_range_l.textEdited.connect()
+        #self.ui.x_range_h.textEdited.connect()
+        #self.ui.y_range_l.textEdited.connect()
+        #self.ui.y_range_h.textEdited.connect()
+        #self.ui.axis_refresh_graphics.clicked.connect()
 
         ## Label property tab ##
     ## TODO need to implement this
