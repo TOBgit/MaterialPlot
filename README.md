@@ -30,14 +30,19 @@ Refer the screenshot for its current UI and the plot style.
 
 Ashby (1992) Materials Selection in Mechanical Design
 
-### Journal articles using these plots
+### Journal articles using these plots:
 Wesgt et al. (2015) Bioinspired structural materials, Nature Materials
+
+### Cite this tool:
+Lao, Weimin, Yin, Kaiyang, Li, Tienan, & Huang, Han. (2022). BEANS: Property Chart Plotter (v0.2.1). Zenodo. https://doi.org/10.5281/zenodo.7182691
+
+You can export it to your reference management software through: https://zenodo.org/record/7182691
 
 
 ## Instructions
 If you're familiar with python, you could clone the git project and run the tool on your platform.
 
-If you don't like to worry about the programming language, the team is also publishing ready-to-use packages for Windows and Mac at important releases. The release packages can be found [here](https://zenodo.org/record/7182691#.Y0S8DXb0lD8). The latest release with the binary package is v0.2.1. Please also refer to the same site if you would ike to cite us in your paper.
+If you don't like to worry about the programming language, the team is also publishing ready-to-use packages for Windows and Mac at important releases. The release packages can be found [here](https://github.com/TOBgit/MaterialPlot/tags). The latest release with the binary package is v0.2.1.
 
 ## Fun fact behind the scene
 
