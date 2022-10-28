@@ -14,6 +14,7 @@ from PySide2.QtWidgets import *
 
 from .AGraphicsView import AGraphicsView
 from .TreeView import TreeView
+from .AListView import AListView
 
 import res_rc
 
@@ -21,7 +22,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1462, 961)
+        MainWindow.resize(1462, 967)
         icon = QIcon()
         icon.addFile(u":/logo/logo.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
@@ -115,63 +116,15 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setHorizontalSpacing(6)
         self.gridLayout.setContentsMargins(0, 0, -1, -1)
-        self.label_14 = QLabel(self.centralwidget)
-        self.label_14.setObjectName(u"label_14")
-
-        self.gridLayout.addWidget(self.label_14, 8, 3, 1, 1)
-
         self.label_16 = QLabel(self.centralwidget)
         self.label_16.setObjectName(u"label_16")
 
-        self.gridLayout.addWidget(self.label_16, 17, 3, 1, 1)
+        self.gridLayout.addWidget(self.label_16, 15, 3, 1, 1)
 
-        self.label_13 = QLabel(self.centralwidget)
-        self.label_13.setObjectName(u"label_13")
+        self.label_14 = QLabel(self.centralwidget)
+        self.label_14.setObjectName(u"label_14")
 
-        self.gridLayout.addWidget(self.label_13, 7, 3, 1, 1)
-
-        self.Plot_sel_ln = QPushButton(self.centralwidget)
-        self.Plot_sel_ln.setObjectName(u"Plot_sel_ln")
-
-        self.gridLayout.addWidget(self.Plot_sel_ln, 16, 4, 1, 1)
-
-        self.add_selection = QPushButton(self.centralwidget)
-        self.add_selection.setObjectName(u"add_selection")
-
-        self.gridLayout.addWidget(self.add_selection, 12, 4, 1, 1)
-
-        self.listView = QListView(self.centralwidget)
-        self.listView.setObjectName(u"listView")
-
-        self.gridLayout.addWidget(self.listView, 13, 0, 1, 6)
-
-        self.delete_selection = QPushButton(self.centralwidget)
-        self.delete_selection.setObjectName(u"delete_selection")
-
-        self.gridLayout.addWidget(self.delete_selection, 12, 5, 1, 1)
-
-        self.clear_sel_ln = QPushButton(self.centralwidget)
-        self.clear_sel_ln.setObjectName(u"clear_sel_ln")
-
-        self.gridLayout.addWidget(self.clear_sel_ln, 16, 5, 1, 1)
-
-        self.label_11 = QLabel(self.centralwidget)
-        self.label_11.setObjectName(u"label_11")
-
-        self.gridLayout.addWidget(self.label_11, 7, 0, 1, 1)
-
-        self.delete_mat_label = QPushButton(self.centralwidget)
-        self.delete_mat_label.setObjectName(u"delete_mat_label")
-
-        self.gridLayout.addWidget(self.delete_mat_label, 7, 5, 1, 1)
-
-        self.label_5 = QLabel(self.centralwidget)
-        self.label_5.setObjectName(u"label_5")
-        font = QFont()
-        font.setPointSize(10)
-        self.label_5.setFont(font)
-
-        self.gridLayout.addWidget(self.label_5, 12, 0, 1, 2)
+        self.gridLayout.addWidget(self.label_14, 6, 3, 1, 1)
 
         self.familyColumn = QComboBox(self.centralwidget)
         self.familyColumn.setObjectName(u"familyColumn")
@@ -183,77 +136,115 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.Refresh_List, 0, 5, 1, 1)
 
+        self.label_5 = QLabel(self.centralwidget)
+        self.label_5.setObjectName(u"label_5")
+        font = QFont()
+        font.setPointSize(10)
+        self.label_5.setFont(font)
+
+        self.gridLayout.addWidget(self.label_5, 10, 0, 1, 2)
+
+        self.delete_mat_label = QPushButton(self.centralwidget)
+        self.delete_mat_label.setObjectName(u"delete_mat_label")
+
+        self.gridLayout.addWidget(self.delete_mat_label, 5, 5, 1, 1)
+
         self.treeView = TreeView(self.centralwidget)
         self.treeView.setObjectName(u"treeView")
         self.treeView.header().setVisible(False)
 
-        self.gridLayout.addWidget(self.treeView, 6, 0, 1, 6)
+        self.gridLayout.addWidget(self.treeView, 4, 0, 1, 6)
 
-        self.delete_item = QPushButton(self.centralwidget)
-        self.delete_item.setObjectName(u"delete_item")
+        self.add_selection = QPushButton(self.centralwidget)
+        self.add_selection.setObjectName(u"add_selection")
 
-        self.gridLayout.addWidget(self.delete_item, 1, 5, 4, 1)
+        self.gridLayout.addWidget(self.add_selection, 10, 4, 1, 1)
+
+        self.listView = AListView(self.centralwidget)
+        self.listView.setObjectName(u"listView")
+
+        self.gridLayout.addWidget(self.listView, 11, 0, 1, 6)
+
+        self.Plot_sel_ln = QPushButton(self.centralwidget)
+        self.Plot_sel_ln.setObjectName(u"Plot_sel_ln")
+
+        self.gridLayout.addWidget(self.Plot_sel_ln, 14, 4, 1, 1)
+
+        self.label_13 = QLabel(self.centralwidget)
+        self.label_13.setObjectName(u"label_13")
+
+        self.gridLayout.addWidget(self.label_13, 5, 3, 1, 1)
+
+        self.clear_sel_ln = QPushButton(self.centralwidget)
+        self.clear_sel_ln.setObjectName(u"clear_sel_ln")
+
+        self.gridLayout.addWidget(self.clear_sel_ln, 14, 5, 1, 1)
+
+        self.label_11 = QLabel(self.centralwidget)
+        self.label_11.setObjectName(u"label_11")
+
+        self.gridLayout.addWidget(self.label_11, 5, 0, 1, 1)
+
+        self.delete_selection = QPushButton(self.centralwidget)
+        self.delete_selection.setObjectName(u"delete_selection")
+
+        self.gridLayout.addWidget(self.delete_selection, 10, 5, 1, 1)
+
+        self.clear_mat_bubble = QPushButton(self.centralwidget)
+        self.clear_mat_bubble.setObjectName(u"clear_mat_bubble")
+
+        self.gridLayout.addWidget(self.clear_mat_bubble, 5, 2, 1, 1)
+
+        self.Plot_Prop_Chrt = QPushButton(self.centralwidget)
+        self.Plot_Prop_Chrt.setObjectName(u"Plot_Prop_Chrt")
+
+        self.gridLayout.addWidget(self.Plot_Prop_Chrt, 5, 1, 1, 1)
+
+        self.Plot_hulls = QPushButton(self.centralwidget)
+        self.Plot_hulls.setObjectName(u"Plot_hulls")
+
+        self.gridLayout.addWidget(self.Plot_hulls, 6, 1, 1, 1)
+
+        self.delete_fam_label = QPushButton(self.centralwidget)
+        self.delete_fam_label.setObjectName(u"delete_fam_label")
+
+        self.gridLayout.addWidget(self.delete_fam_label, 6, 5, 1, 1)
+
+        self.clear_hulls = QPushButton(self.centralwidget)
+        self.clear_hulls.setObjectName(u"clear_hulls")
+
+        self.gridLayout.addWidget(self.clear_hulls, 6, 2, 1, 1)
 
         self.label_4 = QLabel(self.centralwidget)
         self.label_4.setObjectName(u"label_4")
         self.label_4.setFont(font)
 
-        self.gridLayout.addWidget(self.label_4, 0, 0, 5, 2)
-
-        self.manage_item = QPushButton(self.centralwidget)
-        self.manage_item.setObjectName(u"manage_item")
-
-        self.gridLayout.addWidget(self.manage_item, 1, 4, 4, 1)
-
-        self.clear_hulls = QPushButton(self.centralwidget)
-        self.clear_hulls.setObjectName(u"clear_hulls")
-
-        self.gridLayout.addWidget(self.clear_hulls, 8, 2, 1, 1)
-
-        self.delete_fam_label = QPushButton(self.centralwidget)
-        self.delete_fam_label.setObjectName(u"delete_fam_label")
-
-        self.gridLayout.addWidget(self.delete_fam_label, 8, 5, 1, 1)
-
-        self.clear_mat_bubble = QPushButton(self.centralwidget)
-        self.clear_mat_bubble.setObjectName(u"clear_mat_bubble")
-
-        self.gridLayout.addWidget(self.clear_mat_bubble, 7, 2, 1, 1)
-
-        self.Plot_Prop_Chrt = QPushButton(self.centralwidget)
-        self.Plot_Prop_Chrt.setObjectName(u"Plot_Prop_Chrt")
-
-        self.gridLayout.addWidget(self.Plot_Prop_Chrt, 7, 1, 1, 1)
-
-        self.Plot_hulls = QPushButton(self.centralwidget)
-        self.Plot_hulls.setObjectName(u"Plot_hulls")
-
-        self.gridLayout.addWidget(self.Plot_hulls, 8, 1, 1, 1)
-
-        self.label_15 = QLabel(self.centralwidget)
-        self.label_15.setObjectName(u"label_15")
-
-        self.gridLayout.addWidget(self.label_15, 16, 3, 1, 1)
-
-        self.Plot_clear = QPushButton(self.centralwidget)
-        self.Plot_clear.setObjectName(u"Plot_clear")
-
-        self.gridLayout.addWidget(self.Plot_clear, 17, 4, 2, 2)
-
-        self.label_12 = QLabel(self.centralwidget)
-        self.label_12.setObjectName(u"label_12")
-
-        self.gridLayout.addWidget(self.label_12, 8, 0, 1, 1)
-
-        self.show_mat_label = QPushButton(self.centralwidget)
-        self.show_mat_label.setObjectName(u"show_mat_label")
-
-        self.gridLayout.addWidget(self.show_mat_label, 7, 4, 1, 1)
+        self.gridLayout.addWidget(self.label_4, 0, 0, 3, 2)
 
         self.show_fam_label = QPushButton(self.centralwidget)
         self.show_fam_label.setObjectName(u"show_fam_label")
 
-        self.gridLayout.addWidget(self.show_fam_label, 8, 4, 1, 1)
+        self.gridLayout.addWidget(self.show_fam_label, 6, 4, 1, 1)
+
+        self.Plot_clear = QPushButton(self.centralwidget)
+        self.Plot_clear.setObjectName(u"Plot_clear")
+
+        self.gridLayout.addWidget(self.Plot_clear, 15, 4, 2, 2)
+
+        self.label_15 = QLabel(self.centralwidget)
+        self.label_15.setObjectName(u"label_15")
+
+        self.gridLayout.addWidget(self.label_15, 14, 3, 1, 1)
+
+        self.show_mat_label = QPushButton(self.centralwidget)
+        self.show_mat_label.setObjectName(u"show_mat_label")
+
+        self.gridLayout.addWidget(self.show_mat_label, 5, 4, 1, 1)
+
+        self.label_12 = QLabel(self.centralwidget)
+        self.label_12.setObjectName(u"label_12")
+
+        self.gridLayout.addWidget(self.label_12, 6, 0, 1, 1)
 
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setObjectName(u"tabWidget")
@@ -269,15 +260,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.gridLayout_4 = QGridLayout()
         self.gridLayout_4.setObjectName(u"gridLayout_4")
-        self.label_17 = QLabel(self.tab)
-        self.label_17.setObjectName(u"label_17")
-
-        self.gridLayout_4.addWidget(self.label_17, 1, 0, 1, 1)
-
         self.label_18 = QLabel(self.tab)
         self.label_18.setObjectName(u"label_18")
 
         self.gridLayout_4.addWidget(self.label_18, 0, 0, 1, 1)
+
+        self.label_17 = QLabel(self.tab)
+        self.label_17.setObjectName(u"label_17")
+
+        self.gridLayout_4.addWidget(self.label_17, 1, 0, 1, 1)
 
         self.lineEdit_xaxis = QLineEdit(self.tab)
         self.lineEdit_xaxis.setObjectName(u"lineEdit_xaxis")
@@ -295,6 +286,11 @@ class Ui_MainWindow(object):
         self.lineEdit_yaxis.setSizePolicy(sizePolicy1)
 
         self.gridLayout_4.addWidget(self.lineEdit_yaxis, 1, 1, 1, 1)
+
+        self.axis_refresh_graphics = QPushButton(self.tab)
+        self.axis_refresh_graphics.setObjectName(u"axis_refresh_graphics")
+
+        self.gridLayout_4.addWidget(self.axis_refresh_graphics, 2, 1, 1, 1)
 
 
         self.horizontalLayout_4.addLayout(self.gridLayout_4)
@@ -359,11 +355,6 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.x_range_l, 0, 1, 1, 1)
 
-        self.Plot_refresh_graphics = QPushButton(self.plot_prop)
-        self.Plot_refresh_graphics.setObjectName(u"Plot_refresh_graphics")
-
-        self.gridLayout_2.addWidget(self.Plot_refresh_graphics, 2, 2, 1, 1)
-
         self.label_2 = QLabel(self.plot_prop)
         self.label_2.setObjectName(u"label_2")
 
@@ -381,6 +372,11 @@ class Ui_MainWindow(object):
         self.y_range_h.setMaximumSize(QSize(100, 16777215))
 
         self.gridLayout_2.addWidget(self.y_range_h, 1, 1, 1, 1)
+
+        self.Plot_refresh_graphics = QPushButton(self.plot_prop)
+        self.Plot_refresh_graphics.setObjectName(u"Plot_refresh_graphics")
+
+        self.gridLayout_2.addWidget(self.Plot_refresh_graphics, 2, 1, 1, 2)
 
 
         self.horizontalLayout_2.addLayout(self.gridLayout_2)
@@ -472,7 +468,12 @@ class Ui_MainWindow(object):
 
         self.tabWidget.addTab(self.label_property, "")
 
-        self.gridLayout.addWidget(self.tabWidget, 10, 0, 1, 6)
+        self.gridLayout.addWidget(self.tabWidget, 8, 0, 1, 6)
+
+        self.manage_item = QPushButton(self.centralwidget)
+        self.manage_item.setObjectName(u"manage_item")
+
+        self.gridLayout.addWidget(self.manage_item, 1, 4, 2, 2)
 
 
         self.horizontalLayout.addLayout(self.gridLayout)
@@ -494,7 +495,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1462, 23))
+        self.menubar.setGeometry(QRect(0, 0, 1462, 26))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuEdit = QMenu(self.menubar)
@@ -562,7 +563,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(2)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -605,41 +606,40 @@ class Ui_MainWindow(object):
         self.actionManageItem.setText(QCoreApplication.translate("MainWindow", u"Manage Item", None))
         self.actionCapture.setText(QCoreApplication.translate("MainWindow", u"Capture", None))
         self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About Qt...", None))
-        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Family label", None))
         self.label_16.setText("")
-        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Materials label", None))
-        self.Plot_sel_ln.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
+        self.label_14.setText(QCoreApplication.translate("MainWindow", u"Family label", None))
+        self.Refresh_List.setText(QCoreApplication.translate("MainWindow", u"Refresh List", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Selections Lines", None))
+        self.delete_mat_label.setText(QCoreApplication.translate("MainWindow", u"Delete all", None))
         self.add_selection.setText(QCoreApplication.translate("MainWindow", u"Add Selection", None))
-        self.delete_selection.setText(QCoreApplication.translate("MainWindow", u"Delete Selection", None))
+        self.Plot_sel_ln.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"Materials label", None))
         self.clear_sel_ln.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"Materials bubble", None))
-        self.delete_mat_label.setText(QCoreApplication.translate("MainWindow", u"Delete all", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"Selections Lines", None))
-        self.Refresh_List.setText(QCoreApplication.translate("MainWindow", u"Refresh List", None))
-        self.delete_item.setText(QCoreApplication.translate("MainWindow", u"Delete Item", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"List of Materials", None))
-        self.manage_item.setText(QCoreApplication.translate("MainWindow", u"Manage Item", None))
-        self.clear_hulls.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
-        self.delete_fam_label.setText(QCoreApplication.translate("MainWindow", u"Delete all", None))
+        self.delete_selection.setText(QCoreApplication.translate("MainWindow", u"Delete Selection", None))
         self.clear_mat_bubble.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
         self.Plot_Prop_Chrt.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
         self.Plot_hulls.setText(QCoreApplication.translate("MainWindow", u"Generate", None))
-        self.label_15.setText(QCoreApplication.translate("MainWindow", u"Selection line", None))
-        self.Plot_clear.setText(QCoreApplication.translate("MainWindow", u"Clear all", None))
-        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Family bubble", None))
-        self.show_mat_label.setText(QCoreApplication.translate("MainWindow", u"Show", None))
+        self.delete_fam_label.setText(QCoreApplication.translate("MainWindow", u"Delete all", None))
+        self.clear_hulls.setText(QCoreApplication.translate("MainWindow", u"Clear", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"List of Materials", None))
         self.show_fam_label.setText(QCoreApplication.translate("MainWindow", u"Show", None))
-        self.label_17.setText(QCoreApplication.translate("MainWindow", u"Y-axis Feature", None))
+        self.Plot_clear.setText(QCoreApplication.translate("MainWindow", u"Clear all", None))
+        self.label_15.setText(QCoreApplication.translate("MainWindow", u"Selection line", None))
+        self.show_mat_label.setText(QCoreApplication.translate("MainWindow", u"Show", None))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"Family bubble", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"X-axis Feature", None))
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"Y-axis Feature", None))
         self.lineEdit_xaxis.setText(QCoreApplication.translate("MainWindow", u"Modulus", None))
         self.lineEdit_yaxis.setText(QCoreApplication.translate("MainWindow", u"Strength", None))
+        self.axis_refresh_graphics.setText(QCoreApplication.translate("MainWindow", u"Refresh Plot", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Axis select", None))
         self.logRadio.setText(QCoreApplication.translate("MainWindow", u"LogScale", None))
         self.linearRadio.setText(QCoreApplication.translate("MainWindow", u"Linear", None))
         self.checkBox_cursor.setText(QCoreApplication.translate("MainWindow", u"Cursor lines", None))
-        self.Plot_refresh_graphics.setText(QCoreApplication.translate("MainWindow", u"Refresh Plot", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Y-axis Range", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"X-axis Range", None))
+        self.Plot_refresh_graphics.setText(QCoreApplication.translate("MainWindow", u"Refresh Plot", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.plot_prop), QCoreApplication.translate("MainWindow", u"Plot Property", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Family", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Font size (pt)", None))
@@ -648,6 +648,7 @@ class Ui_MainWindow(object):
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Material", None))
         self.Plot_refresh_label.setText(QCoreApplication.translate("MainWindow", u"Refresh Labels", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.label_property), QCoreApplication.translate("MainWindow", u"Label Property", None))
+        self.manage_item.setText(QCoreApplication.translate("MainWindow", u"Manage Item", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuEdit.setTitle(QCoreApplication.translate("MainWindow", u"Edit", None))
         self.menuView.setTitle(QCoreApplication.translate("MainWindow", u"View", None))
