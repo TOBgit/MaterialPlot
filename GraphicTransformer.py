@@ -20,6 +20,7 @@ class GraphicConfig():
         self.log_scale = True
         self.x_axis = "Modulus"
         self.y_axis = "Strength"
+        self.mat_selections = []
 
     def __getattribute__(self, key):
         """
