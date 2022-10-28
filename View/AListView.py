@@ -183,10 +183,10 @@ class AListView(QListView):
         for index in self.selectedIndexes():
             self.model.removeRow(index.row())
 
-    def popItem(self):
+    def popSelectedItem(self):
         if self.model.rowCount() == 0:
             return
-        self.model.removeRow(self.model.rowCount() - 1)
+        self._deleteItem()
         self.EditFinished.emit()
 
     def getData(self):

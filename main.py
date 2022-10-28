@@ -118,7 +118,7 @@ class MainWindow(QMainWindow):
         self.ui.listView.addItem()
 
     def onDelSelection(self):
-        self.ui.listView.popItem()
+        self.ui.listView.popSelectedItem()
 
     def onTextEdited(self, *args):
         self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
