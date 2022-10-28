@@ -9,6 +9,7 @@ hidden_imports = [
 
 datas = [
 	(os.path.join(curdir, "Data"), os.path.join(".", "Data")),
+	(os.path.join(curdir, "platforms"), os.path.join(".", "platforms")),
 
 ]
 
