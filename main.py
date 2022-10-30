@@ -120,6 +120,11 @@ class MainWindow(QMainWindow):
     def onDelSelection(self):
         self.ui.listView.popSelectedItem()
 
+    def onClickPlotSelLn(self):
+        for item in self.ui.listView.getData():
+            if item:
+                self.controller.drawSelectionLine(item)
+
     def onTextEdited(self, *args):
         self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
 
@@ -201,9 +206,6 @@ class MainWindow(QMainWindow):
             self.csv_fpath = filename
         self.controller = MatPlotController(self, self.csv_fpath)
         self.ui.familyColumn.addItems(self.controller.model.getStringColumns())
-
-    def onClickPlotSelLn(self):
-        self.controller.drawSelectionLine()
 
     def onActionClear(self):
         self.controller.clearScene()

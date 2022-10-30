@@ -4,13 +4,17 @@ from typing import List
 from scipy.spatial import ConvexHull
 
 
-# TODO(tienan): consider make general point and polyline classes if more geometry usages are needed.
-class straightLine:
-    def __init__(self, x0, y0, x1, y1):
-        self.x0 = x0
-        self.y0 = y0
-        self.x1 = x1
-        self.y1 = y1
+class selectionLine:
+    '''
+    Used to describe a selection line on log-scale.
+    # (a1 * (x ^ a2)) / (b1 * (y ^ b2)) = c
+    '''
+    def __init__(self, a1, a2, b1, b2, c):
+        self.a1 = a1
+        self.a2 = a2
+        self.b1 = b1
+        self.b2 = b2
+        self.c = c
 
 class simpleEllipse:
     '''

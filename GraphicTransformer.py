@@ -1,7 +1,7 @@
 from math import log10
 from typing import List
 
-from AlgorithmUtils import ellipseHull, simpleEllipse, straightLine
+from AlgorithmUtils import ellipseHull, simpleEllipse
 from DataModel import MaterialItem
 from View.ErrorWidget import simpleErrorPopUp
 
@@ -85,6 +85,11 @@ class GraphicTransformer():
         else:
             return x0, y0, x1, y1
 
+    def pointTransform(self, x0, y0):
+        if self.config.log_scale:
+            return log10(x0), log10(y0)
+        else:
+            return x0, y0
     #
     # Private
     #

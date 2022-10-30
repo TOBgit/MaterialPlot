@@ -1,10 +1,12 @@
 # -*- coding:utf-8 -*-
-import PySide2.QtGui
-from PySide2.QtWidgets import QListView, QStyledItemDelegate, QCheckBox, QLineEdit, QLabel, QHBoxLayout, QFrame, QMenu, QAction
+import math
+
 from PySide2.QtCore import QPointF, QRectF, Qt, Signal, QModelIndex
 from PySide2.QtGui import QTransform, QStandardItemModel, QStandardItem
+from PySide2.QtWidgets import QListView, QStyledItemDelegate, QCheckBox, QLineEdit, QLabel, QHBoxLayout, QFrame, QMenu, QAction
+
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines
-import math
+from AlgorithmUtils import selectionLine
 
 class ListItemModel(QStandardItemModel):
     pass
@@ -27,14 +29,16 @@ class ListItem(QStandardItem):
         self.setData(visible, self.ROLE_V)
 
     def exportData(self):
-        return {
-            "a1": self.data(self.ROLE_A1),
-            "b1": self.data(self.ROLE_B1),
-            "b2": self.data(self.ROLE_B2),
-            "a2": self.data(self.ROLE_A2),
-            "c": self.data(self.ROLE_C),
-            "visible": self.data(self.ROLE_V)
-        }
+        '''
+        Returns the selection line to be drawn. If the item is set non-visible, return None.
+        '''
+        if not self.data(self.ROLE_V):
+            return None
+        return selectionLine(a1 = self.data(self.ROLE_A1),
+                             a2 = self.data(self.ROLE_A2),
+                             b1 = self.data(self.ROLE_B1),
+                             b2 = self.data(self.ROLE_B2),
+                             c = self.data(self.ROLE_C))
 
     def data(self, role):
         if role == Qt.DisplayRole:
