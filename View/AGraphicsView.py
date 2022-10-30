@@ -14,6 +14,7 @@ class AGraphicsView(QGraphicsView):
     ITEM_TYPE_ELLIPSE = "Ellipse"
     ITEM_TYPE_HULLLABEL = "HullLabel"
     ITEM_TYPE_ELLIPSELABEL = "EllipseLabel"
+    ITEM_TYPE_SELECTION_LINE = "SelectionLine"
 
     def __init__(self, parent):
         super(AGraphicsView, self).__init__(parent)

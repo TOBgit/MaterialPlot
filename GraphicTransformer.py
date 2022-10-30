@@ -1,14 +1,13 @@
 from math import log10
 from typing import List
 
-from AlgorithmUtils import ellipseHull, simpleEllipse
+from AlgorithmUtils import ellipseHull, simpleEllipse, straightLine
 from DataModel import MaterialItem
-from PySide2.QtWidgets import QMessageBox
 from View.ErrorWidget import simpleErrorPopUp
 
 class GraphicConfig():
     '''
-    Describe the plot features.
+    Describes the plot features.
     '''
 
     def __init__(self):
@@ -77,12 +76,21 @@ class GraphicTransformer():
                            self.config.expend_ratio,
                            self.config.hull_sampling_step)
 
+    def lineTransform(self, x0, y0, x1, y1):
+        '''
+        Converts a straight line, described by its two end points, to the targeted scale.
+        '''
+        if self.config.log_scale:
+            return log10(x0), log10(y0), log10(x1), log10(y1)
+        else:
+            return x0, y0, x1, y1
+
     #
     # Private
     #
     def convertMatToSimpleEllipse(self, mat_item: MaterialItem):
         '''
-        Convert an material item to a pure geometry object.
+        Converts an material item to a pure geometry object.
         '''
         width = mat_item.get(self.config.x_axis, "_sd")
         height = mat_item.get(self.config.y_axis, "_sd")

@@ -1,11 +1,16 @@
 import numpy as np
-from math import log10
 from typing import List
 
 from scipy.spatial import ConvexHull
 
-from DataModel import MaterialItem
 
+# TODO(tienan): consider make general point and polyline classes if more geometry usages are needed.
+class straightLine:
+    def __init__(self, x0, y0, x1, y1):
+        self.x0 = x0
+        self.y0 = y0
+        self.x1 = x1
+        self.y1 = y1
 
 class simpleEllipse:
     '''

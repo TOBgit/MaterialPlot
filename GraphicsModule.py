@@ -139,16 +139,11 @@ class MatPlotController(object):
             self.semantic_items.append(items)
             self.view.addItemByType(self.view.ITEM_TYPE_HULL, poly)
 
-    def drawLine(self):
-        # fake example, make your draw with your data
-        self.scene.addLine(0, 0, 100, 400, self.pen)
-        for i in range(self.model.getCount()):
-            matitem = self.model.getItem(i)
-            mean = matitem.getMean("Param3")
-            std = matitem.getStd("Param3")
-            # draw a cross
-            graphicitem = self.scene.addLine(mean - 10, std - 10, mean + 10, std + 10, self.pen)
-            graphicitem2 = self.scene.addLine(mean - 10, std + 10, mean + 10, std - 10, self.pen)
+    def drawSelectionLine(self):
+        # for test
+        x0, y0, x1, y1 = self.transformer.lineTransform(1., 1., 10. ,10.)
+        line = self.scene.addLine(x0, y0, x1, y1, self.pen)
+        self.view.addItemByType(self.view.ITEM_TYPE_SELECTION_LINE, line)
 
     def updateGraphicItems(self):
         '''

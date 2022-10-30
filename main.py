@@ -203,7 +203,7 @@ class MainWindow(QMainWindow):
         self.ui.familyColumn.addItems(self.controller.model.getStringColumns())
 
     def onClickPlotSelLn(self):
-        self.controller.drawLine()
+        self.controller.drawSelectionLine()
 
     def onActionClear(self):
         self.controller.clearScene()
