@@ -4,7 +4,7 @@ from typing import List
 import pandas as pd
 import numpy as np
 
-from SyntaxReader.Interpreter import evaluateWithData
+from SyntaxReader.interpreter import evaluateWithData
 
 class MaterialItem(object):
     """
