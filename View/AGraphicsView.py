@@ -35,6 +35,10 @@ class AGraphicsView(QGraphicsView):
         self.graphicItems = []
         self.typedGraphicItems = {}
 
+        self.altPressed = False
+        self.ctrlPressed = False
+        self.shiftPressed = False
+
     def setAxisLabel(self, xlabel, ylabel):
         if self._hMarkline:
             self._hMarkline.setAxisLabel(xlabel)
@@ -113,6 +117,21 @@ class AGraphicsView(QGraphicsView):
         # todo: performance bottleneck
         return self.mapToScene(self.rect()).boundingRect()
 
+    def keyPressEvent(self, event:PySide2.QtGui.QKeyEvent):
+        if event.key() == PySide2.QtCore.Qt.Key_Control:
+            self.ctrlPressed = True
+        elif event.key() == PySide2.QtCore.Qt.Key_Alt:
+            self.altPressed = True
+        elif event.key() == PySide2.QtCore.Qt.Key_Shift:
+            self.shiftPressed = True
+    def keyReleaseEvent(self, event:PySide2.QtGui.QKeyEvent):
+        if event.key() == PySide2.QtCore.Qt.Key_Control:
+            self.ctrlPressed = False
+        elif event.key() == PySide2.QtCore.Qt.Key_Alt:
+            self.altPressed = False
+        elif event.key() == PySide2.QtCore.Qt.Key_Shift:
+            self.shiftPressed = False
+
     def mouseMoveEvent(self, mouseEvent):
         mousePos = QPointF(mouseEvent.pos())
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
@@ -135,12 +154,16 @@ class AGraphicsView(QGraphicsView):
     def wheelEvent(self, mouseEvent: PySide2.QtGui.QWheelEvent):
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
             return
+        if self.shiftPressed and self.altPressed:
+            return
         angleDelta = mouseEvent.angleDelta()
         delta = angleDelta.x() + angleDelta.y()
-        self.v_scaleValue += delta * 0.002
-        self.v_scaleValue = max(- 25, min(10.0, self.v_scaleValue))
-        self.h_scaleValue += delta * 0.002
-        self.h_scaleValue = max(- 25, min(10.0, self.h_scaleValue))
+        if not self.altPressed:
+            self.v_scaleValue += delta * 0.002
+            self.v_scaleValue = max(- 25, min(10.0, self.v_scaleValue))
+        if not self.shiftPressed:
+            self.h_scaleValue += delta * 0.002
+            self.h_scaleValue = max(- 25, min(10.0, self.h_scaleValue))
 
         v_oldScale = self.v_ViewScale
         h_oldScale = self.h_ViewScale
