@@ -3,7 +3,7 @@ import PySide2.QtGui
 from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtGui import QTransform
-from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, MARKTRACK_MODE_LINEAR, MARKTRACK_MODE_LOGSCALE
+from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, MARKTRACK_MODE_LINEAR, MARKTRACK_MODE_LOGSCALE, TICKMARK_BAR_HEIGHT, TICKMARK_BAR_WIDTH
 import math
 
 FIT_EXPAND_MARGIN_RATIO = 0.1
@@ -193,11 +193,16 @@ class AGraphicsView(QGraphicsView):
 
     def setRange(self, xmin, xmax, ymin, ymax):
         # todo: convert data to range
+        rect = self.rect()
+        width = rect.width()
+        height = rect.height()
         if self.axisMode == MARKTRACK_MODE_LOGSCALE:
             xmin = MarkLine.log2lin(xmin)
             xmax = MarkLine.log2lin(xmax)
             ymin = MarkLine.log2lin(ymin)
             ymax = MarkLine.log2lin(ymax)
+        xmin -= (xmax - xmin) * TICKMARK_BAR_WIDTH / width
+        ymin -= (ymax - ymin) * TICKMARK_BAR_HEIGHT / height
         self.viewPosInScene.setX((xmin + xmax) * 0.5)
         self.viewPosInScene.setY((ymin + ymax) * 0.5)
         self.lastViewPosInScene = self.viewPosInScene
@@ -213,6 +218,7 @@ class AGraphicsView(QGraphicsView):
         if not self.typedGraphicItems:
             self.resetView()
             return
+        originrect = self.rect()
         rect = QRectF()
         for itemtype in self.typedGraphicItems:
             for item in self.typedGraphicItems[itemtype]:
@@ -224,12 +230,17 @@ class AGraphicsView(QGraphicsView):
         #     rect.setWidth(rect.height())
         # else:
         #     rect.setHeight(rect.width())
+        widthoffset = rect.width() * TICKMARK_BAR_WIDTH / originrect.width()
+        heightoffset = rect.height() * TICKMARK_BAR_HEIGHT / originrect.height()
+        rect.setLeft(rect.left() - widthoffset)
+        rect.setWidth(rect.width() + widthoffset)
+        rect.setTop(rect.top() - heightoffset)
+        rect.setHeight(rect.height() + heightoffset)
         widthmargin = rect.width() * FIT_EXPAND_MARGIN_RATIO
         rect.setWidth(rect.width() + widthmargin)
         rect.setHeight(rect.height() + widthmargin)
         rect.setTop(rect.top() - widthmargin * 0.8)
         rect.setLeft(rect.left() - widthmargin * 0.8)
-        originrect = self.rect()
         self.v_ViewScale = originrect.height() / rect.height()
         self.h_ViewScale = originrect.width() / rect.width()
         self.v_scaleValue = math.log(self.v_ViewScale)
