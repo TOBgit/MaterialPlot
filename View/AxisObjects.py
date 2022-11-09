@@ -53,7 +53,8 @@ class MarkLine(QGraphicsObject):
     def __init__(self, view):
         super(MarkLine, self).__init__()
         self.view = view
-        self.view_scale = 100.0  # 画布缩放倍率
+        self.v_view_scale = 100.0
+        self.h_view_scale = 100.0  # 画布缩放倍率
         self.textitem = None
         self._axisMode = MARKTRACK_MODE_LOGSCALE
         self._markTextItem = []
@@ -82,7 +83,7 @@ class MarkLine(QGraphicsObject):
     @property
     def axisMin(self):
         rect = self.view.getViewRect()
-        return rect.left() + TICKMARK_BAR_WIDTH / self.view_scale
+        return rect.left() + TICKMARK_BAR_WIDTH / self.h_view_scale
 
     @property
     def axisMax(self):
@@ -93,8 +94,8 @@ class MarkLine(QGraphicsObject):
         rect = self.view.getViewRect()
         if a < self.axisMin:
             return
-        return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MAJORTICK_HEIGHT) / self.view_scale, a,
-                      rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale)
+        return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MAJORTICK_HEIGHT) / self.v_view_scale, a,
+                      rect.top() + TICKMARK_BAR_HEIGHT / self.v_view_scale)
 
     def transFormLogMinorCoord(self, a, basea=None, base=None):
         if self._axisMode == MARKTRACK_MODE_LOGSCALE and basea is not None:
@@ -108,13 +109,13 @@ class MarkLine(QGraphicsObject):
 
         if a < self.axisMin:
             return
-        return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MINORTICK_HEIGHT) / self.view_scale, a,
-                      rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale)
+        return QLineF(a, rect.top() + (TICKMARK_BAR_HEIGHT - MINORTICK_HEIGHT) / self.v_view_scale, a,
+                      rect.top() + TICKMARK_BAR_HEIGHT / self.v_view_scale)
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.7) / self.view_scale
-        x = a - 20 / self.view_scale
+        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.7) / self.v_view_scale
+        x = a - 20 / self.h_view_scale
         if a < self.axisMin:
             return
         return QPointF(x, y)
@@ -336,19 +337,19 @@ class MarkLine(QGraphicsObject):
     def paintAxisLabel(self, painter):
         rect = self.view.getViewRect()
         x = rect.center().x()
-        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.4) / self.view_scale
+        y = rect.top() + (TICKMARK_BAR_HEIGHT *0.4) / self.v_view_scale
         self.labelitem.setPos(x, y)
         self.labelitem.setPlainText(self.label)
         self.labelitem.show()
 
     def getBorderLine(self, rect):
-        y = float(rect.top()) + TICKMARK_BAR_HEIGHT / self.view_scale
+        y = float(rect.top()) + TICKMARK_BAR_HEIGHT / self.v_view_scale
         return QLineF(self.axisMin, y, rect.right(), y)
 
     def boundingRect(self):
         """交互范围."""
         rect = self.view.getViewRect()
-        height = TICKMARK_BAR_HEIGHT / self.view_scale
+        height = TICKMARK_BAR_HEIGHT / self.v_view_scale
         newRect = QRectF(rect.left(), rect.top(), rect.width(), height)
         return newRect
 
@@ -357,8 +358,9 @@ class MarkLine(QGraphicsObject):
             return 1.0
         return self.view.getScale()
 
-    def setViewScale(self, scale):
-        self.view_scale = scale
+    def setViewScale(self, v_scale, h_scale):
+        self.v_view_scale = v_scale
+        self.h_view_scale = h_scale
         self.updateMark()
         self.update()
 
@@ -369,18 +371,18 @@ class VerticalMarkLine(MarkLine):
     def boundingRect(self):
         """交互范围."""
         rect = self.view.getViewRect()
-        width = TICKMARK_BAR_WIDTH / self.view_scale
+        width = TICKMARK_BAR_WIDTH / self.h_view_scale
         newRect = QRectF(rect.left(), rect.top(), width, rect.height())
         return newRect
 
     def getBorderLine(self, rect):
-        x = float(rect.left()) + TICKMARK_BAR_WIDTH / self.view_scale
+        x = float(rect.left()) + TICKMARK_BAR_WIDTH / self.h_view_scale
         return QLineF(x, self.axisMin, x, rect.bottom())
 
     def paintAxisLabel(self, painter):
         rect = self.view.getViewRect()
         y = rect.center().y()
-        x = rect.left() + (TICKMARK_BAR_WIDTH *0.05) / self.view_scale
+        x = rect.left() + (TICKMARK_BAR_WIDTH *0.05) / self.h_view_scale
         self.labelitem.setPos(x, y)
         self.labelitem.setPlainText(self.label)
         self.labelitem.show()
@@ -388,7 +390,7 @@ class VerticalMarkLine(MarkLine):
     @property
     def axisMin(self):
         rect = self.view.getViewRect()
-        return rect.top() + TICKMARK_BAR_HEIGHT / self.view_scale
+        return rect.top() + TICKMARK_BAR_HEIGHT / self.v_view_scale
 
     @property
     def axisMax(self):
@@ -399,8 +401,8 @@ class VerticalMarkLine(MarkLine):
         rect = self.view.getViewRect()
         if a < self.axisMin:
             return
-        return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MAJORTICK_HEIGHT) / self.view_scale, a,
-                      rect.left() + TICKMARK_BAR_WIDTH / self.view_scale, a)
+        return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MAJORTICK_HEIGHT) / self.h_view_scale, a,
+                      rect.left() + TICKMARK_BAR_WIDTH / self.h_view_scale, a)
 
     def makeMinorLine(self, a, basea=None, base=None):
         rect = self.view.getViewRect()
@@ -408,13 +410,13 @@ class VerticalMarkLine(MarkLine):
         a = self.transFormLogMinorCoord(a, basea, base)
         if a < self.axisMin:
             return
-        return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MINORTICK_HEIGHT) / self.view_scale, a,
-                      rect.left() + TICKMARK_BAR_WIDTH / self.view_scale, a)
+        return QLineF(rect.left() + (TICKMARK_BAR_WIDTH - MINORTICK_HEIGHT) / self.h_view_scale, a,
+                      rect.left() + TICKMARK_BAR_WIDTH / self.h_view_scale, a)
 
     def makeTextPos(self, a):
         rect = self.view.getViewRect()
-        x = rect.left() + (TICKMARK_BAR_WIDTH *0.3)/ self.view_scale
-        y = a + 10 / self.view_scale
+        x = rect.left() + (TICKMARK_BAR_WIDTH *0.3)/ self.h_view_scale
+        y = a + 10 / self.v_view_scale
         if a < self.axisMin:
             return
         return QPointF(x, y)
@@ -424,7 +426,8 @@ class IndicatorLines(QGraphicsObject):
 
     def __init__(self, view):
         super(IndicatorLines, self).__init__()
-        self.view_scale = 100.0
+        self.v_view_scale = 100.0
+        self.h_view_scale = 100.0
         self.view = view
         self._viewRect = None
         self._axisMode = MARKTRACK_MODE_LOGSCALE
@@ -444,8 +447,9 @@ class IndicatorLines(QGraphicsObject):
         self.setZValue(400)
         self.setFlags(QGraphicsItem.ItemSendsScenePositionChanges)
 
-    def setViewScale(self, scale):
-        self.view_scale = scale
+    def setViewScale(self, v_scale, h_scale):
+        self.v_view_scale = v_scale
+        self.h_view_scale = h_scale
         self.onHoverChanged(self.hoverPos)
 
     def boundingRect(self):
@@ -463,7 +467,7 @@ class IndicatorLines(QGraphicsObject):
         self.hoverPos = pos
         self.vline = QLineF(pos.x(), rect.top(), pos.x(), rect.bottom())
         self.hline = QLineF(rect.left(), pos.y(), rect.right(), pos.y())
-        self.textitem.setPos(pos + QPointF(0, - 25 / self.view_scale))
+        self.textitem.setPos(pos + QPointF(0, - 25 / self.v_view_scale))
         if self._axisMode == MARKTRACK_MODE_LOGSCALE:
 
             self.textitem.setPlainText("%g, %g" % (10 ** (pos.x()), 10 ** (pos.y())))
@@ -538,5 +542,5 @@ class VShadowMarkLine(HShadowMarkLine):
         return QLineF(rect.left(), a, rect.right(), a)
 
     def getBorderLine(self, rect):
-        x = float(rect.right() - 3.0 / self.view_scale)
+        x = float(rect.right() - 3.0 / self.h_view_scale)
         return QLineF(x, rect.top(), x, rect.bottom())

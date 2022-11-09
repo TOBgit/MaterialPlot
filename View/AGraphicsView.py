@@ -19,8 +19,10 @@ class AGraphicsView(QGraphicsView):
     def __init__(self, parent):
         super(AGraphicsView, self).__init__(parent)
         # initialize
-        self.viewScale = 100.0
-        self.scaleValue = math.log(self.viewScale)
+        self.h_ViewScale = 100.0
+        self.v_ViewScale = 100.0
+        self.h_scaleValue = math.log(self.h_ViewScale)
+        self.v_scaleValue = math.log(self.v_ViewScale)
         self.rightDrag = False
 
         self.viewPosInScene = self.initPos
@@ -116,8 +118,9 @@ class AGraphicsView(QGraphicsView):
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
             self.rightDrag = True
             diffvec = QPointF(self.lastPos) - mousePos
-            diffvec.setY(-diffvec.y())
-            self.viewPosInScene = self.lastViewPosInScene + diffvec / self.viewScale
+            diffvec.setY(-diffvec.y() / self.v_ViewScale)
+            diffvec.setX(diffvec.x() / self.h_ViewScale)
+            self.viewPosInScene = self.lastViewPosInScene + diffvec
 
             self.resetSceneRect()
         if self._indicator:
@@ -134,26 +137,33 @@ class AGraphicsView(QGraphicsView):
             return
         angleDelta = mouseEvent.angleDelta()
         delta = angleDelta.x() + angleDelta.y()
-        self.scaleValue += delta * 0.002
-        self.scaleValue = max(- 25, min(10.0, self.scaleValue))
+        self.v_scaleValue += delta * 0.002
+        self.v_scaleValue = max(- 25, min(10.0, self.v_scaleValue))
+        self.h_scaleValue += delta * 0.002
+        self.h_scaleValue = max(- 25, min(10.0, self.h_scaleValue))
 
-        oldScale = self.viewScale
-        self.viewScale = math.exp(self.scaleValue)
+        v_oldScale = self.v_ViewScale
+        h_oldScale = self.h_ViewScale
+        self.h_ViewScale = math.exp(self.h_scaleValue)
+        self.v_ViewScale = math.exp(self.v_scaleValue)
         # if self.scene():  # 通知scene
         #     self.scene().onViewScale(self.viewScale)
-        scale = self.viewScale / oldScale
+        v_scale = self.v_ViewScale / v_oldScale
+        h_scale = self.h_ViewScale / h_oldScale
 
         mousePos = self.mapToScene(mouseEvent.pos())
         vec = QPointF(self.viewPosInScene - mousePos)
-        self.lastViewPosInScene = self.viewPosInScene = mousePos + vec / scale
+        vec.setY(vec.y() / v_scale)
+        vec.setX(vec.x() / h_scale)
+        self.lastViewPosInScene = self.viewPosInScene = mousePos + vec
         self.resetSceneRect()
 
         # 刷新显示区域
-        self._hMarkline.setViewScale(self.viewScale)
-        self._vMarkline.setViewScale(self.viewScale)
-        self._hsMarkline.setViewScale(self.viewScale)
-        self._vsMarkline.setViewScale(self.viewScale)
-        self._indicator.setViewScale(self.viewScale)
+        self._hMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+        self._vMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+        self._hsMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+        self._vsMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+        self._indicator.setViewScale(self.v_ViewScale, self.h_ViewScale)
 
         return super(AGraphicsView, self).wheelEvent(mouseEvent)
 
@@ -168,25 +178,29 @@ class AGraphicsView(QGraphicsView):
                     continue
                 bb = item.boundingRect()
                 rect = rect.united(bb)
-        if rect.width() < rect.height():
-            rect.setWidth(rect.height())
-        else:
-            rect.setHeight(rect.width())
+        # if rect.width() < rect.height():
+        #     rect.setWidth(rect.height())
+        # else:
+        #     rect.setHeight(rect.width())
         widthmargin = rect.width() * FIT_EXPAND_MARGIN_RATIO
         rect.setWidth(rect.width() + widthmargin)
         rect.setHeight(rect.height() + widthmargin)
         rect.setTop(rect.top() - widthmargin * 0.8)
         rect.setLeft(rect.left() - widthmargin * 0.8)
         originrect = self.rect()
-        self.viewScale = originrect.height() / rect.height()
-        self.scaleValue = math.log(self.viewScale)
+        self.v_ViewScale = originrect.height() / rect.height()
+        self.h_ViewScale = originrect.width() / rect.width()
+        self.v_scaleValue = math.log(self.v_ViewScale)
+        self.h_scaleValue = math.log(self.h_ViewScale)
         self.viewPosInScene = self.lastViewPosInScene = QPointF((rect.left() + rect.right()) * 0.5,
                                                                 (rect.top() + rect.bottom()) * 0.5)
         self.resetSceneRect()
 
     def resetView(self):
-        self.viewScale = 100.0
-        self.scaleValue = math.log(self.viewScale)
+        self.v_ViewScale = 100.0
+        self.h_ViewScale = 100.0
+        self.h_scaleValue = math.log(self.h_ViewScale)
+        self.v_scaleValue = math.log(self.v_ViewScale)
         self.viewPosInScene = self.initPos
         self.lastViewPosInScene = self.initPos
         self.lastPos = QPointF(0, 0)
@@ -196,11 +210,11 @@ class AGraphicsView(QGraphicsView):
     def refreshMarks(self):
         # 刷新显示区域
         if self._hMarkline:
-            self._hMarkline.setViewScale(self.viewScale)
-            self._vMarkline.setViewScale(self.viewScale)
-            self._hsMarkline.setViewScale(self.viewScale)
-            self._vsMarkline.setViewScale(self.viewScale)
-            self._indicator.setViewScale(self.viewScale)
+            self._hMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+            self._vMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+            self._hsMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+            self._vsMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
+            self._indicator.setViewScale(self.v_ViewScale, self.h_ViewScale)
 
             self._hMarkline.update()
             self._vMarkline.update()
@@ -217,16 +231,16 @@ class AGraphicsView(QGraphicsView):
 
     def resetSceneRect(self):
         rect = self.rect()
-        width = rect.width() / self.viewScale
+        width = rect.width() / self.h_ViewScale
 
-        height = rect.height() / self.viewScale
+        height = rect.height() / self.v_ViewScale
 
         rect = QRectF(self.viewPosInScene.x() - width / 2.0, self.viewPosInScene.y() - height / 2.0, width, height)
         # self.scene().setScale(self.viewScale)
         self.setSceneRect(rect)
 
         trans = QTransform()
-        trans.scale(self.viewScale, -self.viewScale)
+        trans.scale(self.h_ViewScale, -self.v_ViewScale)
         self.setTransform(trans)
         # for item in self.graphicItems:
         #     if isinstance(item, QGraphicsTextItem):
