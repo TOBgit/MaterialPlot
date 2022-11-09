@@ -307,20 +307,23 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.gridLayout_2 = QGridLayout()
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.logRadio = QRadioButton(self.plot_prop)
-        self.buttonGroup = QButtonGroup(MainWindow)
-        self.buttonGroup.setObjectName(u"buttonGroup")
-        self.buttonGroup.addButton(self.logRadio)
-        self.logRadio.setObjectName(u"logRadio")
-        self.logRadio.setChecked(True)
+        self.Plot_refresh_graphics = QPushButton(self.plot_prop)
+        self.Plot_refresh_graphics.setObjectName(u"Plot_refresh_graphics")
 
-        self.gridLayout_2.addWidget(self.logRadio, 3, 1, 2, 1)
+        self.gridLayout_2.addWidget(self.Plot_refresh_graphics, 2, 2, 1, 2)
+
+        self.label = QLabel(self.plot_prop)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
 
         self.linearRadio = QRadioButton(self.plot_prop)
+        self.buttonGroup = QButtonGroup(MainWindow)
+        self.buttonGroup.setObjectName(u"buttonGroup")
         self.buttonGroup.addButton(self.linearRadio)
         self.linearRadio.setObjectName(u"linearRadio")
 
-        self.gridLayout_2.addWidget(self.linearRadio, 3, 2, 2, 1)
+        self.gridLayout_2.addWidget(self.linearRadio, 3, 3, 2, 1)
 
         self.checkBox_cursor = QCheckBox(self.plot_prop)
         self.checkBox_cursor.setObjectName(u"checkBox_cursor")
@@ -328,24 +331,23 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.checkBox_cursor, 3, 0, 2, 1)
 
-        self.y_range_l = QLineEdit(self.plot_prop)
-        self.y_range_l.setObjectName(u"y_range_l")
+        self.x_range_h = QLineEdit(self.plot_prop)
+        self.x_range_h.setObjectName(u"x_range_h")
         sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
         sizePolicy3.setHorizontalStretch(0)
         sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.y_range_l.sizePolicy().hasHeightForWidth())
-        self.y_range_l.setSizePolicy(sizePolicy3)
-        self.y_range_l.setMaximumSize(QSize(100, 16777215))
-
-        self.gridLayout_2.addWidget(self.y_range_l, 1, 2, 1, 1)
-
-        self.x_range_h = QLineEdit(self.plot_prop)
-        self.x_range_h.setObjectName(u"x_range_h")
         sizePolicy3.setHeightForWidth(self.x_range_h.sizePolicy().hasHeightForWidth())
         self.x_range_h.setSizePolicy(sizePolicy3)
         self.x_range_h.setMaximumSize(QSize(100, 16777215))
 
-        self.gridLayout_2.addWidget(self.x_range_h, 0, 2, 1, 1)
+        self.gridLayout_2.addWidget(self.x_range_h, 0, 3, 1, 1)
+
+        self.logRadio = QRadioButton(self.plot_prop)
+        self.buttonGroup.addButton(self.logRadio)
+        self.logRadio.setObjectName(u"logRadio")
+        self.logRadio.setChecked(True)
+
+        self.gridLayout_2.addWidget(self.logRadio, 3, 2, 2, 1)
 
         self.x_range_l = QLineEdit(self.plot_prop)
         self.x_range_l.setObjectName(u"x_range_l")
@@ -353,17 +355,12 @@ class Ui_MainWindow(object):
         self.x_range_l.setSizePolicy(sizePolicy3)
         self.x_range_l.setMaximumSize(QSize(100, 16777215))
 
-        self.gridLayout_2.addWidget(self.x_range_l, 0, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.x_range_l, 0, 2, 1, 1)
 
         self.label_2 = QLabel(self.plot_prop)
         self.label_2.setObjectName(u"label_2")
 
         self.gridLayout_2.addWidget(self.label_2, 1, 0, 1, 1)
-
-        self.label = QLabel(self.plot_prop)
-        self.label.setObjectName(u"label")
-
-        self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
 
         self.y_range_h = QLineEdit(self.plot_prop)
         self.y_range_h.setObjectName(u"y_range_h")
@@ -371,12 +368,15 @@ class Ui_MainWindow(object):
         self.y_range_h.setSizePolicy(sizePolicy3)
         self.y_range_h.setMaximumSize(QSize(100, 16777215))
 
-        self.gridLayout_2.addWidget(self.y_range_h, 1, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.y_range_h, 1, 3, 1, 1)
 
-        self.Plot_refresh_graphics = QPushButton(self.plot_prop)
-        self.Plot_refresh_graphics.setObjectName(u"Plot_refresh_graphics")
+        self.y_range_l = QLineEdit(self.plot_prop)
+        self.y_range_l.setObjectName(u"y_range_l")
+        sizePolicy3.setHeightForWidth(self.y_range_l.sizePolicy().hasHeightForWidth())
+        self.y_range_l.setSizePolicy(sizePolicy3)
+        self.y_range_l.setMaximumSize(QSize(100, 16777215))
 
-        self.gridLayout_2.addWidget(self.Plot_refresh_graphics, 2, 1, 1, 2)
+        self.gridLayout_2.addWidget(self.y_range_l, 1, 2, 1, 1)
 
 
         self.horizontalLayout_2.addLayout(self.gridLayout_2)
@@ -495,7 +495,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1462, 26))
+        self.menubar.setGeometry(QRect(0, 0, 1462, 23))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuEdit = QMenu(self.menubar)
@@ -563,7 +563,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(1)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -634,12 +634,12 @@ class Ui_MainWindow(object):
         self.lineEdit_yaxis.setText(QCoreApplication.translate("MainWindow", u"Strength", None))
         self.axis_refresh_graphics.setText(QCoreApplication.translate("MainWindow", u"Refresh Plot", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Axis select", None))
-        self.logRadio.setText(QCoreApplication.translate("MainWindow", u"LogScale", None))
+        self.Plot_refresh_graphics.setText(QCoreApplication.translate("MainWindow", u"Refresh Plot", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"X-axis Range", None))
         self.linearRadio.setText(QCoreApplication.translate("MainWindow", u"Linear", None))
         self.checkBox_cursor.setText(QCoreApplication.translate("MainWindow", u"Cursor lines", None))
+        self.logRadio.setText(QCoreApplication.translate("MainWindow", u"LogScale", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Y-axis Range", None))
-        self.label.setText(QCoreApplication.translate("MainWindow", u"X-axis Range", None))
-        self.Plot_refresh_graphics.setText(QCoreApplication.translate("MainWindow", u"Refresh Plot", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.plot_prop), QCoreApplication.translate("MainWindow", u"Plot Property", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Family", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Font size (pt)", None))
