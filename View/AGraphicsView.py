@@ -3,7 +3,7 @@ import PySide2.QtGui
 from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtGui import QTransform
-from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines
+from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, MARKTRACK_MODE_LINEAR, MARKTRACK_MODE_LOGSCALE
 import math
 
 FIT_EXPAND_MARGIN_RATIO = 0.1
@@ -23,6 +23,7 @@ class AGraphicsView(QGraphicsView):
         self.v_ViewScale = 100.0
         self.h_scaleValue = math.log(self.h_ViewScale)
         self.v_scaleValue = math.log(self.v_ViewScale)
+        self.axisMode = MARKTRACK_MODE_LOGSCALE
         self.rightDrag = False
 
         self.viewPosInScene = self.initPos
@@ -76,6 +77,7 @@ class AGraphicsView(QGraphicsView):
         self.typedGraphicItems.clear()
 
     def changeAxisMode(self, mode):
+        self.axisMode = mode
         if self._hMarkline:
             self._hMarkline.setAxisMode(mode)
             self._vMarkline.setAxisMode(mode)
@@ -179,20 +181,33 @@ class AGraphicsView(QGraphicsView):
         vec.setY(vec.y() / v_scale)
         vec.setX(vec.x() / h_scale)
         self.lastViewPosInScene = self.viewPosInScene = mousePos + vec
-        self.resetSceneRect()
 
-        # 刷新显示区域
-        self._hMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
-        self._vMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
-        self._hsMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
-        self._vsMarkline.setViewScale(self.v_ViewScale, self.h_ViewScale)
-        self._indicator.setViewScale(self.v_ViewScale, self.h_ViewScale)
+        self.onScaleUpdated()
 
         return super(AGraphicsView, self).wheelEvent(mouseEvent)
 
+    def onScaleUpdated(self):
+        self.resetSceneRect()
+
+        self.refreshMarks()
+
     def setRange(self, xmin, xmax, ymin, ymax):
         # todo: convert data to range
-        pass
+        if self.axisMode == MARKTRACK_MODE_LOGSCALE:
+            xmin = MarkLine.log2lin(xmin)
+            xmax = MarkLine.log2lin(xmax)
+            ymin = MarkLine.log2lin(ymin)
+            ymax = MarkLine.log2lin(ymax)
+        self.viewPosInScene.setX((xmin + xmax) * 0.5)
+        self.viewPosInScene.setY((ymin + ymax) * 0.5)
+        self.lastViewPosInScene = self.viewPosInScene
+        rect = self.rect()
+        self.h_ViewScale = rect.width() / (xmax - xmin)
+        self.v_ViewScale = rect.height() / (ymax - ymin)
+        self.v_scaleValue = math.log(self.v_ViewScale)
+        self.h_scaleValue = math.log(self.h_ViewScale)
+
+        self.onScaleUpdated()
 
     def fitView(self):
         if not self.typedGraphicItems:

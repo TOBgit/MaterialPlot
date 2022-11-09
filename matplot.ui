@@ -219,7 +219,7 @@
          <enum>Qt::TabFocus</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -292,20 +292,21 @@
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
            <layout class="QGridLayout" name="gridLayout_2">
-            <item row="3" column="1" rowspan="2">
-             <widget class="QRadioButton" name="logRadio">
+            <item row="2" column="2" colspan="2">
+             <widget class="QPushButton" name="Plot_refresh_graphics">
               <property name="text">
-               <string>LogScale</string>
+               <string>Refresh Plot</string>
               </property>
-              <property name="checked">
-               <bool>true</bool>
-              </property>
-              <attribute name="buttonGroup">
-               <string notr="true">buttonGroup</string>
-              </attribute>
              </widget>
             </item>
-            <item row="3" column="2" rowspan="2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>X-axis Range</string>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3" rowspan="2">
              <widget class="QRadioButton" name="linearRadio">
               <property name="text">
                <string>Linear</string>
@@ -325,23 +326,7 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="2">
-             <widget class="QLineEdit" name="y_range_l">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>100</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="2">
+            <item row="0" column="3">
              <widget class="QLineEdit" name="x_range_h">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -357,7 +342,20 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
+            <item row="3" column="2" rowspan="2">
+             <widget class="QRadioButton" name="logRadio">
+              <property name="text">
+               <string>LogScale</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">buttonGroup</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="0" column="2">
              <widget class="QLineEdit" name="x_range_l">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -380,14 +378,7 @@
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>X-axis Range</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
+            <item row="1" column="3">
              <widget class="QLineEdit" name="y_range_h">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -403,10 +394,19 @@
               </property>
              </widget>
             </item>
-            <item row="2" column="1" colspan="2">
-             <widget class="QPushButton" name="Plot_refresh_graphics">
-              <property name="text">
-               <string>Refresh Plot</string>
+            <item row="1" column="2">
+             <widget class="QLineEdit" name="y_range_l">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>100</width>
+                <height>16777215</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -589,7 +589,7 @@
      <x>0</x>
      <y>0</y>
      <width>1462</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
