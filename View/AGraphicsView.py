@@ -190,6 +190,10 @@ class AGraphicsView(QGraphicsView):
 
         return super(AGraphicsView, self).wheelEvent(mouseEvent)
 
+    def setRange(self, xmin, xmax, ymin, ymax):
+        # todo: convert data to range
+        pass
+
     def fitView(self):
         if not self.typedGraphicItems:
             self.resetView()

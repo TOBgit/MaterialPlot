@@ -77,6 +77,8 @@ class MainWindow(QMainWindow):
         self.ui.show_fam_label.clicked.connect(self.onClickShowFamLabel)
         self.ui.delete_mat_label.clicked.connect(self.onClickDeleteMatLabel)
         self.ui.delete_fam_label.clicked.connect(self.onClickDeleteFamLabel)
+
+        self.ui.Plot_refresh_graphics.clicked.connect(self.onClickRefreshGraphics)
         
         ##Axis Select Tab##
 
@@ -113,6 +115,16 @@ class MainWindow(QMainWindow):
 
     def onAbout(self):
         QMessageBox.aboutQt(None, "About")
+
+    def onClickRefreshGraphics(self):
+        try:
+            xmin = float(self.ui.x_range_l.text())
+            xmax = float(self.ui.x_range_h.text())
+            ymin = float(self.ui.y_range_l.text())
+            ymax = float(self.ui.y_range_h.text())
+            self.ui.graphicsView.setRange(xmin, xmax, ymin, ymax)
+        except:
+            pass
 
     def onAddSelection(self):
         self.ui.listView.addItem()
