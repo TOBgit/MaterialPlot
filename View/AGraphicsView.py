@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import PySide2.QtGui
-from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem
+from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem, QGraphicsEllipseItem
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtGui import QTransform
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, MARKTRACK_MODE_LINEAR, MARKTRACK_MODE_LOGSCALE, TICKMARK_BAR_HEIGHT, TICKMARK_BAR_WIDTH
@@ -21,6 +21,7 @@ class AGraphicsView(QGraphicsView):
         # initialize
         self.h_ViewScale = 100.0
         self.v_ViewScale = 100.0
+        self.currentzvalue = 1
         self.h_scaleValue = math.log(self.h_ViewScale)
         self.v_scaleValue = math.log(self.v_ViewScale)
         self.axisMode = MARKTRACK_MODE_LOGSCALE
@@ -149,8 +150,16 @@ class AGraphicsView(QGraphicsView):
         return super(AGraphicsView, self).mouseMoveEvent(mouseEvent)
 
     def mouseReleaseEvent(self, mouseEvent):
+        mousePos = mouseEvent.pos()
         self.setDragMode(QGraphicsView.NoDrag)
         self.lastViewPosInScene = self.viewPosInScene
+        if mouseEvent.button() == Qt.LeftButton and self.ctrlPressed:
+            items = self.items(mousePos)
+            for item in items:
+                if isinstance(item, QGraphicsEllipseItem) or isinstance(item, QGraphicsTextItem):
+                    item.setZValue(self.currentzvalue)
+                    self.currentzvalue += 0.01
+                    break
         return super(AGraphicsView, self).mouseReleaseEvent(mouseEvent)
 
     def wheelEvent(self, mouseEvent: PySide2.QtGui.QWheelEvent):
@@ -252,6 +261,7 @@ class AGraphicsView(QGraphicsView):
     def resetView(self):
         self.v_ViewScale = 100.0
         self.h_ViewScale = 100.0
+        self.currentzvalue = 1
         self.h_scaleValue = math.log(self.h_ViewScale)
         self.v_scaleValue = math.log(self.v_ViewScale)
         self.viewPosInScene = self.initPos
