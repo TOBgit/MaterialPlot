@@ -67,7 +67,7 @@ class MatPlotModel(object):
     def loadData(self, filename: str):
         df = pd.DataFrame()
         if filename:
-            df = pd.read_csv(filename)
+            df = pd.read_csv(filename, dtype={'Name': np.dtype('O')})
         return df
     
     def onRawDataUpdate(self):
@@ -77,8 +77,8 @@ class MatPlotModel(object):
         df = pd.DataFrame()
         if len(self.raw_data) > 0:
             # Find the numerical and string columns.
-            self.numeric_columns = list(self.raw_data.columns[self.raw_data.dtypes == np.float])
-            self.string_columns = list(self.raw_data.columns[self.raw_data.dtypes == np.dtype('O')])
+            self.numeric_columns = list(self.raw_data.select_dtypes([np.int, np.float]))
+            self.string_columns = list(self.raw_data.select_dtypes([np.dtype('O')]).columns)
             def groupData(df):
                 # Calculate the mean among all numeric columns.
                 avg_series = df.loc[:, self.numeric_columns].mean(axis=0, skipna=True)
