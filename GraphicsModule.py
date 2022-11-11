@@ -115,12 +115,14 @@ class MatPlotController(object):
         ul_x, ul_y, w, h = self.transformer.matToSquare(mat_item)
         elps = self.scene.addEllipse(QRectF(ul_x, ul_y, w, h), self.pen, brush)
         elps.setRotation(self.transformer.matRotation(mat_item))
+        elps.name = mat_item.label
 
         text = self.scene.addText(mat_item.label, QFont("Arial", 12, 2))
         c_x, c_y = self.transformer.matCenterPoint(mat_item)
         text.setPos(QPointF(c_x, c_y))
         text.setRotation(self.transformer.matRotation(mat_item))
         text.setFlag(QGraphicsItem.ItemIgnoresTransformations)
+        text.name = mat_item.label + "_Label"
 
         text.setFlag(QGraphicsItem.ItemIsMovable)
         # Append semantic item info for re-draw.

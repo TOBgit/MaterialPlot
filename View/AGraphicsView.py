@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 import PySide2.QtGui
-from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem, QGraphicsEllipseItem
+from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem, QGraphicsEllipseItem, QMenu, QAction
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtGui import QTransform
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, MARKTRACK_MODE_LINEAR, MARKTRACK_MODE_LOGSCALE, TICKMARK_BAR_HEIGHT, TICKMARK_BAR_WIDTH
@@ -155,11 +155,25 @@ class AGraphicsView(QGraphicsView):
         self.lastViewPosInScene = self.viewPosInScene
         if mouseEvent.button() == Qt.LeftButton and self.ctrlPressed:
             items = self.items(mousePos)
+            hititems = []
             for item in items:
                 if isinstance(item, QGraphicsEllipseItem) or isinstance(item, QGraphicsTextItem):
+                    hititems.append(item)
+                    # item.setZValue(self.currentzvalue)
+                    # self.currentzvalue += 0.01
+                    # break
+            menu = QMenu()
+            for item in hititems:
+                if not hasattr(item, "name"):
+                    continue
+                action = QAction(item.name, self)
+                def ontriggered():
                     item.setZValue(self.currentzvalue)
                     self.currentzvalue += 0.01
-                    break
+                action.triggered.connect(ontriggered)
+                menu.addAction(action)
+                print("action", item.name)
+            menu.exec_(self.mapToGlobal(mousePos))
         return super(AGraphicsView, self).mouseReleaseEvent(mouseEvent)
 
     def wheelEvent(self, mouseEvent: PySide2.QtGui.QWheelEvent):
