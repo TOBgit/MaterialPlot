@@ -1,6 +1,7 @@
 import numpy as np
 from typing import List
 
+from scipy.interpolate import interp1d
 from scipy.spatial import ConvexHull
 
 
@@ -49,3 +50,8 @@ def ellipseHull(ellipses: List[simpleEllipse], expand_ratio, step):
     hull = ConvexHull(pts)
 
     return pts[hull.vertices]
+
+
+def lineExtrapolation(x: List[float], y: List[float], x_query: List[float]):
+    f = interp1d(x, y, fill_value="extrapolate")
+    return [f(x) for x in x_query]

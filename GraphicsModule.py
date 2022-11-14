@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
 from typing import List
 
-from PySide2.QtCore import QPointF, QRectF
+from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtWidgets import QGraphicsItem
 from PySide2.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
 
-from AlgorithmUtils import selectionLine
+from AlgorithmUtils import selectionLine, lineExtrapolation
 from DataModel import MatPlotModel, MaterialItem
 from GraphicTransformer import GraphicConfig, GraphicTransformer
 
@@ -17,6 +17,9 @@ class MatPlotController(object):
         self.tree = window.ui.treeView
         self.pen = QPen(QColor(0, 0, 0))
         self.pen.setWidth(0)
+        self.dash_pen = QPen(QColor(0, 0, 0))
+        self.dash_pen.setWidth(0)
+        self.dash_pen.setStyle(Qt.DashLine)
         self.model = MatPlotModel(filename)
         self.config = GraphicConfig()
         self.transformer = GraphicTransformer(self.config)
@@ -161,8 +164,10 @@ class MatPlotController(object):
 
         x1, y1 = self.transformer.pointTransform(POINT1_X, POINT1_Y)
         x2, y2 = self.transformer.pointTransform(POINT2_X, POINT2_Y)
-        print(x1, x2, y1, y2)
-        line = self.scene.addLine(x1, y1, x2, y2, self.pen)
+        # Extrapolate to mock a "near" infinite-length line.
+        X_END_L, X_END_R = -1e9, 1e9
+        Y_END = lineExtrapolation([x1, x2], [y1, y2], [X_END_L, X_END_R])
+        line = self.scene.addLine(X_END_L, Y_END[0], X_END_R, Y_END[1], self.dash_pen)
         self.view.addItemByType(self.view.ITEM_TYPE_SELECTION_LINE, line)
 
     def updateGraphicItems(self):

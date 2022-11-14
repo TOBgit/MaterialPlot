@@ -133,6 +133,7 @@ class MainWindow(QMainWindow):
         self.ui.listView.popSelectedItem()
 
     def onClickPlotSelLn(self):
+        self.ui.graphicsView.clearItemByType(self.ui.graphicsView.ITEM_TYPE_SELECTION_LINE)
         for item in self.ui.listView.getData():
             if item:
                 self.controller.drawSelectionLine(item)
