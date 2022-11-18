@@ -137,6 +137,7 @@ class MainWindow(QMainWindow):
         for item in self.ui.listView.getData():
             if item:
                 self.controller.drawSelectionLine(item)
+        self.myScene.update()
 
     def onTextEdited(self, *args):
         self.ui.graphicsView.setAxisLabel( self.ui.lineEdit_xaxis.text(),  self.ui.lineEdit_yaxis.text())
