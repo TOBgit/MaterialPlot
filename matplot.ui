@@ -44,9 +44,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2" colspan="3">
-       <widget class="QComboBox" name="familyColumn"/>
-      </item>
       <item row="0" column="5">
        <widget class="QPushButton" name="Refresh_List">
         <property name="text">
@@ -219,7 +216,7 @@
          <enum>Qt::TabFocus</enum>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab">
          <attribute name="title">
@@ -302,7 +299,7 @@
             <item row="0" column="0">
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>X-axis Range</string>
+               <string>X-axis Range (Alt+Scroll)</string>
               </property>
              </widget>
             </item>
@@ -374,7 +371,7 @@
             <item row="1" column="0">
              <widget class="QLabel" name="label_2">
               <property name="text">
-               <string>Y-axis Range</string>
+               <string>Y-axis Range (Shift+Scroll)</string>
               </property>
              </widget>
             </item>
@@ -557,6 +554,16 @@
         </property>
        </widget>
       </item>
+      <item row="0" column="3" colspan="2">
+       <widget class="QComboBox" name="familyColumn"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Family Criterion</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -589,7 +596,7 @@
      <x>0</x>
      <y>0</y>
      <width>1462</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -694,8 +701,9 @@
    <addaction name="actionFamily"/>
    <addaction name="actionGenerateChart"/>
    <addaction name="actionFamilyBubble"/>
-   <addaction name="actionSelection"/>
+   <addaction name="actionFitView"/>
    <addaction name="actionPlotSelLn"/>
+   <addaction name="actionSelection"/>
    <addaction name="actionCapture"/>
    <addaction name="separator"/>
    <addaction name="actionConvexHull"/>
@@ -816,7 +824,7 @@
      <normaloff>:/logo/MatBubb.svg</normaloff>:/logo/MatBubb.svg</iconset>
    </property>
    <property name="text">
-    <string>Generate Chart</string>
+    <string>Materials Bubble</string>
    </property>
   </action>
   <action name="actionSelection">
@@ -833,14 +841,14 @@
   </action>
   <action name="actionPlotSelLn">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="icon">
     <iconset resource="Res/res.qrc">
      <normaloff>:/logo/SelectionLine.svg</normaloff>:/logo/SelectionLine.svg</iconset>
    </property>
    <property name="text">
-    <string>Plot Selection Lines</string>
+    <string>Selection Lines</string>
    </property>
   </action>
   <action name="actionFamilyBubble">
@@ -861,6 +869,10 @@
    </property>
   </action>
   <action name="actionFitView">
+   <property name="icon">
+    <iconset resource="Res/res.qrc">
+     <normaloff>:/logo/FitView.svg</normaloff>:/logo/FitView.svg</iconset>
+   </property>
    <property name="text">
     <string>Fit View</string>
    </property>
