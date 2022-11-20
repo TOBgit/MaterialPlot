@@ -91,8 +91,11 @@ class LexerForData:
         if (((prop_str + "_mean") in self.data_feature_cache) and
                 ((prop_str + "_sd") in self.data_feature_cache)):
             return Token(TokenType.PROP, self.data_feature_cache[prop_str+"_mean"], self.data_feature_cache[prop_str+"_sd"])
+        # If not, this might be a value only feature (e.g. density). We assign it value and zero sd to the token.
+        elif prop_str in self.data_feature_cache:
+            return Token(TokenType.PROP, self.data_feature_cache[prop_str], 0.0)
         else:
-            print("ERROR!")
+            print("ERROR! We don't have info about this feature!")
             return Token(TokenType.PROP)
 
     def star(self):
