@@ -84,7 +84,7 @@ class MainWindow(QMainWindow):
 
         self.ui.lineEdit_xaxis.textEdited.connect(self.onTextEdited)
         self.ui.lineEdit_yaxis.textEdited.connect(self.onTextEdited)
-        self.ui.axis_refresh_graphics.clicked.connect(self.onClickGenPropChrt)
+        self.ui.axis_refresh_graphics.clicked.connect(self.onAxisStyleChanged)
 
         ## Plot property tab ##
         self.ui.buttonGroup.buttonToggled.connect(self.onAxisStyleChanged)
