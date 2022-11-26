@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from typing import List
 
+import numpy as np
 from PySide2.QtCore import QPointF, QRectF, Qt
 from PySide2.QtWidgets import QGraphicsItem
 from PySide2.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
@@ -64,11 +65,11 @@ class MatPlotController(object):
         family_candidates = self.model.provideFamilyCandidateByColumn(family_key)
         for family in family_candidates:
             items = self.model.getItemsByFamilyAndSelected(family_key, family, self.config.mat_selections).values()
-            self.drawHull(list(items))
+            self.drawHull((family, list(items)))
 
     def drawAllHull(self):
         items = self.model.getSelectedItems(self.config.mat_selections).values()
-        self.drawHull(list(items))
+        self.drawHull((None, list(items)))
 
     def updateObjectsByAxis(self, new_column_info: List[str]):
         x_column = new_column_info[0]
@@ -133,7 +134,9 @@ class MatPlotController(object):
         self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSE, elps)
         self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSELABEL, text)
 
-    def drawHull(self, items: List[MaterialItem]):
+    def drawHull(self, items_info: tuple):
+        family_name = items_info[0]
+        items = items_info[1]
         if len(items) > 0:
             r, g, b = self.model.getMeanColor(items)
             self.pen = QPen(QColor(125, 125, 125, 50), 0)
@@ -141,8 +144,17 @@ class MatPlotController(object):
             hull = self.transformer.getEllipseHull(items)
             poly = self.scene.addPolygon(QPolygonF(list(map(QPointF, *hull.T))), self.pen, self.brush)
             poly.setZValue(-1)
-            self.semantic_items.append(items)
+            self.semantic_items.append(items_info)
             self.view.addItemByType(self.view.ITEM_TYPE_HULL, poly)
+            if family_name:
+                text = self.scene.addText(family_name, QFont("Arial", 14, 500))
+                # Hull's label is put at the center of all its boundary point.
+                c_x, c_y = np.mean(hull, axis=0)
+                text.setPos(QPointF(c_x, c_y))
+                text.setFlag(QGraphicsItem.ItemIgnoresTransformations)
+                text.name = family_name + "_Hull_Label"
+                text.setFlag(QGraphicsItem.ItemIsMovable)
+                self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSELABEL, text)
 
     def drawSelectionLine(self, item: selectionLine):
         # Will not draw selection line if not in log scale.
@@ -176,10 +188,10 @@ class MatPlotController(object):
         '''
         prev_items = self.semantic_items.copy()
         self.clearScene()
-        for item in prev_items:
+        for p_item in prev_items:
             # If it is one item, draw the corresponding ellipse.
-            if isinstance(item, MaterialItem):
-                self.drawEllipse(item)
-            # If it is a list of items, draw their convex hull.
-            if isinstance(item, list):
-                self.drawHull(item)
+            if isinstance(p_item, MaterialItem):
+                self.drawEllipse(p_item)
+            # If it is a tuple (family_name, item_list), draw their convex hull.
+            if isinstance(p_item, tuple):
+                self.drawHull(p_item)
