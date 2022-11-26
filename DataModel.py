@@ -76,6 +76,8 @@ class MatPlotModel(object):
     def initFromData(self):
         df = pd.DataFrame()
         if len(self.raw_data) > 0:
+            # process missing color
+            self.raw_data.loc[:, ['Color_R', 'Color_G', 'Color_B']] = self.raw_data[['Color_R', 'Color_G', 'Color_B']].fillna(value=255)
             # Find the numerical and string columns.
             self.numeric_columns = list(self.raw_data.select_dtypes([np.int, np.float]).columns)
             self.string_columns = list(self.raw_data.select_dtypes([np.dtype('O')]).columns)
