@@ -4,16 +4,19 @@ from PySide2.QtCore import Qt, Signal
 
 
 class TreeItem(QStandardItem):
-    def __init__(self, name):
+    def __init__(self, name, color=None):
         super(TreeItem, self).__init__(name)
         self.setCheckable(True)
         self.setTristate(True)
         self.setCheckState(Qt.Checked)
         self.name = name
+        self.color = color
 
     def data(self, role: int):
         if role == Qt.DisplayRole:
             return self.name
+        elif role == Qt.BackgroundColorRole:
+            return self.color
         return super(TreeItem, self).data(role)
 
     def setData(self, value, role):
@@ -58,7 +61,7 @@ class TreeItemModel(QStandardItemModel):
         self.rootitem = self.invisibleRootItem()
 
     def getAllCheckedItems(self):
-        data = {"Families": [], "Items": []}
+        data = {"Families": [], "Items": {}}
         for row in range(self.rowCount()):
             family = self.item(row)
             if family.checkState() == Qt.Checked:
@@ -66,7 +69,7 @@ class TreeItemModel(QStandardItemModel):
             for row2 in range(family.rowCount()):
                 item = family.child(row2)
                 if item.checkState() == Qt.Checked:
-                    data["Items"].append(item.name)
+                    data["Items"][item.name] = {"color":item.color}
         return data
 
     def flags(self, index):
@@ -94,9 +97,9 @@ class TreeItemModel(QStandardItemModel):
         self.appendRow(familyItem)
         return familyItem
 
-    def addItemByFamily(self, label, family=None):
+    def addItemByFamily(self, label, color, family=None):
         if not family:
-            item = TreeItem(label)
+            item = TreeItem(label, color)
             self.appendRow(item)
             return item
         items = self.findItems(family, Qt.MatchRecursive)
@@ -104,6 +107,6 @@ class TreeItemModel(QStandardItemModel):
             familyitem = self.addFamily(family)
         else:
             familyitem = items[0]
-        item = TreeItem(label)
+        item = TreeItem(label, color)
         familyitem.appendRow(item)
         return item
