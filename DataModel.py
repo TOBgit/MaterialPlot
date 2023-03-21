@@ -79,7 +79,7 @@ class MatPlotModel(object):
             # process missing color
             self.raw_data.loc[:, ['Color_R', 'Color_G', 'Color_B']] = self.raw_data[['Color_R', 'Color_G', 'Color_B']].fillna(value=255)
             # Find the numerical and string columns.
-            self.numeric_columns = list(self.raw_data.select_dtypes([np.int, np.float]).columns)
+            self.numeric_columns = list(self.raw_data.select_dtypes([int, float]).columns)
             self.string_columns = list(self.raw_data.select_dtypes([np.dtype('O')]).columns)
             def groupData(df):
                 # Calculate the mean among all numeric columns.
