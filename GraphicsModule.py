@@ -147,7 +147,7 @@ class MatPlotController(object):
             self.semantic_items.append(items_info)
             self.view.addItemByType(self.view.ITEM_TYPE_HULL, poly)
             if family_name:
-                text = self.scene.addText(family_name, QFont("Arial", 14, 500))
+                text = self.scene.addText(family_name, QFont("Arial", 14, QFont.Bold))
                 # Hull's label is put at the center of all its boundary point.
                 c_x, c_y = np.mean(hull, axis=0)
                 text.setPos(QPointF(c_x, c_y))
