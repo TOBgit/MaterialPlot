@@ -157,7 +157,7 @@ class MatPlotController(object):
                 text.setFlag(QGraphicsItem.ItemIgnoresTransformations)
                 text.name = family_name + "_Hull_Label"
                 text.setFlag(QGraphicsItem.ItemIsMovable)
-                self.view.addItemByType(self.view.ITEM_TYPE_ELLIPSELABEL, text)
+                self.view.addItemByType(self.view.ITEM_TYPE_HULLLABEL, text)
 
     def drawSelectionLine(self, item: selectionLine):
         # Will not draw selection line if not in log scale.
