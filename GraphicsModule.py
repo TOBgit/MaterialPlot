@@ -116,7 +116,10 @@ class MatPlotController(object):
 
     def drawEllipse(self, mat_item: MaterialItem):
         brush = QBrush(QColor(mat_item.color_r, mat_item.color_g, mat_item.color_b, a=255))
-        ul_x, ul_y, w, h = self.transformer.matToSquare(mat_item)
+        ret = self.transformer.matToSquare(mat_item)
+        if ret is None:
+            return
+        ul_x, ul_y, w, h = ret
         elps = self.scene.addEllipse(QRectF(ul_x, ul_y, w, h), self.pen, brush)
         elps.setRotation(self.transformer.matRotation(mat_item))
         elps.name = mat_item.label

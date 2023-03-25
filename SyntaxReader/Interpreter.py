@@ -2,7 +2,7 @@ from typing import Dict
 
 from SyntaxReader.internalDataClass import *
 from SyntaxReader.lexer import LexerForData
-from SyntaxReader.parser import Parser
+from SyntaxReader.parser import Parser, SyntaxReaderErrorCode
 
 class Interpreter:
     '''
@@ -71,8 +71,13 @@ def evaluateWithData(syntax: str, original_data_features: Dict):
     '''
     lexer = LexerForData(syntax, original_data_features)
     tokens = lexer.generate_token()
-    parser = Parser(tokens)
-    tree = parser.parse()
+    try:
+        parser = Parser(tokens)
+        tree = parser.parse()
+    except SyntaxError as e:
+        if len(e.args) > 0 and e.args[0] == SyntaxReaderErrorCode:
+            e.args = (SyntaxReaderErrorCode, syntax)
+        raise e
     if not tree:
         return False
     meanInt = Interpreter()

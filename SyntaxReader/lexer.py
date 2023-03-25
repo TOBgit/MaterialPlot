@@ -4,7 +4,7 @@ from typing import Dict
 WHITESPACE = " \n\t"
 DIGITS = "0123456789"
 LETTERS = "abcdefghijlkmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
+NameErrorCode = 14
 class LexerForData:
     def __init__(self, text: str, data_feature: Dict):
         self.text = iter(text)
@@ -96,7 +96,7 @@ class LexerForData:
             return Token(TokenType.PROP, self.data_feature_cache[prop_str], 0.0)
         else:
             print("ERROR! We don't have info about this feature!")
-            return Token(TokenType.PROP)
+            raise NameError(NameErrorCode, prop_str)
 
     def star(self):
         if self.current_char == "*":

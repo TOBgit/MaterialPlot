@@ -1,12 +1,13 @@
 from SyntaxReader.internalDataClass import *
-
+SyntaxReaderErrorCode = 13
 class Parser:
 	def __init__(self, tokens):
 		self.tokens = iter(tokens)
 		self.advance()
 
 	def raise_error(self):
-		raise Exception("Invalid syntax")
+		print("Invalid syntax")
+		raise SyntaxError(SyntaxReaderErrorCode)
 	
 	def advance(self):
 		try:

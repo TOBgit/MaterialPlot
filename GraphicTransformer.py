@@ -3,6 +3,8 @@ from typing import List
 
 from AlgorithmUtils import ellipseHull, simpleEllipse
 from DataModel import MaterialItem
+from SyntaxReader.parser import SyntaxReaderErrorCode
+from SyntaxReader.lexer import NameErrorCode
 from View.ErrorWidget import simpleErrorPopUp
 
 class GraphicConfig():
@@ -57,6 +59,8 @@ class GraphicTransformer():
 
     def matToSquare(self, mat_item: MaterialItem):
         elps = self.convertMatToSimpleEllipse(mat_item)
+        if elps is None:
+            return None
         return elps.upper_left_x, elps.upper_left_y, elps.w, elps.h
 
     def matUpperLeftPoint(self, mat_item: MaterialItem):
@@ -97,10 +101,27 @@ class GraphicTransformer():
         '''
         Converts an material item to a pure geometry object.
         '''
-        width = mat_item.get(self.config.x_axis, "_sd")
-        height = mat_item.get(self.config.y_axis, "_sd")
-        upper_left_x = mat_item.get(self.config.x_axis, "_mean") - width * 0.5
-        upper_left_y = mat_item.get(self.config.y_axis, "_mean") + height * 0.5
+        try:
+            width = mat_item.get(self.config.x_axis, "_sd")
+            height = mat_item.get(self.config.y_axis, "_sd")
+            upper_left_x = mat_item.get(self.config.x_axis, "_mean") - width * 0.5
+            upper_left_y = mat_item.get(self.config.y_axis, "_mean") + height * 0.5
+        except SyntaxError as e:
+            if len(e.args) > 0 and e.args[0] == SyntaxReaderErrorCode:
+                simpleErrorPopUp(
+                    f"The expression ({e.args[1]}) of material ({mat_item.label}) is illegal."
+                    f"Please check the syntax of the expression")
+                return None
+            else:
+                raise e
+        except NameError as e:
+            if len(e.args) > 0 and e.args[0] == NameErrorCode:
+                simpleErrorPopUp(
+                    f"The feature ({e.args[1]}) of material ({mat_item.label}) is not found."
+                    f"Please check the name of the feature")
+                return None
+            else:
+                raise e
         if self.config.log_scale:
             # The ellipse/square in log scale is defined by the log of the original four corner points.
             # Use the diff between the lower-right point and upper-left point to re-calculate
