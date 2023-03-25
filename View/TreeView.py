@@ -94,7 +94,7 @@ class TreeView(QTreeView):
     def addFamilies(self, families):
         for family in families:
             family = self.model.addFamily(family)
-            self.openPersistentEditor(family.index())
+            # self.openPersistentEditor(family.index())
 
     def addItem(self, item, family=None):
         item = self.model.addItemByFamily(item.label, [item.color_r, item.color_g, item.color_b], family)
