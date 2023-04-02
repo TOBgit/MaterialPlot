@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg197"
+   width="400"
+   height="400"
+   viewBox="0 0 400 400"
+   sodipodi:docname="AshbyIcon.ai_eye_closed"
+   inkscape:version="1.2.1 (9c6d41e4, 2022-07-14)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs201">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath211">
+      <path
+         d="M 0,300 H 300 V 0 H 0 Z"
+         id="path209" />
+    </clipPath>
+  </defs>
+  <sodipodi:namedview
+     id="namedview199"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.59"
+     inkscape:cx="200"
+     inkscape:cy="200"
+     inkscape:window-width="1309"
+     inkscape:window-height="456"
+     inkscape:window-x="53"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="g203" />
+  <g
+     id="g203"
+     inkscape:groupmode="layer"
+     inkscape:label="AshbyIcon2"
+     transform="matrix(1.3333333,0,0,-1.3333333,0,400)">
+    <g
+       id="g205">
+      <g
+         id="g207"
+         clip-path="url(#clipPath211)">
+        <g
+           id="g213"
+           transform="translate(281.9623,145.6894)">
+          <path
+             d="m 0,0 c 0,-40.628 -59.082,-73.563 -131.962,-73.563 -72.881,0 -131.963,32.935 -131.963,73.563 0,40.628 59.082,73.563 131.963,73.563 C -59.082,73.563 0,40.628 0,0 Z"
+             style="fill:none;stroke:#b5cde3;stroke-width:18;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path215" />
+        </g>
+        <g
+           id="g217"
+           transform="translate(212.7981,145.603)">
+          <path
+             d="m 0,0 c 0,-34.682 -28.116,-62.798 -62.798,-62.798 -34.682,0 -62.798,28.116 -62.798,62.798 0,34.682 28.116,62.798 62.798,62.798 C -28.116,62.798 0,34.682 0,0"
+             style="fill:#b5cde3;fill-opacity:1;fill-rule:nonzero;stroke:none"
+             id="path219" />
+        </g>
+        <g
+           id="g221"
+           transform="translate(45.3342,243.7832)">
+          <path
+             d="M 0,0 205.489,-189.126"
+             style="fill:none;stroke:#85ab8f;stroke-width:18;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+             id="path223" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
