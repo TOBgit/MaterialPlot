@@ -14,6 +14,8 @@
     <file>Search.svg</file>
     <file>Select.svg</file>
     <file>SelectionLine.svg</file>
+    <file>Visible.svg</file>
+    <file>Unvisible.svg</file>
     <file>logo.ico</file>
   </qresource>
 </RCC>

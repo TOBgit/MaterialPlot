@@ -6,9 +6,9 @@ from PySide2.QtCore import Qt, Signal
 class TreeItem(QStandardItem):
     def __init__(self, name, color=None):
         super(TreeItem, self).__init__(name)
-        self.setCheckable(True)
-        self.setTristate(True)
-        self.setCheckState(Qt.Checked)
+        # self.setCheckable(True)
+        # self.setTristate(True)
+        # self.setCheckState(Qt.Checked)
         self.name = name
         self.color = color
 
@@ -20,7 +20,7 @@ class TreeItem(QStandardItem):
         return super(TreeItem, self).data(role)
 
     def setData(self, value, role):
-        if role == Qt.CheckStateRole:
+        if role == Qt.UserRole:
             if value == int(Qt.Checked):
                 for i in range(self.rowCount()):
                     child = self.child(i)
@@ -68,7 +68,7 @@ class TreeItemModel(QStandardItemModel):
                 data["Families"].append(family.name)
             for row2 in range(family.rowCount()):
                 item = family.child(row2)
-                if item.checkState() == Qt.Checked:
+                if item.data(Qt.UserRole) == Qt.Checked:
                     data["Items"][item.name] = {"color":item.color}
         return data
 
@@ -76,7 +76,7 @@ class TreeItemModel(QStandardItemModel):
         if not index.isValid():
             return Qt.NoItemFlags
 
-        return Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsUserCheckable
+        return Qt.ItemIsEnabled
 
     #
     def setData(self, index, value, role):
@@ -87,9 +87,9 @@ class TreeItemModel(QStandardItemModel):
     def data(self, index, role=Qt.DisplayRole):
         if not index.isValid():
             return None
-        if role == Qt.CheckStateRole:
-            item = self.itemFromIndex(index)
-            return item.checkState()
+        # if role == Qt.CheckStateRole:
+        #     item = self.itemFromIndex(index)
+        #     return item.checkState()
         return super(TreeItemModel, self).data(index, role)
 
     def addFamily(self, familyname):
