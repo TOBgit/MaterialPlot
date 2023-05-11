@@ -5,7 +5,7 @@ from typing import List
 from PySide2.QtCore import QFile, QRectF, QPointF
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog, QMessageBox
-from PySide2.QtGui import QBrush, QPen, QColor, QFont, QIcon
+from PySide2.QtGui import QBrush, QPen, QColor, QFont, QIcon, QPainter
 import res_rc # noqa
 
 from GraphicsModule import MatPlotController
@@ -145,7 +145,14 @@ class MainWindow(QMainWindow):
         filename, _ = QFileDialog.getSaveFileName(self, "save Capture", filter="Bitmap (*.bmp)")
         if filename:
             pix = self.ui.graphicsView.grab()
-            pix.save(filename)
+            # Heuristically remove the surrounding pixels,
+            # aka the weird thin line.
+            thin_line_pixels = 2
+            sub_pix = pix.copy(thin_line_pixels,
+                               thin_line_pixels, 
+                               pix.width()-thin_line_pixels*2, 
+                               pix.height()-thin_line_pixels*2)
+            sub_pix.save(filename)
 
     def onClickClearMat(self):
         self.ui.graphicsView.clearItemByType(self.ui.graphicsView.ITEM_TYPE_ELLIPSE)
