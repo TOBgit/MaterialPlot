@@ -147,7 +147,7 @@ class MainWindow(QMainWindow):
             pix = self.ui.graphicsView.grab()
             # Heuristically remove the surrounding pixels,
             # aka the weird thin line.
-            thin_line_pixels = 2
+            thin_line_pixels = 1
             sub_pix = pix.copy(thin_line_pixels,
                                thin_line_pixels, 
                                pix.width()-thin_line_pixels*2, 
