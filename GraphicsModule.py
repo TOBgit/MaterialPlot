@@ -2,9 +2,9 @@
 from typing import List
 
 import numpy as np
-from PySide6.QtCore import QPointF, QRectF, Qt
-from PySide6.QtWidgets import QGraphicsItem
-from PySide6.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
+from PySide2.QtCore import QPointF, QRectF, Qt
+from PySide2.QtWidgets import QGraphicsItem
+from PySide2.QtGui import QBrush, QPen, QColor, QFont, QPolygonF
 
 from AlgorithmUtils import selectionLine, lineExtrapolation
 from DataModel import MatPlotModel, MaterialItem

@@ -1,11 +1,11 @@
 # -*- coding:utf-8 -*-
-from PySide6.QtWidgets import QTreeView, QStyledItemDelegate, QLabel, QHBoxLayout, QFrame, QMenu, QColorDialog, \
+from PySide2.QtWidgets import QTreeView, QStyledItemDelegate, QLabel, QHBoxLayout, QFrame, QMenu, QAction, QColorDialog, \
     QDialog, QToolButton
-from PySide6.QtGui import QColor, QIcon, QAction
-from PySide6.QtCore import Qt
+from PySide2.QtGui import QColor, QIcon
+from PySide2.QtCore import Qt
 from .TreeModel import TreeItemModel
-from PySide6.QtCore import Signal
-import PySide6
+from PySide2.QtCore import Signal
+import PySide2
 
 class EyeLabel(QToolButton):
     def __init__(self, parent, index):
@@ -82,8 +82,8 @@ class ColorLabel(QLabel):
 
 
 class MyDelegate(QStyledItemDelegate):
-    def createEditor(self, parent: PySide6.QtWidgets.QWidget, option: PySide6.QtWidgets.QStyleOptionViewItem,
-                     index: PySide6.QtCore.QModelIndex):
+    def createEditor(self, parent: PySide2.QtWidgets.QWidget, option: PySide2.QtWidgets.QStyleOptionViewItem,
+                     index: PySide2.QtCore.QModelIndex):
         layout = QHBoxLayout()
         frame = QFrame(parent)
         frame.setLayout(layout)
@@ -102,7 +102,7 @@ class MyDelegate(QStyledItemDelegate):
             layout.addWidget(colorlabel)
         return frame
 
-    def setEditorData(self, editor:PySide6.QtWidgets.QWidget, index:PySide6.QtCore.QModelIndex) -> None:
+    def setEditorData(self, editor:PySide2.QtWidgets.QWidget, index:PySide2.QtCore.QModelIndex) -> None:
         editor.eyelabel.setChecked(index.data(Qt.UserRole) == Qt.Checked)
         super(MyDelegate, self).setEditorData(editor, index)
 
