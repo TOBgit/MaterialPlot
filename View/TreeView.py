@@ -28,9 +28,9 @@ class EyeLabel(QToolButton):
     def updateState(self):
         checked = self.isChecked()
         if checked:
-            self.setIcon(QIcon(u"./Res/Visible.svg"))
+            self.setIcon(QIcon(u"./Res/Visible.png"))
         else:
-            self.setIcon(QIcon(u"./Res/Unvisible.svg"))
+            self.setIcon(QIcon(u"./Res/Unvisible.png"))
 
     def OnToggled(self, *args):
 
