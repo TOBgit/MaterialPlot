@@ -1,5 +1,5 @@
 pandas
-PySide2
+PySide6
 PyInstaller
 scipy
 dataclasses

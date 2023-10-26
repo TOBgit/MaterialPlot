@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from PySide2.QtGui import QStandardItemModel, QStandardItem
-from PySide2.QtCore import Qt, Signal
+from PySide6.QtGui import QStandardItemModel, QStandardItem
+from PySide6.QtCore import Qt, Signal
 
 
 class TreeItem(QStandardItem):

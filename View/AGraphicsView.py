@@ -1,8 +1,8 @@
 # -*- coding:utf-8 -*-
-import PySide2.QtGui
-from PySide2.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem, QGraphicsEllipseItem, QMenu, QAction
-from PySide2.QtCore import QPointF, QRectF, Qt
-from PySide2.QtGui import QTransform
+import PySide6.QtGui
+from PySide6.QtWidgets import QGraphicsScene, QGraphicsView, QGraphicsTextItem, QGraphicsItem, QGraphicsEllipseItem, QMenu
+from PySide6.QtCore import QPointF, QRectF, Qt
+from PySide6.QtGui import QTransform, QAction
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines, MARKTRACK_MODE_LINEAR, MARKTRACK_MODE_LOGSCALE, TICKMARK_BAR_HEIGHT, TICKMARK_BAR_WIDTH
 import math
 
@@ -120,19 +120,19 @@ class AGraphicsView(QGraphicsView):
         # todo: performance bottleneck
         return self.mapToScene(self.rect()).boundingRect()
 
-    def keyPressEvent(self, event:PySide2.QtGui.QKeyEvent):
-        if event.key() == PySide2.QtCore.Qt.Key_Control:
+    def keyPressEvent(self, event:PySide6.QtGui.QKeyEvent):
+        if event.key() == PySide6.QtCore.Qt.Key_Control:
             self.ctrlPressed = True
-        elif event.key() == PySide2.QtCore.Qt.Key_Alt:
+        elif event.key() == PySide6.QtCore.Qt.Key_Alt:
             self.altPressed = True
-        elif event.key() == PySide2.QtCore.Qt.Key_Shift:
+        elif event.key() == PySide6.QtCore.Qt.Key_Shift:
             self.shiftPressed = True
-    def keyReleaseEvent(self, event:PySide2.QtGui.QKeyEvent):
-        if event.key() == PySide2.QtCore.Qt.Key_Control:
+    def keyReleaseEvent(self, event:PySide6.QtGui.QKeyEvent):
+        if event.key() == PySide6.QtCore.Qt.Key_Control:
             self.ctrlPressed = False
-        elif event.key() == PySide2.QtCore.Qt.Key_Alt:
+        elif event.key() == PySide6.QtCore.Qt.Key_Alt:
             self.altPressed = False
-        elif event.key() == PySide2.QtCore.Qt.Key_Shift:
+        elif event.key() == PySide6.QtCore.Qt.Key_Shift:
             self.shiftPressed = False
 
     def mouseMoveEvent(self, mouseEvent):
@@ -166,7 +166,7 @@ class AGraphicsView(QGraphicsView):
             for item in hititems:
                 if not hasattr(item, "name"):
                     continue
-                action = QAction(item.name, self)
+                action = QtGui(item.name, self)
                 def ontriggered():
                     item.setZValue(self.currentzvalue)
                     self.currentzvalue += 0.01
@@ -176,7 +176,7 @@ class AGraphicsView(QGraphicsView):
             menu.exec_(self.mapToGlobal(mousePos))
         return super(AGraphicsView, self).mouseReleaseEvent(mouseEvent)
 
-    def wheelEvent(self, mouseEvent: PySide2.QtGui.QWheelEvent):
+    def wheelEvent(self, mouseEvent: PySide6.QtGui.QWheelEvent):
         if self.dragMode() == QGraphicsView.ScrollHandDrag:
             return
         if self.shiftPressed and self.altPressed:

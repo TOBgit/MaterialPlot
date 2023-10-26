@@ -1,1 +1,1 @@
-pyside2-uic ../matplot.ui -o ../View/matplot.py
+PySide6-uic ../matplot.ui -o ../View/matplot.py

@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 import math
 
-from PySide2.QtCore import QPointF, QRectF, Qt, Signal, QModelIndex
-from PySide2.QtGui import QTransform, QStandardItemModel, QStandardItem
-from PySide2.QtWidgets import QListView, QStyledItemDelegate, QCheckBox, QLineEdit, QLabel, QHBoxLayout, QFrame, QMenu, QAction
+from PySide6.QtCore import QPointF, QRectF, Qt, Signal, QModelIndex
+from PySide6.QtGui import QTransform, QStandardItemModel, QStandardItem, QAction
+from PySide6.QtWidgets import QListView, QStyledItemDelegate, QCheckBox, QLineEdit, QLabel, QHBoxLayout, QFrame, QMenu
 
 from .AxisObjects import MarkLine, VerticalMarkLine, VShadowMarkLine, HShadowMarkLine, IndicatorLines
 from AlgorithmUtils import selectionLine

@@ -2,10 +2,10 @@
 import sys
 from typing import List
 
-from PySide2.QtCore import QFile, QRectF, QPointF
-from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog, QMessageBox
-from PySide2.QtGui import QBrush, QPen, QColor, QFont, QIcon, QPainter
+from PySide6.QtCore import QFile, QRectF, QPointF
+from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QFileDialog, QTreeView, QDialog, QMessageBox
+from PySide6.QtGui import QBrush, QPen, QColor, QFont, QIcon, QPainter
 import res_rc # noqa
 
 from GraphicsModule import MatPlotController

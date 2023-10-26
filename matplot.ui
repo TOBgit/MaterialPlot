@@ -713,7 +713,7 @@
   <action name="actionOpen_CSV">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/OpenCSV.svg</normaloff>./Res/OpenCSV.svg</iconset>
+     <normaloff>./Res/OpenCSV.png</normaloff>./Res/OpenCSV.png</iconset>
    </property>
    <property name="text">
     <string>Open CSV...</string>
