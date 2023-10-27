@@ -713,7 +713,7 @@
   <action name="actionOpen_CSV">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/OpenCSV.svg</normaloff>./Res/OpenCSV.svg</iconset>
+     <normaloff>./Res/OpenCSV.png</normaloff>./Res/OpenCSV.png</iconset>
    </property>
    <property name="text">
     <string>Open CSV...</string>
@@ -730,7 +730,7 @@
    </property>
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/Axes.svg</normaloff>./Res/Axes.svg</iconset>
+     <normaloff>./Res/Axes.png</normaloff>./Res/Axes.png</iconset>
    </property>
    <property name="text">
     <string>Axes</string>
@@ -745,7 +745,7 @@
    </property>
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/Search.svg</normaloff>./Res/Search.svg</iconset>
+     <normaloff>./Res/Search.png</normaloff>./Res/Search.png</iconset>
    </property>
    <property name="text">
     <string>Search</string>
@@ -800,7 +800,7 @@
   <action name="actionConvexHull">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/FamBubb.svg</normaloff>./Res/FamBubb.svg</iconset>
+     <normaloff>./Res/FamBubb.png</normaloff>./Res/FamBubb.png</iconset>
    </property>
    <property name="text">
     <string>ConvexHull</string>
@@ -812,7 +812,7 @@
    </property>
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/Family.svg</normaloff>./Res/Family.svg</iconset>
+     <normaloff>./Res/Family.png</normaloff>./Res/Family.png</iconset>
    </property>
    <property name="text">
     <string>Family</string>
@@ -821,7 +821,7 @@
   <action name="actionGenerateChart">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/MatBubb.svg</normaloff>./Res/MatBubb.svg</iconset>
+     <normaloff>./Res/MatBubb.png</normaloff>./Res/MatBubb.png</iconset>
    </property>
    <property name="text">
     <string>Materials Bubble</string>
@@ -833,7 +833,7 @@
    </property>
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/Select.svg</normaloff>./Res/Select.svg</iconset>
+     <normaloff>./Res/Select.png</normaloff>./Res/Select.png</iconset>
    </property>
    <property name="text">
     <string>Selection</string>
@@ -845,7 +845,7 @@
    </property>
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/SelectionLine.svg</normaloff>./Res/SelectionLine.svg</iconset>
+     <normaloff>./Res/SelectionLine.png</normaloff>./Res/SelectionLine.png</iconset>
    </property>
    <property name="text">
     <string>Selection Lines</string>
@@ -854,7 +854,7 @@
   <action name="actionFamilyBubble">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/FamBubb.svg</normaloff>./Res/FamBubb.svg</iconset>
+     <normaloff>./Res/FamBubb.png</normaloff>./Res/FamBubb.png</iconset>
    </property>
    <property name="text">
     <string>Family Bubble</string>
@@ -871,7 +871,7 @@
   <action name="actionFitView">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/FitView.svg</normaloff>./Res/FitView.svg</iconset>
+     <normaloff>./Res/FitView.png</normaloff>./Res/FitView.png</iconset>
    </property>
    <property name="text">
     <string>Fit View</string>
@@ -880,7 +880,7 @@
   <action name="actionManageItem">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/ManageItem.svg</normaloff>./Res/ManageItem.svg</iconset>
+     <normaloff>./Res/ManageItem.png</normaloff>./Res/ManageItem.png</iconset>
    </property>
    <property name="text">
     <string>Manage Item</string>
@@ -889,7 +889,7 @@
   <action name="actionCapture">
    <property name="icon">
     <iconset resource="Res/res.qrc">
-     <normaloff>./Res/Capture.svg</normaloff>./Res/Capture.svg</iconset>
+     <normaloff>./Res/Capture.png</normaloff>./Res/Capture.png</iconset>
    </property>
    <property name="text">
     <string>Capture</string>
